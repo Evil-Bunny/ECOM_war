@@ -12,7 +12,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello Git World!</h1>
-        toto
+    <%@ include file="/WEB-INF/jspf/header.jspf" %>
+     <h1>Hello Git World!</h1>
+
+    <form>
+        First name: <input type="text" name="firstname"><br>
+        Last name: <input type="text" name="lastname">
+    </form> 
     </body>
 </html>
