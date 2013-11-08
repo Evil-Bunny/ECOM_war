@@ -29,7 +29,7 @@
    Enumeration paramNames = request.getParameterNames();
    if (!paramNames.hasMoreElements()){
   %>     
-        <form name="register" action="register.jsp" method="POST">
+        <form name="register" action="test" method="POST">
             <label for="name">first name</label>
             <input id="name" type="text" name="name" value="" size="30" /><br/>
             <label for="surname">surname</label>
