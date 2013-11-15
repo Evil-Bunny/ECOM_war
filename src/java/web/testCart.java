@@ -4,38 +4,33 @@
  */
 package web;
 
-import ejb.ClientImplFacade;
+import ejb.CommandEntity;
+import ejb.CommandEntityFacade;
+import ejb.ProductEntity;
+import ejb.ProductEntityFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.Session;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user.ClientImpl;
-import user.data.AddressImpl;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Samy
  */
-public class test extends HttpServlet {
+@WebServlet(name = "testCart", urlPatterns = {"/testCart"})
+public class testCart extends HttpServlet {
 
     @EJB
-    private ClientImplFacade clientImplFacade;
-    @Resource(mappedName = "jms/NewMessageFactory")
-    private ConnectionFactory connectionFactory;
-    @Resource(mappedName = "jms/NewMessage")
-    private Queue queue;
+    private ProductEntityFacade pef;
+    private CommandEntity cart;
+    @EJB
+    private CommandEntityFacade cef;
 
     /**
      * Processes requests for both HTTP
@@ -52,59 +47,42 @@ public class test extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            HttpSession session = request.getSession(true);
+            if (session.getAttribute("cart") != null) {
+                cart = (CommandEntity) session.getAttribute("cart");
+            } else {
+                session.setAttribute("cart", new CommandEntity());
+                cart = (CommandEntity) session.getAttribute("cart");
+            }
+
+
+
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet test</title>");
+            out.println("<title>Servlet testCart</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet test at " + request.getContextPath() + "</h1>");
             Enumeration paramNames = request.getParameterNames();
-            if (paramNames.hasMoreElements()) {
-                try {
-                    Connection connection = connectionFactory.createConnection();
-                    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-                    MessageProducer messageProducer = session.createProducer(queue);
-
-                    ObjectMessage message = session.createObjectMessage();
-                    AddressImpl ai = new AddressImpl();
-                    ai.setNumber(Integer.parseInt(request.getParameter("addressnb")));
-                    ai.setName(request.getParameter("address"));
-
-                    message.setObject(ai);
-                    messageProducer.send(message);
-                    messageProducer.close();
-                    System.out.println("ai.getId()");
-
-//                    messageProducer = session.createProducer(queue);
-                    ClientImpl ci = new ClientImpl();
-
-                    ci.setAddress(ai);
-                    ci.setFirstname(request.getParameter("name"));
-                    ci.setSurname(request.getParameter("surname"));
-//
-//                    message.setObject(ci);
-//                    messageProducer.send(message);
-//                    messageProducer.close();
-                    connection.close();
-                    // clientImplFacade.create(ci);
-                } catch (JMSException e) {
-                    e.printStackTrace();
+            if (!paramNames.hasMoreElements()) {
+                out.println("<h1>Voici le Cart</h1>");
+                for (ProductEntity p : cart.getProducts().keySet()) {
+                    out.println(p.toString() + " : " + cart.getProducts().get(p).toString());
                 }
+
             } else {
+                out.println("<h1>Merci de l'achat pigeon</h1>");
 
+                ProductEntity pe = new ProductEntity();
+                pe.setBrand(request.getParameter("brand"));
+                pe.setName(request.getParameter("name"));
+                pe.setPrice(Float.parseFloat(request.getParameter("price")));
+                pef.create(pe);
+                cart.setQuantity(pe, 1);
+                session.setAttribute("cart", cart);
+                cef.create(cart);
 
-
-                response.sendRedirect("register.jsp");
-
-
-//                List l = clientImplFacade.findAll();
-//                for (Iterator it = l.iterator(); it.hasNext();) {
-//                    ClientImpl elem = (ClientImpl) it.next();
-//                    out.println(" <b>" + elem.getFirstname() + " </b><br />");
-//                    out.println(elem.getSurname() + "<br /> ");
-//                }
             }
             out.println("</body>");
             out.println("</html>");
