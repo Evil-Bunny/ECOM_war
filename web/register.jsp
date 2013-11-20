@@ -23,13 +23,13 @@
 
     <body>
         <h1>Hello World!</h1>
-        
 
-                <%
-   Enumeration paramNames = request.getParameterNames();
-   if (!paramNames.hasMoreElements()){ 
-  %>     
+ 
         <form name="register" action="test2" method="POST">
+            <label for="username">username</label>
+            <input id="username" type="text" name="username" value="" size="30" /><br/>
+            <label for="password">password</label>
+            <input id="password" type="password" name="password" value="" size="30" />   <br/>   
             <label for="name">first name</label>
             <input id="name" type="text" name="name" value="" size="30" /><br/>
             <label for="surname">surname</label>
@@ -38,26 +38,11 @@
             <input id="addressnb" type="text" name="addressnb" value="" size="10" />  <br/>
             <label for="address">address</label>
             <input id="address" type="text" name="address" value="" size="100" />  <br/>  
-            
-<input type="submit" value="Submit" />
-  </form>
-  <%                 
-   }
-   else{
-       
-   %>
-   <jsp:setProperty name="client" property="firstname" value="<%= request.getParameter("name")%>" />
-   <jsp:setProperty name="client" property="surname" value="<%= request.getParameter("surname")%>" />
-   <jsp:setProperty name="address" property="number" value="<%= Integer.parseInt(request.getParameter("addressnb"))%>" />
-   <jsp:setProperty name="address" property="name" value="<%= request.getParameter("address")%>" />
-   <jsp:setProperty name="client" property="address" value="${address}" /> 
-   
-   
-  <%     
-        //clients.create(client);
-            
-   }       
-   %>
-   
-  </body>
+
+
+            <input type="submit" value="Submit" />
+        </form>
+
+
+    </body>
 </html>

@@ -1,20 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package web;
 
 import ejb.ClientImplFacade;
 import ejb.CommandEntity;
 import ejb.CommandEntityFacade;
-import ejb.ProductEntity;
-import ejb.ProductEntityFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,16 +18,12 @@ import user.ClientImpl;
  *
  * @author Samy
  */
-@WebServlet(name = "testCart", urlPatterns = {"/testCart"})
-public class testCart extends HttpServlet {
+public class login extends HttpServlet {
 
     @EJB
-    private ProductEntityFacade pef;
-    private CommandEntity cart;
+    ClientImplFacade cif;
     @EJB
     private CommandEntityFacade cef;
-    @EJB
-    private ClientImplFacade cif;
 
     /**
      * Processes requests for both HTTP
@@ -52,49 +41,29 @@ public class testCart extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             HttpSession session = request.getSession(true);
-            if (session.getAttribute("client") == null) {
-                if (session.getAttribute("cart") != null) {
-                    cart = (CommandEntity) session.getAttribute("cart");
-                } else {
-                    session.setAttribute("cart", new CommandEntity());
-                    cart = (CommandEntity) session.getAttribute("cart");
-                }
-            } else {
-                cart = (CommandEntity) ((ClientImpl) session.getAttribute("client")).getCommand();
-            }
-
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet testCart</title>");
+            out.println("<title>Servlet login</title>");
             out.println("</head>");
             out.println("<body>");
+            out.println("<h1>Servlet login at " + request.getContextPath() + "</h1>");
             Enumeration paramNames = request.getParameterNames();
-            if (!paramNames.hasMoreElements()) {
-                out.println("<h1>Voici le Cart</h1>");
-                for (ProductEntity p : cart.getProducts().keySet()) {
-                    out.println(p.toString() + " : " + cart.getProducts().get(p).toString());
-                }
-
-            } else {
-                out.println("<h1>Merci de l'achat pigeon</h1>");
-
-                ProductEntity pe = new ProductEntity();
-                pe.setBrand(request.getParameter("brand"));
-                pe.setName(request.getParameter("name"));
-                pe.setPrice(Float.parseFloat(request.getParameter("price")));
-                pef.create(pe);
-                cart.setQuantity(pe, 1);
-
-                if (session.getAttribute("client") == null) {
-                    session.setAttribute("cart", cart);
-                    cef.create(cart);
+            if (paramNames.hasMoreElements()) {
+                ClientImpl ci = cif.find(request.getParameter("username"), request.getParameter("password"));
+                if (ci != null) {
+                    session.setAttribute("client", ci);
                 } else {
-                    ((ClientImpl) session.getAttribute("client")).setCommand(cart);
-                    cif.create((ClientImpl) session.getAttribute("client"));
-                }
+                    out.println("<h1> Erreur de login/mdp </h1>");
 
+
+                }
             }
+
+
+
+
+
             out.println("</body>");
             out.println("</html>");
         } finally {

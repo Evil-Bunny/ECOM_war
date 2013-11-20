@@ -5,6 +5,7 @@
 package web;
 
 import ejb.ClientImplFacade;
+import ejb.CommandEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -50,7 +51,6 @@ public class test2 extends HttpServlet {
 
             Enumeration paramNames = request.getParameterNames();
             if (paramNames.hasMoreElements()) {
-                //List l = cif.findAll();
                 AddressImpl ai = new AddressImpl();
                 ai.setNumber(Integer.parseInt(request.getParameter("addressnb")));
                 ai.setName(request.getParameter("address"));
@@ -58,7 +58,9 @@ public class test2 extends HttpServlet {
                 ci.setAddress(ai);
                 ci.setFirstname(request.getParameter("name"));
                 ci.setSurname(request.getParameter("surname"));
-                
+                ci.setUsername(request.getParameter("username"));
+                ci.setPassword(request.getParameter("password"));
+                ci.setCommand(new CommandEntity());
                 cif.create(ci);
 
                 out.println("</body>");
