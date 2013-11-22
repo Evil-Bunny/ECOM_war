@@ -1,0 +1,93 @@
+#content img {
+	float:left;
+	border:2px solid #d1d1d1;
+	border-radius: 5px;
+	margin:2px 10px 2px 2px;
+}
+
+.prod_right {
+	float:right;
+	margin:5px 10px;
+	text-align:right;
+}
+
+#content li {
+	margin-bottom:10px;
+	border:2px solid #666666;
+	border-radius: 7px;
+	margin-right:10px;
+}
+
+#content li>* {
+	display:block;
+}
+
+#content li:hover {
+	background:#d1d1d1;
+	border-color:#00a300;
+}
+
+#content li:hover img {
+	border-color:#666666;
+}
+
+h2 {
+	margin:5px 0;
+}
+
+h2 a {
+	text-decoration:none;
+}
+
+#content table {
+	overflow: hidden;
+}
+
+#content td:first-child:after {
+	content:":";
+        margin:0 0.5ex;
+}
+
+#content td:first-child {
+	text-align:right;
+}
+
+#content td {
+	vertical-align:top;
+}
+
+.price {
+	font-size:170%;
+	color:#00a300;
+}
+
+.stock {
+	background:url("img/yes.png") right center no-repeat;
+	padding-right:25px;
+	height:20px;
+}
+
+.stock_no {
+	background-image:url("img/no.png");
+}
+
+.pages {
+	margin:0 10px 10px;
+	float:right;
+}
+
+.pages a {
+	text-decoration:none;
+	color:black;
+}
+
+.pages span {
+	color:#00a300;
+	font-weight:bold;
+}
+
+.pages * {
+	border:1px solid #666666;
+	background:#d1d1d1;
+	padding:3px;
+}
