@@ -4,7 +4,7 @@
  */
 package web;
 
-import ejb.ClientImplFacade;
+import ejb.ClientFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -21,8 +21,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user.ClientImpl;
-import user.data.AddressImpl;
+import user.Client;
+import user.data.Address;
 
 /**
  *
@@ -31,7 +31,7 @@ import user.data.AddressImpl;
 public class test extends HttpServlet {
 
     @EJB
-    private ClientImplFacade clientImplFacade;
+    private ClientFacade clientImplFacade;
     @Resource(mappedName = "jms/NewMessageFactory")
     private ConnectionFactory connectionFactory;
     @Resource(mappedName = "jms/NewMessage")
@@ -68,7 +68,7 @@ public class test extends HttpServlet {
                     MessageProducer messageProducer = session.createProducer(queue);
 
                     ObjectMessage message = session.createObjectMessage();
-                    AddressImpl ai = new AddressImpl();
+                    Address ai = new Address();
                     ai.setNumber(Integer.parseInt(request.getParameter("addressnb")));
                     ai.setName(request.getParameter("address"));
 
@@ -78,7 +78,7 @@ public class test extends HttpServlet {
                     System.out.println("ai.getId()");
 
 //                    messageProducer = session.createProducer(queue);
-                    ClientImpl ci = new ClientImpl();
+                    Client ci = new Client();
 
                     ci.setAddress(ai);
                     ci.setFirstname(request.getParameter("name"));
@@ -101,7 +101,7 @@ public class test extends HttpServlet {
 
 //                List l = clientImplFacade.findAll();
 //                for (Iterator it = l.iterator(); it.hasNext();) {
-//                    ClientImpl elem = (ClientImpl) it.next();
+//                    Client elem = (Client) it.next();
 //                    out.println(" <b>" + elem.getFirstname() + " </b><br />");
 //                    out.println(elem.getSurname() + "<br /> ");
 //                }
