@@ -4,8 +4,8 @@
  */
 package web;
 
-import ejb.ClientImplFacade;
-import ejb.CommandEntity;
+import ejb.ClientFacade;
+import command.Command;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -14,17 +14,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user.ClientImpl;
-import user.data.AddressImpl;
+import user.Client;
+import user.data.Address;
 
 /**
  *
  * @author Samy
  */
-public class test2 extends HttpServlet {
+public class RegisterClient extends HttpServlet {
 
     @EJB
-    private ClientImplFacade cif;
+    private ClientFacade cif;
 
     /**
      * Processes requests for both HTTP
@@ -51,16 +51,16 @@ public class test2 extends HttpServlet {
 
             Enumeration paramNames = request.getParameterNames();
             if (paramNames.hasMoreElements()) {
-                AddressImpl ai = new AddressImpl();
+                Address ai = new Address();
                 ai.setNumber(Integer.parseInt(request.getParameter("addressnb")));
                 ai.setName(request.getParameter("address"));
-                ClientImpl ci = new ClientImpl();
+                Client ci = new Client();
                 ci.setAddress(ai);
                 ci.setFirstname(request.getParameter("name"));
                 ci.setSurname(request.getParameter("surname"));
                 ci.setUsername(request.getParameter("username"));
                 ci.setPassword(request.getParameter("password"));
-                ci.setCommand(new CommandEntity());
+                ci.setCommand(new Command());
                 cif.create(ci);
 
                 out.println("</body>");

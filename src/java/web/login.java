@@ -1,8 +1,8 @@
 package web;
 
-import ejb.ClientImplFacade;
-import ejb.CommandEntity;
-import ejb.CommandEntityFacade;
+import ejb.ClientFacade;
+import command.Command;
+import ejb.CommandFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import user.ClientImpl;
+import user.Client;
 
 /**
  *
@@ -21,9 +21,9 @@ import user.ClientImpl;
 public class login extends HttpServlet {
 
     @EJB
-    ClientImplFacade cif;
+    ClientFacade cif;
     @EJB
-    private CommandEntityFacade cef;
+    private CommandFacade cef;
 
     /**
      * Processes requests for both HTTP
@@ -50,7 +50,7 @@ public class login extends HttpServlet {
             out.println("<h1>Servlet login at " + request.getContextPath() + "</h1>");
             Enumeration paramNames = request.getParameterNames();
             if (paramNames.hasMoreElements()) {
-                ClientImpl ci = cif.find(request.getParameter("username"), request.getParameter("password"));
+                Client ci = cif.find(request.getParameter("username"), request.getParameter("password"));
                 if (ci != null) {
                     session.setAttribute("client", ci);
                 } else {

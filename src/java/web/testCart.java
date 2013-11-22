@@ -4,11 +4,11 @@
  */
 package web;
 
-import ejb.ClientImplFacade;
-import ejb.CommandEntity;
-import ejb.CommandEntityFacade;
-import ejb.ProductEntity;
-import ejb.ProductEntityFacade;
+import ejb.ClientFacade;
+import command.Command;
+import ejb.CommandFacade;
+import product.Product;
+import ejb.ProductFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -19,7 +19,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import user.ClientImpl;
+import product.Manufacturer;
+import product.type.Category;
+import user.Client;
 
 /**
  *
@@ -29,12 +31,12 @@ import user.ClientImpl;
 public class testCart extends HttpServlet {
 
     @EJB
-    private ProductEntityFacade pef;
-    private CommandEntity cart;
+    private ProductFacade pef;
+    private Command cart;
     @EJB
-    private CommandEntityFacade cef;
+    private CommandFacade cef;
     @EJB
-    private ClientImplFacade cif;
+    private ClientFacade cif;
 
     /**
      * Processes requests for both HTTP
@@ -54,13 +56,13 @@ public class testCart extends HttpServlet {
             HttpSession session = request.getSession(true);
             if (session.getAttribute("client") == null) {
                 if (session.getAttribute("cart") != null) {
-                    cart = (CommandEntity) session.getAttribute("cart");
+                    cart = (Command) session.getAttribute("cart");
                 } else {
-                    session.setAttribute("cart", new CommandEntity());
-                    cart = (CommandEntity) session.getAttribute("cart");
+                    session.setAttribute("cart", new Command());
+                    cart = (Command) session.getAttribute("cart");
                 }
             } else {
-                cart = (CommandEntity) ((ClientImpl) session.getAttribute("client")).getCommand();
+                cart = (Command) ((Client) session.getAttribute("client")).getCommand();
             }
 
             out.println("<!DOCTYPE html>");
@@ -72,15 +74,20 @@ public class testCart extends HttpServlet {
             Enumeration paramNames = request.getParameterNames();
             if (!paramNames.hasMoreElements()) {
                 out.println("<h1>Voici le Cart</h1>");
-                for (ProductEntity p : cart.getProducts().keySet()) {
+                for (Product p : cart.getProducts().keySet()) {
                     out.println(p.toString() + " : " + cart.getProducts().get(p).toString());
                 }
 
             } else {
                 out.println("<h1>Merci de l'achat pigeon</h1>");
-
-                ProductEntity pe = new ProductEntity();
-                pe.setBrand(request.getParameter("brand"));
+                Manufacturer m = new Manufacturer();
+                Category c = new Category();
+                Product pe = new Product();
+                
+                m.setName(request.getParameter("brand"));
+                c.setCategorie(request.getParameter("category"));
+                pe.setBrand(m);
+                pe.setCategorie(c);
                 pe.setName(request.getParameter("name"));
                 pe.setPrice(Float.parseFloat(request.getParameter("price")));
                 pef.create(pe);
@@ -90,8 +97,8 @@ public class testCart extends HttpServlet {
                     session.setAttribute("cart", cart);
                     cef.create(cart);
                 } else {
-                    ((ClientImpl) session.getAttribute("client")).setCommand(cart);
-                    cif.create((ClientImpl) session.getAttribute("client"));
+                    ((Client) session.getAttribute("client")).setCommand(cart);
+                    cif.create((Client) session.getAttribute("client"));
                 }
 
             }

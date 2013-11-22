@@ -19,9 +19,10 @@
             <input id="name" type="text" name="name" value="" size="30" /><br/>
             <label for="surname">brand</label>
             <input id="surname" type="text" name="brand" value="" size="30" />   <br/>     
-            <label for="addressnb">price</label>
-            <input id="addressnb" type="text" name="price" value="" size="10" />  <br/>
-
+            <label for="price">price</label>
+            <input id="price" type="text" name="price" value="" size="10" />  <br/>
+            <label for="category">categorie</label>
+            <input id="category" type="text" name="category" value="" size="10" />  <br/>
             
 <input type="submit" value="Submit" />
   </form>

@@ -4,6 +4,11 @@
     Author     : Samy
 --%>
 
+<%@page import="java.util.Properties"%>
+<%@page import="javax.rmi.PortableRemoteObject"%>
+<%@page import="user.ClientImpl"%>
+<%@page import="javax.naming.Context"%>
+<%@page import="javax.naming.InitialContext"%>
 <%@page import="javax.persistence.EntityManagerFactory"%>
 <%@page import="javax.persistence.EntityManager"%>
 <%@page import="javax.ejb.EJB"%>
@@ -17,18 +22,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Register to Evil Bunny</title>
     </head>
-    <jsp:useBean id="client" scope="session" class="user.ClientImpl" />
-    <jsp:useBean id="address" scope="session" class="user.data.AddressImpl" />
-    <jsp:useBean id="clients" scope="session" class="ejb.ClientImplFacade" />
 
     <body>
         <h1>Hello World!</h1>
 
- 
-        <form name="register" action="test2" method="POST">
+
+        <form name="register" action="RegisterClient" method="POST">
             <label for="username">username</label>
             <input id="username" type="text" name="username" value="" size="30" /><br/>
-            <label for="password">password</label>
+            <label for="password">password</label> 
             <input id="password" type="password" name="password" value="" size="30" />   <br/>   
             <label for="name">first name</label>
             <input id="name" type="text" name="name" value="" size="30" /><br/>
@@ -42,6 +44,7 @@
 
             <input type="submit" value="Submit" />
         </form>
+
 
 
     </body>
