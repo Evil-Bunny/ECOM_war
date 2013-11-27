@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript">setTitle("Produits")</script> 
+<script type="text/javascript">setTitle("Produits");</script> 
 <ul id="list_products">
         <li>
                 <a href=""><img src="img/category.png" alt="" height="100px" width="100px" style="background:white;"/></a>
@@ -40,7 +40,7 @@
         </li>
 </ul>
 <div class="pages"><a href="">Début</a> <a href="">Précédent</a> <a href="">1</a> <span>2</span> <a href="">3</a> <a href="">4</a> <a href="">5</a> <a href="">6</a> <a href="">7</a> <a title="Aller à  la page..." href="">...</a> <a href="">42</a> <a href="">Suivant</a> <a href="">Fin</a></div>
-<script  type="text/javascript">
+<script type="text/javascript">
         list = document.getElementById('list_products');
         str = "";
         for (i=0 ; i<5 ; i++)

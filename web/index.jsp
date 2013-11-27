@@ -30,7 +30,7 @@
 					else
 						band.style.left = -(document.documentElement.scrollLeft+document.body.scrollLeft) + "px";
 					band.style.marginLeft = "2px";
-					if (left.offsetWidth != 260) {
+					if (left.offsetWidth !== 260) {
 						left.style.position = "fixed";
 						left.style.width = document.body.clientWidth-4 + "px";
 						left.style.top = "32px";
@@ -61,7 +61,7 @@
                             url_split[1] = url_split[1].split("&");
                             var page, params="";
                             for (var i = 0 ; i < url_split[1].length ; i++) {
-                                if (url_split[1][i].substr(0, 5) == "page=") {
+                                if (url_split[1][i].substr(0, 5) === "page=") {
                                     page = url_split[1][i].substr(5);
                                 } else {
                                     params += url_split[1][i] + "&";

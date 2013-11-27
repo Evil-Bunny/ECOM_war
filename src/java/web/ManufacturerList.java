@@ -6,6 +6,9 @@ package web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,8 +40,9 @@ public class ManufacturerList extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        for (Manufacturer m : cif.findAll()) {
+        List<Manufacturer> manufacturers = cif.findAll();
+        Collections.sort(manufacturers);
+        for (Manufacturer m : manufacturers) {
             out.println("<li><a href='?manufacturer="+m.getId()+"'>"+m.getName()+"</a></li>");
         }
     }

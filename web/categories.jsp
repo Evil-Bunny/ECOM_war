@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript">setTitle("Catégories")</script> 
+<script type="text/javascript">setTitle("Catégories");</script>
 <ul>
         <li>
                 <a href="perif"><img height="200px" width="200px" src="img/category.png" alt=""/>Périphériques</a><br/>
