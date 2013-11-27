@@ -1,0 +1,57 @@
+/* 
+    Document   : home
+    Created on : 27 nov. 2013, 15:48:28
+    Author     : bousky
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#pub {
+    text-align: center;
+    margin-right: 20px;
+    margin-top:25px;
+}
+
+#pub table {
+    margin:auto;
+}
+
+#pub a {
+    width:260px;
+    height:205px;
+    display:block;
+    margin:5px;
+    border:2px solid #666666;
+    border-radius:7px;
+    color:black;
+    text-decoration: none;
+    position: relative;
+}
+
+#pub a:hover {
+    border-color: #00a300;
+    background:#d1d1d1;
+}
+
+#pub img {
+    border:2px solid #d1d1d1;
+    border-radius:5px;
+    display:block;
+}
+
+#pub a:hover img {
+    border-color: #666666;
+}
+
+#pub .name {
+    clear:both;
+    font-size:130%;
+}
+
+#pub .price {
+    color: #00a300;
+    font-size: 200%;
+    position:absolute;
+    top:5px;
+    right:10px;
+}

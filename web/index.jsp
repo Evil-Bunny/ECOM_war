@@ -6,7 +6,7 @@
                 <%
                     String requestPage = request.getParameter("page");
                     if (requestPage == null) {
-                        requestPage = "categories";
+                        requestPage = "home";
                     }
                 %>
 		<title>Evil Bunny</title>
