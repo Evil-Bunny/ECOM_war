@@ -52,7 +52,6 @@ public class RegisterClient extends HttpServlet {
             Enumeration paramNames = request.getParameterNames();
             if (paramNames.hasMoreElements()) {
                 Address ai = new Address();
-                ai.setNumber(Integer.parseInt(request.getParameter("addressnb")));
                 ai.setName(request.getParameter("address"));
                 Client ci = new Client();
                 ci.setAddressDelivery(ai);

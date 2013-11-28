@@ -26,8 +26,6 @@
             <input id="name" type="text" name="name" value="" size="30" /><br/>
             <label for="surname">surname</label>
             <input id="surname" type="text" name="surname" value="" size="30" />   <br/>     
-            <label for="addressnb">address number</label>
-            <input id="addressnb" type="text" name="addressnb" value="" size="10" />  <br/>
             <label for="address">address</label>
             <input id="address" type="text" name="address" value="" size="100" />  <br/>  
 
