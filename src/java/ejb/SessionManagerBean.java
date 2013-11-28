@@ -1,7 +1,7 @@
 package ejb;
 
 import product.Product;
-import command.Command;
+import command.Cart;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSessionListener;
 public class SessionManagerBean implements HttpSessionListener {
 
 //    @EJB
-    private Command pan;
+    private Cart pan;
     
     @EJB
     private CommandFacade cef;
@@ -27,7 +27,7 @@ public class SessionManagerBean implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        pan = new Command();
+        pan = new Cart();
 
     }
 
@@ -37,13 +37,13 @@ public class SessionManagerBean implements HttpSessionListener {
         cef.create(pan);
     }
 
-    public Command getCart() {
+    public Cart getCart() {
         return pan;
     }
 
     public void addToCart(Product p, Integer q) {
         if (pan == null) {
-            pan = new Command();
+            pan = new Cart();
         }
 
         pan.setQuantity(p, q);
@@ -51,7 +51,7 @@ public class SessionManagerBean implements HttpSessionListener {
 
     public void addToCart(Product p) {
         if (pan == null) {
-            pan = new Command();
+            pan = new Cart();
         }
         pan.setQuantity(p, 1);
 

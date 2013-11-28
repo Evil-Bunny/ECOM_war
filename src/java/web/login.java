@@ -1,7 +1,6 @@
 package web;
 
 import ejb.ClientFacade;
-import command.Command;
 import ejb.CommandFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,10 +58,6 @@ public class login extends HttpServlet {
 
                 }
             }
-
-
-
-
 
             out.println("</body>");
             out.println("</html>");

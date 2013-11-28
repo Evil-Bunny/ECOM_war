@@ -4,16 +4,6 @@
     Author     : Samy
 --%>
 
-<%@page import="java.util.Properties"%>
-<%@page import="javax.rmi.PortableRemoteObject"%>
-<%@page import="user.ClientImpl"%>
-<%@page import="javax.naming.Context"%>
-<%@page import="javax.naming.InitialContext"%>
-<%@page import="javax.persistence.EntityManagerFactory"%>
-<%@page import="javax.persistence.EntityManager"%>
-<%@page import="javax.ejb.EJB"%>
-<%@page import="ejb.ClientImplFacade"%>
-<%@page import="java.util.Enumeration"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 

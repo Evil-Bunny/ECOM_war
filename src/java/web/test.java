@@ -80,7 +80,9 @@ public class test extends HttpServlet {
 //                    messageProducer = session.createProducer(queue);
                     Client ci = new Client();
 
-                    ci.setAddress(ai);
+                    ci.setAddressDelivery(ai);
+                    ci.setAddressPayement(ai);
+
                     ci.setFirstname(request.getParameter("name"));
                     ci.setSurname(request.getParameter("surname"));
 //

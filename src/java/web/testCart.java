@@ -5,7 +5,8 @@
 package web;
 
 import ejb.ClientFacade;
-import command.Command;
+import command.Cart;
+import command.LineCommand;
 import ejb.CommandFacade;
 import product.Product;
 import ejb.ProductFacade;
@@ -32,7 +33,7 @@ public class testCart extends HttpServlet {
 
     @EJB
     private ProductFacade pef;
-    private Command cart;
+    private Cart cart;
     @EJB
     private CommandFacade cef;
     @EJB
@@ -56,13 +57,13 @@ public class testCart extends HttpServlet {
             HttpSession session = request.getSession(true);
             if (session.getAttribute("client") == null) {
                 if (session.getAttribute("cart") != null) {
-                    cart = (Command) session.getAttribute("cart");
+                    cart = (Cart) session.getAttribute("cart");
                 } else {
-                    session.setAttribute("cart", new Command());
-                    cart = (Command) session.getAttribute("cart");
+                    session.setAttribute("cart", new Cart());
+                    cart = (Cart) session.getAttribute("cart");
                 }
             } else {
-                cart = (Command) ((Client) session.getAttribute("client")).getCommand();
+                cart = (Cart) ((Client) session.getAttribute("client")).getCommand();
             }
 
             out.println("<!DOCTYPE html>");
@@ -74,8 +75,8 @@ public class testCart extends HttpServlet {
             Enumeration paramNames = request.getParameterNames();
             if (!paramNames.hasMoreElements()) {
                 out.println("<h1>Voici le Cart</h1>");
-                for (Product p : cart.getProducts().keySet()) {
-                    out.println(p.toString() + " : " + cart.getProducts().get(p).toString());
+                for (LineCommand p : cart.getProducts()) {
+                    out.println(p.toString());
                 }
 
             } else {
@@ -83,7 +84,7 @@ public class testCart extends HttpServlet {
                 Manufacturer m = new Manufacturer();
                 Category c = new Category();
                 Product pe = new Product();
-                
+
                 m.setName(request.getParameter("brand"));
                 c.setCategorie(request.getParameter("category"));
                 pe.setBrand(m);

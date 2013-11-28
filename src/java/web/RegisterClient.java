@@ -5,7 +5,7 @@
 package web;
 
 import ejb.ClientFacade;
-import command.Command;
+import command.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -55,12 +55,13 @@ public class RegisterClient extends HttpServlet {
                 ai.setNumber(Integer.parseInt(request.getParameter("addressnb")));
                 ai.setName(request.getParameter("address"));
                 Client ci = new Client();
-                ci.setAddress(ai);
+                ci.setAddressDelivery(ai);
+                ci.setAddressPayement(ai);
                 ci.setFirstname(request.getParameter("name"));
                 ci.setSurname(request.getParameter("surname"));
                 ci.setUsername(request.getParameter("username"));
                 ci.setPassword(request.getParameter("password"));
-                ci.setCommand(new Command());
+                ci.setCommand(new Cart());
                 cif.create(ci);
 
                 out.println("</body>");
