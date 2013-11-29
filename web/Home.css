@@ -18,7 +18,7 @@
 
 #pub a {
     width:260px;
-    height:205px;
+    height:180px;
     display:block;
     margin:5px;
     border:2px solid #666666;
@@ -61,8 +61,10 @@
     padding-top: 10px;
 }
 
-#TittleHome {
+h2 {
     color: #00a300;
+    font-family: "Courier New";
+    margin:3px 3px -5px;
 }
 
 #PresHome {
@@ -76,7 +78,7 @@
 }
 
 #logo-home {
-    margin: 5px 5px 0 0;
+    margin: 5px -5px 0 0;
     float: left;
 }
 

@@ -30,6 +30,9 @@ public class Products extends AbstractPage {
     @EJB
     ProductFacade pf;
     
+    public static final int PRODUCTSBYPAGE = 10;
+    public static final int PAGESAROUND = 5;
+    
     @Override
     protected String getTitle(HttpServletRequest request) {
         if (request.getParameter("category") != null) {
@@ -64,8 +67,8 @@ public class Products extends AbstractPage {
         } else {
             start = 0;
         }
-        nbPages = products.size()/10;
-        products = products.subList(start, Math.min(products.size(),start+10));
+        nbPages = (products.size()-1)/PRODUCTSBYPAGE +1;
+        products = products.subList(start, Math.min(products.size(),start+PRODUCTSBYPAGE));
         
         out.println("<ul id='list_products'>");
         for (Product p : products) {
@@ -73,9 +76,13 @@ public class Products extends AbstractPage {
             out.println("<li><a href='?page=Product&amp;id="+p.getId()+"'>");
             out.println("<img src='img/category.png' alt='' height='100px' width='100px' style='background:white;'/>");
             out.println("</a><div class='prod_right'>");
-            out.println("<div class='price'>"+p.getPrice()+" &euro;</div>");
-            out.println("<div class='stock stock_yes'>En stock</div>");
-            out.println("<a href='?page=cart&amp;add="+p.getId()+"'>Ajouter au panier</a><br/>");
+            out.println(String.format("<div class='price'>%.2f &euro;</div>", p.getPrice()));
+            if (p.getStock() == 0) {
+                out.println("<div class='stock stock_no'>Rupture de stock</div>");
+            } else {
+                out.println("<div class='stock stock_yes'>En stock</div>");
+                out.println("<a href='?page=cart&amp;add="+p.getId()+"'>Ajouter au panier</a><br/>");
+            }
             out.println("<a href='?page=Product&amp;id="+p.getId()+"'>Plus d'info</a></div>");
             out.println("<h2><a href='?page=Product&amp;id="+p.getId()+"'>"+p.getName()+"</a></h2>");
             out.println("<table><tr><td>Caractéristiques</td><td>");
@@ -89,42 +96,31 @@ public class Products extends AbstractPage {
             out.println("</td></tr></table><div class='clear_footer'></div></li>");
         }
         out.println("</ul>");
-        
-        /*for (int i=0 ; i<5 ; i++) {
-            out.println("        <li>\n" +
-"                <a href=\"\"><img src=\"img/category.png\" alt=\"\" height=\"100px\" width=\"100px\" style=\"background:white;\"/></a>\n" +
-"                <div class=\"prod_right\">\n" +
-"                        <div class=\"price\">99.99 &euro;</div>\n" +
-"                        <div class=\"stock stock_yes\">En stock</div>\n" +
-"                        <a href=\"\">Ajouter au panier</a><br/>\n" +
-"                        <a href=\"\">Plus d'info</a>\n" +
-"                </div>\n" +
-"                <h2><a href=\"nom produit\">Nom produit</a></h2>\n" +
-"                <table>\n" +
-"                        <tr><td>Caractéristiques</td><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.</td></tr>\n" +
-"                        <tr><td>Catégorie</td><td><a href=\"\">Périphériques</a> &gt; <a href=\"\">Câbles & Connectique</a></td></tr>\n" +
-"                        <tr><td>Marque</td><td><a href=\"\">Tatatititutu</a></td></tr>\n" +
-"                </table>\n" +
-"                <div class=\"clear_footer\"></div>\n" +
-"        </li>\n" +
-"        <li>\n" +
-"                <a href=\"\"><img src=\"img/category.png\" alt=\"\" height=\"100px\" width=\"100px\" style=\"background:white;\"/></a>\n" +
-"                <div class=\"prod_right\">\n" +
-"                        <div class=\"price\">99.99 &euro;</div>\n" +
-"                        <div class=\"stock stock_no\">Rupture de stock</div>\n" +
-"                        <a href=\"\">Plus d'info</a>\n" +
-"                </div>\n" +
-"                <h2><a href=\"\">Nom produit</a></h2>\n" +
-"                <table>\n" +
-"                        <tr><td>Caractéristiques</td><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.</td></tr>\n" +
-"                        <tr><td>Catégorie</td><td><a href=\"\">Périphériques</a> &gt; <a href=\"\">Câbles & Connectique</a></td></tr>\n" +
-"                        <tr><td>Marque</td><td><a href=\"\">Tatatititutu</a></td></tr>\n" +
-"                </table>\n" +
-"                <div class=\"clear_footer\"></div>\n" +
-"        </li>\n");
+        if (nbPages != 1) {
+            int currentPage = start/PRODUCTSBYPAGE +1;
+            String baseURL = "?page=Products";
+            if (request.getParameter("category") != null) {
+                baseURL += "&amp;category=" + request.getParameter("category");
+            }
+            if (request.getParameter("manufacturer") != null) {
+                baseURL += "&amp;manufacturer=" + request.getParameter("manufacturer");
+            }
+            if (request.getParameter("search") != null) {
+                baseURL += "&amp;search=" + request.getParameter("search");
+            }
+            baseURL += "&amp;start=";
+            out.println("<div class='pages'><a href='"+baseURL+"0'>Début</a>");
+            if (currentPage != 1)
+                out.println("<a href='"+baseURL+(start-PRODUCTSBYPAGE)+"'>Précédent</a>");
+            for (int i = Math.max(1, currentPage-PAGESAROUND) ; i < currentPage ; i++)
+                out.println("<a href='"+baseURL+i+"'>"+i+"</a>");
+            out.println("<span>"+currentPage+"</span>");
+            for (int i = currentPage+1; i<= Math.min(nbPages, currentPage+PAGESAROUND) ; i++)
+                out.println("<a href='"+baseURL+i+"'>"+i+"</a>");
+            if (currentPage != nbPages)
+                out.println("<a href='"+baseURL+(start+PRODUCTSBYPAGE)+"'>Suivant</a>");
+            out.println("<a href='"+baseURL+((nbPages-1)*PRODUCTSBYPAGE)+"'>Fin</a></div>");
         }
-        out.println("</ul>");
-        out.println("<div class=\"pages\"><a href=\"\">Début</a> <a href=\"\">Précédent</a> <a href=\"\">1</a> <span>2</span> <a href=\"\">3</a> <a href=\"\">4</a> <a href=\"\">5</a> <a href=\"\">6</a> <a href=\"\">7</a> <a title=\"Aller à  la page...\" href=\"\">...</a> <a href=\"\">42</a> <a href=\"\">Suivant</a> <a href=\"\">Fin</a></div>\n");*/
     }
     
 }

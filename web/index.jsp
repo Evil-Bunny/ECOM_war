@@ -15,7 +15,7 @@
 		<!--<link rel="shortcut icon" href="favicon.ico" />-->
 		<link rel="stylesheet" type="text/css" href="common.css" />
 		<link rel="stylesheet" type="text/css" href="small.css" media="screen and (max-width:1134px)" /><!--max-device-width-->
-		<link id="page_css" rel="stylesheet" type="text/css" href="<%=requestPage%>.css" />
+		<link rel="stylesheet" type="text/css" href="<%=requestPage%>.css" />
 		<script type="text/javascript">
 			function positionBand() {
 				band = document.getElementById('band');
@@ -59,7 +59,7 @@
 	<body>
 		<div id="central">
 			<div id="header">
-				<a href=""><img height="136px" width="640px" id="logo" src="img/logo.png" alt="Evil Bunny, fournisseur de matériel informatique rétro"/></a>
+				<a href="."><img height="136px" width="640px" id="logo" src="img/logo.png" alt="Evil Bunny, fournisseur de matériel informatique rétro"/></a>
 				<span id="lang">
 					<a href="?fr"><img id="current_lang" src="img/fr.png" alt="Français / French" title="Français / French"/></a>
 					<a href="?en"><img src="img/en.png" alt="Anglais / English" title="Anglais / English"/></a>
@@ -72,8 +72,9 @@
 			</div><!--header-->
 			<div id="left">
 				<ul id="menu">
-					<li><a href="?page=Categories">Catégories</a>
-                                        <jsp:include page="Categories"><jsp:param name="menu" value="true"/></jsp:include>
+					<li>
+                                            <a href="?page=Categories">Catégories</a>
+                                            <jsp:include page="Categories"><jsp:param name="menu" value="true"/></jsp:include>
 					</li>
 					<li><a href="brand">Marques &amp; Constructeurs</a>
 						<ul>
@@ -105,7 +106,7 @@
 					</fieldset>
 				</form>
 			</div><!--left-->
-			<div id="ariane"><a href=""><img src="img/home.png" alt="EvilBunny" width="20px" height="20px"/></a> &gt; Catégories</div>
+			<div id="ariane"><a href="."><img src="img/home.png" alt="EvilBunny" width="20px" height="20px"/></a> &gt; Catégories</div>
 			<div id="content">
                             <jsp:include page="<%=requestPage%>"/>
 			</div><!--content-->
