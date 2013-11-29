@@ -6,10 +6,10 @@
                 <%
                     String requestPage = request.getParameter("page");
                     if (requestPage == null) {
-                        requestPage = "home";
+                        requestPage = "Home";
                     }
                 %>
-		<title>Evil Bunny</title>
+                <title>Evil Bunny - <jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></title>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 		<meta name      ="author"       content="Nicolas Bouscarle" />
 		<!--<link rel="shortcut icon" href="favicon.ico" />-->
@@ -54,38 +54,7 @@
 			}
 			window.onscroll = positionBand;
 			window.onresize = positionBand;
-                        
-                        function loadLink(url) {
-                            window.history.pushState(null, null, url);
-                            var url_split = url.split("?");
-                            url_split[1] = url_split[1].split("&");
-                            var page, params="";
-                            for (var i = 0 ; i < url_split[1].length ; i++) {
-                                if (url_split[1][i].substr(0, 5) === "page=") {
-                                    page = url_split[1][i].substr(5);
-                                } else {
-                                    params += url_split[1][i] + "&";
-                                }
-                            }
-                            var new_url = url_split[0]+page+".jsp?" + params;
-                            new_url = new_url.substr(0, url.length-1);
-                            //alert(url);
-                            //return(url);/*
-                            var xmlHttp = new XMLHttpRequest();
-                            xmlHttp.open( "GET", new_url, false );
-                            xmlHttp.send( null );
-                            document.getElementById('content').innerHTML = xmlHttp.responseText;/**/
-                            document.getElementById('page_css').href = page + ".css";
-                            var scripts = document.getElementById('content').getElementsByTagName('script');
-                            for (var i = 0 ; i < scripts.length ; i++)
-                                eval(scripts[i].innerHTML);
-                        }
-                        
-                        function setTitle(title) {
-                            document.getElementsByTagName("title")[0].innerHTML = "EvilBunny - " + title;
-                            document.getElementsByTagName("h1")[0].innerHTML = title;
-                        }
-		</script>
+                </script>
 	</head>
 	<body>
 		<div id="central">
@@ -97,46 +66,14 @@
 				</span>
 				<div id="band">
 					<a id="nav" href="" title="Retour à  ..."><img src="img/previous.png" width="30px" height="30px" alt=""/>Retour</a>
-					<h1></h1>
+					<h1><jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></h1>
 					<span id="options"><a href="cart">Panier (10)</a><a href="log">Connexion</a><a href="register">Inscription</a></span>
 				</div><!--band-->
 			</div><!--header-->
 			<div id="left">
 				<ul id="menu">
-					<li><a href="?page=categories">Catégories</a>
-						<ul>
-							<li>
-								<a href="perif">Périphériques</a>
-								<ul>
-									<li><a href="">Claviers</a></li>
-									<li><a href="">Souris</a></li>
-									<li><a href="">Écrans</a></li>
-									<li><a href="">Imprimantes</a></li>
-									<li><a href="">Scanners</a></li>
-									<li><a href="?page=products">Câbles &amp; Connectique</a></li>
-									<li><a href="">Lecteurs</a></li>
-								</ul>
-							</li><!--Périphériques-->
-							<li>
-								<a href="conso">Consommables</a>
-								<ul>
-									<li><a href="">Papier</a></li>
-									<li><a href="">Encre</a></li>
-								</ul>
-							</li><!--Consommables-->
-							<li>
-								<a href="compo">Composants</a>
-								<ul>
-									<li><a href="">Cartes mères</a></li>
-									<li><a href="">Cartes réseau</a></li>
-									<li><a href="">Cartes son</a></li>
-									<li><a href="">Cartes graphiques</a></li>
-									<li><a href="">Disques durs</a></li>
-									<li><a href="">Connectique interne</a></li>
-									<li><a href="">Lecteurs</a></li>			
-								</ul>
-							</li><!--Composants-->
-						</ul>
+					<li><a href="?page=Categories">Catégories</a>
+                                        <jsp:include page="Categories"><jsp:param name="menu" value="true"/></jsp:include>
 					</li>
 					<li><a href="brand">Marques &amp; Constructeurs</a>
 						<ul>
@@ -170,9 +107,9 @@
 			</div><!--left-->
 			<div id="ariane"><a href=""><img src="img/home.png" alt="EvilBunny" width="20px" height="20px"/></a> &gt; Catégories</div>
 			<div id="content">
-                            <jsp:include page="<%=requestPage+".jsp"%>"/>
+                            <jsp:include page="<%=requestPage%>"/>
 			</div><!--content-->
-			<div id="clear_footer"></div>
+			<div class="clear_footer"></div>
 		</div><!--central-->
 		<div id="footer"><a href="contact">Nous contacter</a><a href="legal">Mentions légales</a><span>©EvilBunny</span></div>
 	</body>
