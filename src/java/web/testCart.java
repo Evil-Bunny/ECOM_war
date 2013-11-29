@@ -58,12 +58,13 @@ public class testCart extends HttpServlet {
             if (session.getAttribute("client") == null) {
                 if (session.getAttribute("cart") != null) {
                     cart = (Cart) session.getAttribute("cart");
+                    cef.create(cart);
                 } else {
                     session.setAttribute("cart", new Cart());
                     cart = (Cart) session.getAttribute("cart");
                 }
             } else {
-                cart = (Cart) ((Client) session.getAttribute("client")).getCommand();
+                cart = (Cart) ((Client) session.getAttribute("client")).getCart();
             }
 
             out.println("<!DOCTYPE html>");
@@ -96,10 +97,10 @@ public class testCart extends HttpServlet {
 
                 if (session.getAttribute("client") == null) {
                     session.setAttribute("cart", cart);
-                    cef.create(cart);
+                    cef.edit(cart);
                 } else {
-                    ((Client) session.getAttribute("client")).setCommand(cart);
-                    cif.create((Client) session.getAttribute("client"));
+                    ((Client) session.getAttribute("client")).setCart(cart);
+                    cif.edit((Client) session.getAttribute("client"));
                 }
 
             }

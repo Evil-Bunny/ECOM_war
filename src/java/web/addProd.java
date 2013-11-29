@@ -10,11 +10,14 @@ import ejb.ProductFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.persistence.NoResultException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import product.Manufacturer;
+import ejb.ManufacturerFacade;
 import product.type.Category;
 
 /**
@@ -27,6 +30,8 @@ public class addProd extends HttpServlet {
     private ProductFacade pef;
     @EJB
     private CategoryFacade cf;
+    @EJB
+    private ManufacturerFacade mf;
 
     /**
      * Processes requests for both HTTP
@@ -68,7 +73,7 @@ public class addProd extends HttpServlet {
                 for (Category c : cf.findAll()) {
                     out.println("<option value=\"" + c.getId() + "\">" + c.getCategorie() + "</option>");
                 }
-                
+
                 out.println("</select><br />");
                 out.println("<label for=\"price\">Price</label>");
                 out.println("<input id=\"price\" type=\"text\" name=\"price\" value=\"\" size=\"10\" />  <br/>");
@@ -77,15 +82,27 @@ public class addProd extends HttpServlet {
             } else {
 
                 Product pe = new Product();
-                Manufacturer m = new Manufacturer();
-                m.setName(request.getParameter("brand"));
+
+                Manufacturer m;
+                try {
+                    m = mf.findByName(request.getParameter("brand"));
+                } catch (EJBException  e) { 
+                    //out.println(e.toString());
+                    m = new Manufacturer();
+                    m.setName(request.getParameter("brand"));
+                }
                 pe.setBrand(m);
                 pe.setName(request.getParameter("name"));
                 pe.setCategorie(cf.find(Long.parseLong(request.getParameter("category"))));
 
                 pe.setPrice(Float.parseFloat(request.getParameter("price")));
-                pef.edit(pe);
-                out.println("Produit " + request.getParameter("name") + " ajouté.");
+                try {
+                    pef.edit(pe);
+                    out.println("Produit " + request.getParameter("name") + " ajouté.");
+                } catch (EJBException e) {
+                    out.print(e.getMessage());
+                }
+
             }
 
             out.println("</body>");

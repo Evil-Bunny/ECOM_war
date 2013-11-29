@@ -68,9 +68,8 @@ public class addCategory extends HttpServlet {
 
                 if (!request.getParameter("parent").equals(new String("null"))) {
                     c.setParent(cf.find(Long.parseLong(request.getParameter("parent"))));
-                    cf.edit(c);
                 }
-                
+                cf.edit(c);
                 
                 out.println("Catégorie "+request.getParameter("name")+ " ajoutée");
             }
