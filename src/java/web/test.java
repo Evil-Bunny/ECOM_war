@@ -8,6 +8,8 @@ import ejb.ClientFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.jms.Connection;
@@ -30,13 +32,6 @@ import user.data.Address;
  */
 public class test extends HttpServlet {
 
-    @EJB
-    private ClientFacade clientImplFacade;
-    @Resource(mappedName = "jms/NewMessageFactory")
-    private ConnectionFactory connectionFactory;
-    @Resource(mappedName = "jms/NewMessage")
-    private Queue queue;
-
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -47,72 +42,26 @@ public class test extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet test</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet test at " + request.getContextPath() + "</h1>");
-            Enumeration paramNames = request.getParameterNames();
-            if (paramNames.hasMoreElements()) {
-                try {
-                    Connection connection = connectionFactory.createConnection();
-                    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-                    MessageProducer messageProducer = session.createProducer(queue);
-
-                    ObjectMessage message = session.createObjectMessage();
-                    Address ai = new Address();
-                    ai.setNumber(Integer.parseInt(request.getParameter("addressnb")));
-                    ai.setName(request.getParameter("address"));
-
-                    message.setObject(ai);
-                    messageProducer.send(message);
-                    messageProducer.close();
-                    System.out.println("ai.getId()");
-
-//                    messageProducer = session.createProducer(queue);
-                    Client ci = new Client();
-
-                    ci.setAddressDelivery(ai);
-                    ci.setAddressPayement(ai);
-
-                    ci.setFirstname(request.getParameter("name"));
-                    ci.setSurname(request.getParameter("surname"));
-//
-//                    message.setObject(ci);
-//                    messageProducer.send(message);
-//                    messageProducer.close();
-                    connection.close();
-                    // clientImplFacade.create(ci);
-                } catch (JMSException e) {
-                    e.printStackTrace();
-                }
-            } else {
-
-
-
-                response.sendRedirect("register.jsp");
-
-
-//                List l = clientImplFacade.findAll();
-//                for (Iterator it = l.iterator(); it.hasNext();) {
-//                    Client elem = (Client) it.next();
-//                    out.println(" <b>" + elem.getFirstname() + " </b><br />");
-//                    out.println(elem.getSurname() + "<br /> ");
-//                }
+         if (request.getParameter("param") != null) {
+            try {
+                out.print(this.getClass().getDeclaredField(request.getParameter("param")).get(null));
+            } catch (NoSuchFieldException | IllegalAccessException ex) {
+                out.print("&lt;"+request.getParameter("param")+"&gt");
             }
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+        } else {
+            printPage(out, request, response);
         }
+    }
+    
+    static final String title = "Test";
+    
+    protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
+        out.println("page...");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -4,18 +4,24 @@
  */
 package web;
 
+import ejb.ProductFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import product.Product;
 
 /**
  *
  * @author msi
  */
 public class buyProd extends HttpServlet {
+
+    @EJB
+    private ProductFacade pef;
 
     /**
      * Processes requests for both HTTP
@@ -36,29 +42,29 @@ public class buyProd extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet buyProd</title>");            
+            out.println("<title>Servlet buyProd</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet buyProd at " + request.getContextPath() + "</h1>");
-            
-            if (request.getParameterNames().hasMoreElements())
-            {
-            int i =Integer.parseInt(request.getParameter("id"));
-            out.print(i);
-            
+
+            if (request.getParameterNames().hasMoreElements()) {
+                out.println("TODO");
+
+            } else {
+                out.print("<form name=\"buy\" action=\"buyProd\" method=\"POST\">");
+                out.print("<label for=\"name\">Achat de Produit</label><br />");
+
+                for (Product pe : pef.findAll()) {
+                    out.print("<input type=\"checkbox\" name=\"id\" value=" + pe.getId() + ">Name : " + pe.getName() + "\tBrand : " + pe.getBrand().getName() + "\tPrice : " + pe.getPrice() + "<br />");
+                }
+                out.print("<input id=\"number\" type=\"text\" name=\"number\" value=\"\" size=\"10\" /><br />");
+                out.print("<input type=\"submit\" value=\"Submit\" />");
+                out.print("</form>");
+
             }
-            else{
-            out.print(("Vous n'avez pas spécifié l'élément a acheter"));
-            
-            
-            }
-            
-            
-            
-            
             out.println("</body>");
             out.println("</html>");
-        } finally {            
+        } finally {
             out.close();
         }
     }

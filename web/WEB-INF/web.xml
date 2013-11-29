@@ -28,6 +28,18 @@
         <servlet-name>listProd</servlet-name>
         <servlet-class>web.listProd</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Products</servlet-name>
+        <servlet-class>pages.Products</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Categories</servlet-name>
+        <servlet-class>pages.Categories</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addCategory</servlet-name>
+        <servlet-class>web.addCategory</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
@@ -55,6 +67,18 @@
     <servlet-mapping>
         <servlet-name>buyProd</servlet-name>
         <url-pattern>/buyProd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Products</servlet-name>
+        <url-pattern>/Products</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Categories</servlet-name>
+        <url-pattern>/Categories</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addCategory</servlet-name>
+        <url-pattern>/addCategory</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
