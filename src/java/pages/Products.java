@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import ejb.ManufacturerFacade;
 import product.Product;
 import product.type.Category;
+import product.type.LineCharacteristic;
 
 /**
  *
@@ -51,6 +52,8 @@ public class Products extends AbstractPage {
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         List<Product> products;
         int start, nbPages;
+        String tmp;
+        
         if (request.getParameter("category") != null) {
             Category category = cf.find(new Long(request.getParameter("category")));
             products = category.getProducts();
@@ -86,7 +89,12 @@ public class Products extends AbstractPage {
             out.println("<a href='?page=Product&amp;id="+p.getId()+"'>Plus d'info</a></div>");
             out.println("<h2><a href='?page=Product&amp;id="+p.getId()+"'>"+p.getName()+"</a></h2>");
             out.println("<table><tr><td>Caractéristiques</td><td>");
-            out.println("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.");
+            tmp = "";
+            for (LineCharacteristic carac : p.getProductCaracteristics()) {
+                tmp += " ; "+carac.getCharacteristic().getName()+" : "+carac.getName();
+            }
+            if (tmp.length() != 0)
+                out.println(tmp.substring(3));
             out.println("</td></tr><tr><td>Catégorie</td><td>");
             if (category.getParent() != null)
                 out.println("<a href='?page=Products&amp;category="+category.getParent().getId()+"'>"+category.getParent().getCategorie()+"</a> &gt; ");
