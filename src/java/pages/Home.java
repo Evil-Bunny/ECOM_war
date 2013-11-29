@@ -69,5 +69,4 @@ public class Home extends AbstractPage {
         out.println("</a></td>");
     }
     
-
 }
