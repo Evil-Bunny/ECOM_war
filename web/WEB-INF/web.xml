@@ -36,6 +36,10 @@
         <servlet-name>Categories</servlet-name>
         <servlet-class>pages.Categories</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addCategory</servlet-name>
+        <servlet-class>web.addCategory</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>Categories</servlet-name>
         <url-pattern>/Categories</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addCategory</servlet-name>
+        <url-pattern>/addCategory</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

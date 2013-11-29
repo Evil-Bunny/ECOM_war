@@ -38,20 +38,26 @@ public class listProd extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
+        try {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Ajout de produit</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet addProd at " + request.getContextPath() + "</h1>");
 
-        out.print("<form name=\"buy\" action=\"buyProd\" method=\"POST\">");
-        out.print("<label for=\"name\">Product name</label><br />");
 
-        for (Product pe : pef.findAll()) {
+            for (Product pe : pef.findAll()) {
+                out.print("ID : " + pe.getId() + "\tName : " + pe.getName() + "\tBrand : " + pe.getBrand().getName() + "\tPrice : " + pe.getPrice() + "<br />");
+            }
 
-            out.print("<input type=\"checkbox\" name=\"id\" value=" + pe.getId() + ">Name : " + pe.getName() + " nBrand : " + pe.getBrand().getName() + " nPrice : " + pe.getPrice() + "<br />");
-            //out.print("Name : "+pe.getName() + "\nBrand : "+pe.getBrand()+ "\nPrice : "+pe.getPrice() + "\n<br />");
+            out.println("</body>");
+            out.println("</html>");
 
+        } finally {
+            out.close();
         }
-        out.print("<input id=\"number\" type=\"text\" name=\"number\" value=\"\" size=\"10\" /><br />");
-        out.print("<input type=\"submit\" value=\"Submit\" />");
-        out.print("</form>");
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

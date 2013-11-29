@@ -6,21 +6,18 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">setTitle("Accueil");</script>
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.
-    Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur
-    ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas
-    mattis sit amet vitae augue.<!--Nam tincidunt congue enim, ut porta lorem lacinia
-    consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem
-    ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem.
-    Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor
-    nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra
-    tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan.
-    Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu
-    rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-    ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis
-    semper ac in est.-->
-</p>
+<div id="AllHome">
+    <img id="logo-home" alt="Bienvenue !" src="img/logo-home.png" width="71px" height="100px"/>
+    <img id="ballon" alt="say" src="img/ballon.png" width="20px" height="100px"/>
+    <div id="PresHome">
+        <h2 id="TittleHome" >Evil Bunny</h2>
+        <p id ='TextHome'>
+            Votre site de E-commerce spécialisé dans la vente de matériel informatique rétro.</br>
+            Du matériel d'occasion à votre disposition pour un prix incomparable.</br>
+            Présent pour vous satisfaire depuis 2013.
+        </p>
+    </div>
+</div>
 <div id="pub">
     <table>
         <tr>
