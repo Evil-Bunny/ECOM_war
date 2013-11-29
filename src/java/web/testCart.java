@@ -64,7 +64,7 @@ public class testCart extends HttpServlet {
                     cart = (Cart) session.getAttribute("cart");
                 }
             } else {
-                cart = (Cart) ((Client) session.getAttribute("client")).getCommand();
+                cart = (Cart) ((Client) session.getAttribute("client")).getCart();
             }
 
             out.println("<!DOCTYPE html>");
@@ -99,7 +99,7 @@ public class testCart extends HttpServlet {
                     session.setAttribute("cart", cart);
                     cef.edit(cart);
                 } else {
-                    ((Client) session.getAttribute("client")).setCommand(cart);
+                    ((Client) session.getAttribute("client")).setCart(cart);
                     cif.edit((Client) session.getAttribute("client"));
                 }
 

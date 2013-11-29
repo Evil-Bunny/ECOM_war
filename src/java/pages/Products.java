@@ -11,7 +11,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import product.ManufacturerFacade;
+import ejb.ManufacturerFacade;
 import product.Product;
 import product.type.Category;
 

@@ -60,7 +60,7 @@ public class RegisterClient extends HttpServlet {
                 ci.setSurname(request.getParameter("surname"));
                 ci.setUsername(request.getParameter("username"));
                 ci.setPassword(request.getParameter("password"));
-                ci.setCommand(new Cart());
+                ci.setCart(new Cart());
                 cif.edit(ci);
             } else {
                 out.println("<form name=\"register\" action=\"RegisterClient\" method=\"POST\">"
