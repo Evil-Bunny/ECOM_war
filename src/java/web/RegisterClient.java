@@ -47,7 +47,7 @@ public class RegisterClient extends HttpServlet {
             out.println("<title>Servlet test2</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet test2 at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RegisterClient at " + request.getContextPath() + "</h1>");
 
             Enumeration paramNames = request.getParameterNames();
             if (paramNames.hasMoreElements()) {
@@ -62,11 +62,27 @@ public class RegisterClient extends HttpServlet {
                 ci.setUsername(request.getParameter("username"));
                 ci.setPassword(request.getParameter("password"));
                 ci.setCommand(new Cart());
-                cif.create(ci);
+                cif.edit(ci);
+            } else {
+                out.println("<form name=\"register\" action=\"RegisterClient\" method=\"POST\">"
+                        + "<label for=\"username\">username</label>\n"
+                        + "            <input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /><br/>\n"
+                        + "            <label for=\"password\">password</label>\n"
+                        + "            <input id=\"password\" type=\"password\" name=\"password\" value=\"\" size=\"30\" /><br/>\n"
+                        + "            <label for=\"name\">first name</label>\n"
+                        + "            <input id=\"name\" type=\"text\" name=\"name\" value=\"\" size=\"30\" /><br/>\n"
+                        + "            <label for=\"surname\">surname</label>\n"
+                        + "            <input id=\"surname\" type=\"text\" name=\"surname\" value=\"\" size=\"30\" /><br/>\n"
+                        + "            <label for=\"addressnb\">address number</label>\n"
+                        + "            <input id=\"addressnb\" type=\"text\" name=\"addressnb\" value=\"\" size=\"10\" /><br/>\n"
+                        + "            <label for=\"address\">address</label>\n"
+                        + "            <input id=\"address\" type=\"text\" name=\"address\" value=\"\" size=\"100\" /><br/>\n"
+                        + "            <input type=\"submit\" value=\"Submit\" />\n"
+                        + "</form>\n");
 
-                out.println("</body>");
-                out.println("</html>");
             }
+            out.println("</body>");
+            out.println("</html>");
 
         } finally {
             out.close();
