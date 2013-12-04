@@ -76,10 +76,8 @@
                                             <a href="?page=Categories">Catégories</a>
                                             <jsp:include page="Categories"><jsp:param name="menu" value="true"/></jsp:include>
 					</li>
-					<li><a href="brand">Marques &amp; Constructeurs</a>
-						<ul>
-                                                    <jsp:include page="ManufacturerList"/>
-						</ul>
+					<li><a href="?page=Manufacturers">Marques &amp; Constructeurs</a>
+                                             <jsp:include page="Manufacturers"/>
 					</li>
 					<!--<li><a href="search">Recherche</a></li>-->
 					<li><a href="advanced_search">Recherche avancée</a></li>
