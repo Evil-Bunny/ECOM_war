@@ -62,7 +62,7 @@ public class RegisterClient extends HttpServlet {
                 ci.setSurname(request.getParameter("surname"));
                 ci.setUsername(request.getParameter("username"));
                 ci.setPassword(request.getParameter("password"));
-                ci.setCommand(new Cart());
+                ci.setCart(new Cart());
                 try {
                     cif.edit(ci);
                 } catch (EJBException e) {
