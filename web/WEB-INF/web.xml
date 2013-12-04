@@ -44,6 +44,14 @@
         <servlet-name>Home</servlet-name>
         <servlet-class>pages.Home</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Manufacturers</servlet-name>
+        <servlet-class>pages.Manufacturers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Product</servlet-name>
+        <servlet-class>pages.Product</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
@@ -87,6 +95,14 @@
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Manufacturers</servlet-name>
+        <url-pattern>/Manufacturers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Product</servlet-name>
+        <url-pattern>/Product</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

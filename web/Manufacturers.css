@@ -1,0 +1,17 @@
+/* 
+    Document   : Manufacturers
+    Created on : 4 déc. 2013, 14:45:39
+    Author     : bousky
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#content li {
+    display:inline-block;
+    width:33%;
+}
+
+#content a {
+    margin-right:20px;
+}
+
