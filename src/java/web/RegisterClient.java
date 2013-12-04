@@ -8,8 +8,10 @@ import ejb.ClientFacade;
 import command.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Enumeration;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +46,7 @@ public class RegisterClient extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet test2</title>");
+            out.println("<title>Servlet RegisterClient</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet RegisterClient at " + request.getContextPath() + "</h1>");
@@ -60,8 +62,12 @@ public class RegisterClient extends HttpServlet {
                 ci.setSurname(request.getParameter("surname"));
                 ci.setUsername(request.getParameter("username"));
                 ci.setPassword(request.getParameter("password"));
-                ci.setCart(new Cart());
-                cif.edit(ci);
+                ci.setCommand(new Cart());
+                try {
+                    cif.edit(ci);
+                } catch (EJBException e) {
+                    out.println(e.getMessage());
+                }
             } else {
                 out.println("<form name=\"register\" action=\"RegisterClient\" method=\"POST\">"
                         + "<label for=\"username\">username</label>\n"
