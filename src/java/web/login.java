@@ -49,13 +49,12 @@ public class login extends HttpServlet {
             out.println("<h1>Servlet login at " + request.getContextPath() + "</h1>");
             Enumeration paramNames = request.getParameterNames();
             if (paramNames.hasMoreElements()) {
-                Client ci = cif.find(request.getParameter("username"), request.getParameter("password"));
+                Client ci = cif.find(request.getParameter("username"), request.getParameter("pass"));
                 if (ci != null) {
+                    out.println("<h1> Connection Reussie </h1>");
                     session.setAttribute("client", ci);
                 } else {
                     out.println("<h1> Erreur de login/mdp </h1>");
-
-
                 }
             }
 

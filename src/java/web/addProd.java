@@ -84,13 +84,12 @@ public class addProd extends HttpServlet {
                 Product pe = new Product();
 
                 Manufacturer m;
-                try {
-                    m = mf.findByName(request.getParameter("brand"));
-                } catch (EJBException  e) { 
-                    //out.println(e.toString());
+                m = mf.findByName(request.getParameter("brand"));
+                if (m == null) {
                     m = new Manufacturer();
                     m.setName(request.getParameter("brand"));
                 }
+
                 pe.setBrand(m);
                 pe.setName(request.getParameter("name"));
                 pe.setCategorie(cf.find(Long.parseLong(request.getParameter("category"))));
