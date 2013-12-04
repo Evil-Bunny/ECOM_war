@@ -33,7 +33,7 @@ public class Categories extends AbstractPage {
         List<Category> topCategories = new ArrayList();
         List<Category> subCategories;
         for (Category c : cf.findAll()) {
-            if (! c.getSubCategories().isEmpty())
+            if (c.getParent() == null)
                 topCategories.add(c);
         }
         Collections.sort(topCategories);
