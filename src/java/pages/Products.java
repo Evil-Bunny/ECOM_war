@@ -5,6 +5,7 @@
 package pages;
 
 import ejb.CategoryFacade;
+import ejb.CharacteristicFacade;
 import ejb.ProductFacade;
 import java.io.PrintWriter;
 import java.util.List;
@@ -12,10 +13,10 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ejb.ManufacturerFacade;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import product.Manufacturer;
 import product.Product;
 import product.type.Category;
 import product.type.LineCharacteristic;
@@ -35,19 +36,22 @@ public class Products extends AbstractPage {
     @EJB
     ProductFacade pf;
     
+    @EJB
+    CharacteristicFacade chf;
+    
     public static final int PRODUCTSBYPAGE = 10;
     public static final int PAGESAROUND = 5;
     
     @Override
     protected String getTitle(HttpServletRequest request) {
-        if (request.getParameter("category") != null) {
+        if (request.getParameter("category") != null && request.getParameter("manufacturer") != null) {
+            return "Produits - Recherche";
+        }
+        if (request.getParameter("category") != null && ! request.getParameter("category").equals("")) {
             return cf.find(new Long(request.getParameter("category"))).getCategorie();
         }
-        if (request.getParameter("manufacturer") != null) {
+        if (request.getParameter("manufacturer") != null && ! request.getParameter("manufacturer").equals("")) {
             return mf.find(new Long(request.getParameter("manufacturer"))).getName();
-        }
-        if (request.getParameter("search") != null) {
-            return "Produits - Recherche";
         }
         return "Produits";
     }
@@ -58,7 +62,52 @@ public class Products extends AbstractPage {
         int start, nbPages;
         String tmp;
         
-        if (request.getParameter("category") != null) {
+        if (request.getParameter("category") != null && request.getParameter("manufacturer") != null) {
+            // Search
+            String param;
+            Category c = null;
+            Manufacturer m = null;
+            boolean stock = false;
+            float minPrice = 0, maxPrice = 0;
+            param = request.getParameter("category");
+            if (param != null && ! param.equals(""))
+                c = cf.find(new Long(param));
+            param = request.getParameter("manufacturer");
+            if (param != null && ! param.equals(""))
+                m = mf.find(new Long(param));
+            param = request.getParameter("stock");
+            if (param != null && ! param.equals(""))
+                stock = true;
+            param = request.getParameter("minPrice");
+            if (param != null && ! param.equals(""))
+                minPrice = new Float(param);
+            param = request.getParameter("maxPrice");
+            if (param != null && ! param.equals(""))
+                maxPrice = new Float(param);
+            // LineCharacteristic
+            Enumeration<String> params = request.getParameterNames();
+            HashMap<Integer, Long> caracName = new HashMap();
+            HashMap<Integer, String> caracVal = new HashMap();
+            while (params.hasMoreElements()) {
+                param = params.nextElement();
+                if (param.startsWith("caracName_")) {
+                    caracName.put(new Integer(param.substring("caracName_".length())), new Long(request.getParameter(param)));
+                } else if (param.startsWith("caracVal_")) {
+                    caracVal.put(new Integer(param.substring("caracVal_".length())), request.getParameter(param));
+                }
+            }
+            List<LineCharacteristic> characs = new ArrayList();
+            for (Integer i : caracName.keySet()) {
+                String val = caracVal.get(i);
+                if (val == null || val.equals(""))
+                    continue;
+                LineCharacteristic lc = new LineCharacteristic();
+                lc.setCharacteristic(chf.find(caracName.get(i)));
+                lc.setName(caracVal.get(i));
+                characs.add(lc);
+            }
+            products = pf.findAdvanced(c, m, request.getParameter("name"), stock, minPrice, maxPrice, characs);
+        } else if (request.getParameter("category") != null) {
             Category category = cf.find(new Long(request.getParameter("category")));
             products = category.getProducts();
             for (Category c : category.getSubCategories()) {
