@@ -16,45 +16,7 @@
 		<link rel="stylesheet" type="text/css" href="common.css" />
 		<link rel="stylesheet" type="text/css" href="small.css" media="screen and (max-width:1134px)" /><!--max-device-width-->
 		<link rel="stylesheet" type="text/css" href="<%=requestPage%>.css" />
-		<script type="text/javascript">
-			function positionBand() {
-				band = document.getElementById('band');
-				header = document.getElementById('header');
-				left = document.getElementById('left');
-				if (window.pageYOffset > header.clientHeight - band.clientHeight -2) {
-					band.style.position = "fixed";
-					header.style.paddingBottom = band.clientHeight+2 + "px";
-					band.style.width = document.body.clientWidth-4 + "px";
-					if (document.documentElement.clientWidth > document.body.clientWidth) 
-						band.style.left = (document.documentElement.clientWidth - document.body.clientWidth)/2 + "px";
-					else
-						band.style.left = -(document.documentElement.scrollLeft+document.body.scrollLeft) + "px";
-					band.style.marginLeft = "2px";
-					if (left.offsetWidth !== 260) {
-						left.style.position = "fixed";
-						left.style.width = document.body.clientWidth-4 + "px";
-						left.style.top = "32px";
-						header.style.marginBottom = left.clientHeight+2 + "px";
-						if (document.documentElement.clientWidth > document.body.clientWidth) 
-							left.style.left = (document.documentElement.clientWidth - document.body.clientWidth)/2 + "px";
-						else
-							left.style.left = -(document.documentElement.scrollLeft+document.body.scrollLeft)+2 + "px";
-					}
-				} else {
-					band.style.position = "";
-					header.style.paddingBottom = "";
-					band.style.width = "";
-					band.style.left = "";
-					band.style.marginLeft = "";
-					left.style.position = "";
-					left.style.width = "";
-					left.style.top = "";
-					header.style.marginBottom = "";
-				}
-			}
-			window.onscroll = positionBand;
-			window.onresize = positionBand;
-                </script>
+                <script type="text/javascript" src="scripts.js"></script>
 	</head>
 	<body>
 		<div id="central">
@@ -80,7 +42,7 @@
                                              <jsp:include page="Manufacturers"/>
 					</li>
 					<!--<li><a href="search">Recherche</a></li>-->
-					<li><a href="advanced_search">Recherche avancée</a></li>
+					<li><a href="?page=Search">Recherche avancée</a></li>
 				</ul><!--menu-->
 				<div id="cart"><a href="cart">Panier (10 articles)</a>
 					<ul>
