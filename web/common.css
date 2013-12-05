@@ -226,6 +226,8 @@ h1 {
 #left fieldset {
 	margin:0 6px 0 5px;
 	padding:3px;
+}
+fieldset {
 	border:1px solid #999999;
 }
 
