@@ -11,7 +11,6 @@ import ejb.CommandFacade;
 import ejb.ProductFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -36,7 +35,8 @@ public class AddToCart extends HttpServlet {
     private CommandFacade cef;
     private Cart cart;
 
-    /**
+    
+        /**
      * Processes requests for both HTTP
      * <code>GET</code> and
      * <code>POST</code> methods.
@@ -62,25 +62,21 @@ public class AddToCart extends HttpServlet {
             }
 
             Product p = pf.find(new Long(request.getParameter("product")));
-            p.setStock(10);
             if (p.getStock() > 0) {
                 p.setStock(p.getStock() - 1);
-                if (cart.getQuantity(p) != null) {
-                    cart.setQuantity(p, cart.getQuantity(p) + 1);
-                } else {
-                    cart.setQuantity(p, 1);
+                cart.setQuantity(p, 1);
+                for (LineCommand lc : cart.getProducts()) {
+                  //  out.println(lc.getProduct().getName());
                 }
-                
                 if (session.getAttribute("client") == null) {
                     session.setAttribute("cart", cart);
                 } else {
                     ((Client) session.getAttribute("client")).setCart(cart);
                     cif.edit((Client) session.getAttribute("client"));
-                }
-                pf.edit(p);
+                } 
             }
-        }
-        response.sendRedirect(response.encodeRedirectURL("?" + request.getParameter("old")));
+       }
+        response.sendRedirect(response.encodeRedirectURL("?"+request.getParameter("old")));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -68,6 +68,6 @@
 			</div><!--content-->
 			<div class="clear_footer"></div>
 		</div><!--central-->
-		<div id="footer"><a href="contact">Nous contacter</a><a href="legal">Mentions légales</a><span>©EvilBunny</span></div>
+		<div id="footer"><a href="?page=Contact">Nous contacter</a><a href="legal">Mentions légales</a><span>©EvilBunny</span></div>
 	</body>
 </html>
