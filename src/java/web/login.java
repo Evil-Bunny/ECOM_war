@@ -4,7 +4,11 @@ import ejb.ClientFacade;
 import ejb.CommandFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,13 +53,42 @@ public class login extends HttpServlet {
             out.println("<h1>Servlet login at " + request.getContextPath() + "</h1>");
             Enumeration paramNames = request.getParameterNames();
             if (paramNames.hasMoreElements()) {
-                Client ci = cif.find(request.getParameter("username"), request.getParameter("pass"));
-                if (ci != null) {
-                    out.println("<h1> Connection Reussie </h1>");
-                    session.setAttribute("client", ci);
-                } else {
-                    out.println("<h1> Erreur de login/mdp </h1>");
+                try {
+                    MessageDigest md = MessageDigest.getInstance("SHA-256");
+                    md.update(request.getParameter("pass").getBytes());
+                    byte byteData[] = md.digest();
+
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < byteData.length; i++) {
+                        String hex = Integer.toHexString(0xff & byteData[i]);
+                        if (hex.length() == 1) {
+                            sb.append('0');
+                        }
+                        sb.append(hex);
+                    }
+                    Client ci = cif.find(request.getParameter("username"), sb.toString());
+                    if (ci != null) {
+                        out.println("<h1> Connection Reussie </h1>");
+                        session.setAttribute("client", ci);
+                    } else {
+                        out.println("<h1> Erreur de login/mdp </h1>");
+                    }
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
+            } else {
+
+                out.println("        <form name=\"register\" action=\"login\" method=\"POST\">\n"
+                        + "            <label for=\"username\">username</label>\n"
+                        + "            <input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /><br/>\n"
+                        + "            <label for=\"pass\">password</label>\n"
+                        + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" size=\"30\" />   <br/>     \n"
+                        + "\n"
+                        + "\n"
+                        + "            <input type=\"submit\" value=\"Log in\" />\n"
+                        + "        </form>");
+
             }
 
             out.println("</body>");

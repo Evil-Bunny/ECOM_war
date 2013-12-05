@@ -8,6 +8,8 @@ import ejb.ClientFacade;
 import command.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Enumeration;
 import javax.ejb.EJB;
@@ -61,13 +63,30 @@ public class RegisterClient extends HttpServlet {
                 ci.setFirstname(request.getParameter("name"));
                 ci.setSurname(request.getParameter("surname"));
                 ci.setUsername(request.getParameter("username"));
-                ci.setPassword(request.getParameter("password"));
-                ci.setCart(new Cart());
                 try {
-                    cif.edit(ci);
-                } catch (EJBException e) {
-                    out.println(e.getMessage());
+                    MessageDigest md = MessageDigest.getInstance("SHA-256");
+                    md.update(request.getParameter("password").getBytes());
+                    byte byteData[] = md.digest();
+
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < byteData.length; i++) {
+                        String hex = Integer.toHexString(0xff & byteData[i]);
+                        if (hex.length() == 1) {
+                            sb.append('0');
+                        }
+                        sb.append(hex);
+                    }
+                    ci.setPassword(sb.toString());
+                    ci.setCart(new Cart());
+                    try {
+                        cif.edit(ci);
+                    } catch (EJBException e) {
+                        out.println(e.getMessage());
+                    }
+                } catch (NoSuchAlgorithmException e) {
+                    out.println("impossible de hasher le password");
                 }
+
             } else {
                 out.println("<form name=\"register\" action=\"RegisterClient\" method=\"POST\">"
                         + "<label for=\"username\">username</label>\n"
