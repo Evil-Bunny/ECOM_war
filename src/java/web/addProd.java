@@ -5,6 +5,7 @@
 package web;
 
 import ejb.CategoryFacade;
+import ejb.CharacteristicFacade;
 import product.Product;
 import ejb.ProductFacade;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import product.Manufacturer;
 import ejb.ManufacturerFacade;
 import product.type.Category;
+import product.type.Characteristic;
 
 /**
  *
@@ -32,6 +34,8 @@ public class addProd extends HttpServlet {
     private CategoryFacade cf;
     @EJB
     private ManufacturerFacade mf;
+    @EJB
+    private CharacteristicFacade charaf;
 
     /**
      * Processes requests for both HTTP
@@ -58,6 +62,10 @@ public class addProd extends HttpServlet {
             out.println("<title>Ajout de produit</title>");
             out.println("</head>");
             out.println("<body>");
+
+
+
+
             out.println("<h1>Servlet addProd at " + request.getContextPath() + "</h1>");
 
             if (!request.getParameterNames().hasMoreElements()) {
@@ -77,10 +85,40 @@ public class addProd extends HttpServlet {
                 out.println("</select><br />");
                 out.println("<label for=\"price\">Price</label>");
                 out.println("<input id=\"price\" type=\"text\" name=\"price\" value=\"\" size=\"10\" />  <br/>");
+                out.print("<table id = \"tableDesc\" border=1>");
+                out.print("<tr>");
+                out.println("<th><label for=\"idDes\">Nom du descripteur</label></th>");
+                out.println("<th><label for=\"idDes\">Valeur</label></th>");
+                out.println("</tr>");
+                out.print("<tr>");
+                out.println("<td><input list=\"idDesc\" id=\"idDes\" name=\"idDes1\"> ");
+                out.println("<datalist id = \"idDesc\">");
+                for (Characteristic c : charaf.findAll()) {
+                    out.println("<option value=\"" + c.getName() + "\">");
+                }
+
+                out.println("</datalist></td>");
+                out.println("<td><input id=\"descr\" type=\"text\" name=\"descr1\" value=\"\" size=\"30\" /></td> ");
+                out.print("</tr>");
+
+                out.print("</table>");
+//
+//                out.print("<script>\n"
+//                        + "var i =2;\n"
+//                        + "function addRow()\n"
+//                        + "{\n"
+//                        + "var table=document.getElementById(\"tableDesc\");\n"
+//                        + "table.insertRow().innerHTML=\"<td><input list=\'idDesc\' id=\'idDes\' name=\'descr\'+i></td><td><input id=\'descr\' type=\'text\' name=\'descr\'+i value=\'\' size=\'30\' /></td>\"\n"
+//                        + "i++;"
+//                        + "}\n"
+//                        + "</script>");
+
+//                out.print("<button type=\"button\" onclick=\"addRow()\">Add Row</button><br />");
                 out.println("<input type=\"submit\" value=\"Submit\" />\n");
                 out.println("</form>");
-            } else {
 
+            } else {
+/////////////////RAJOUTER LES CARACTS DANS LIGNE CARAC AVEC l'ID recup avec getCharacByName
                 Product pe = new Product();
 
                 Manufacturer m;

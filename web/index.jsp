@@ -67,7 +67,7 @@
 				<div id="band">
 					<a id="nav" href="" title="Retour à  ..."><img src="img/previous.png" width="30px" height="30px" alt=""/>Retour</a>
 					<h1><jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></h1>
-					<span id="options"><a href="cart">Panier (10)</a><a href="login">Connexion</a><a href="RegisterClient">Inscription</a></span>
+					<span id="options"><a href="cart">Panier (10)</a><a href="?page=Login">Connexion</a><a href="?page=RegisterClient">Inscription</a></span>
 				</div><!--band-->
 			</div><!--header-->
 			<div id="left">
@@ -96,7 +96,7 @@
 						<input id="search_button" type="submit" value="Rechercher"/>
 					</fieldset>
 				</form>
-				<form id="log" action="login"  method="POST">
+				<form id="log" action="?page=Login"  method="POST">
 					<fieldset><legend>Connexion rapide</legend>
 						<label>Identifiant : <input type="text" name="username"/></label>
 						<label>Mot de passe : <input type="password" name="pass"/></label>
