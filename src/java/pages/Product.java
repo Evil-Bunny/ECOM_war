@@ -6,9 +6,13 @@ package pages;
 
 import ejb.ProductFacade;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,8 +44,12 @@ public class Product extends AbstractPage {
             out.println("<div class='stock stock_no'>Rupture de stock</div>");
         } else {
             out.println("<div class='stock stock_yes'>En stock</div>");
+        } 
+        try {
+            out.println("<a id='add2cart' href='AddToCart?&amp;product="+ product.getId() +"&amp;old="+URLEncoder.encode(request.getQueryString(), "UTF-8") + "' title='Ajouter au panier'><img src='img/cart.png' alt='Panier' height='60px' width='60px'/></a></div><h2>");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
         }
-        out.println("<a id='add2cart' href='' title='Ajouter au panier'><img src='img/cart.png' alt='Panier' height='60px' width='60px'/></a></div><h2>");
         out.println(product.getName());
         out.println("</h2><table><tr><td>Caractéristiques</td><td><table>");
         for (LineCharacteristic carac : product.getProductCaracteristics()) {
