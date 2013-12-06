@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ejb.ManufacturerFacade;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -83,6 +84,10 @@ public class Products extends AbstractPage {
             }
             for (Category c : cf.search(search)) {
                 p.addAll(c.getProducts());
+                if (c.getSubCategories() != null) {
+                    for (Category sc : c.getSubCategories())
+                        p.addAll(sc.getProducts());
+                }
             }
             for (LineCharacteristic lc : lcf.search(search)) {
                 p.add(lc.getProduct());

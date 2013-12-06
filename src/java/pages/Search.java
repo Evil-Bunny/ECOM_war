@@ -64,7 +64,7 @@ public class Search extends AbstractPage {
         }
         out.println("</select></label>");
         out.println("<label>En stock<input type='checkbox' name='stock' checked='checked'/></label>");
-        out.println("<fieldset><legend>Prix</legend><label>suppérieur à<input type='text' name='minPrice'/></label><label>inférieur à<input type='text' name='maxPrice'/></label></fieldset>");
+        out.println("<fieldset><legend>Prix</legend><label>supérieur à<input type='text' name='minPrice'/></label><label>inférieur à<input type='text' name='maxPrice'/></label></fieldset>");
         out.println("<fieldset id='carac'><legend>Caractéristiques</legend><div><table id='caracs'>");
         out.println("<tr><td>Nom</td><td>Valeur</td><td></td></tr>");
         out.println("<tr><td><select name='caracName_1'>");

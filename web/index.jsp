@@ -49,12 +49,12 @@
 				</div><!--cart-->
 				<form id="search" action="." method='GET'>
 					<fieldset><legend>Recherche rapide</legend>
+                                            <input type='hidden' name='page' value='Products'/>
                                             <input id="search_query" type="text" name="search" value="<%
                                                 if (request.getParameter("search") != null)
                                                     out.print(request.getParameter("search"));
                                             %>"/>
-                                                <input type='hidden' name='page' value='Products'/>
-						<input id="search_button" type="submit" value="Rechercher"/>
+                                            <input id="search_button" type="submit" value="Rechercher"/>
 					</fieldset>
 				</form>
 				<form id="log" action="log">
