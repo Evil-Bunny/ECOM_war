@@ -49,7 +49,7 @@ public abstract class AbstractPage extends HttpServlet {
     
     abstract protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response);
     
-    static String HTMLEncode(String s) {
+    public static String HTMLEncode(String s) {
         return s.replace(">", "&gt;").replace("<", "&lt;").replace("&", "&amp;");
     }
 

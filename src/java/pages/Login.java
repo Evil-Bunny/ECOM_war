@@ -3,10 +3,6 @@ package pages;
 import ejb.ClientFacade;
 import ejb.CommandFacade;
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,28 +29,12 @@ public class Login extends AbstractPage {
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
         if (request.getParameter("pass") != null && request.getParameter("username") != null) {
-            try {
-                MessageDigest md = MessageDigest.getInstance("SHA-256");
-                md.update(request.getParameter("pass").getBytes());
-                byte byteData[] = md.digest();
-
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < byteData.length; i++) {
-                    String hex = Integer.toHexString(0xff & byteData[i]);
-                    if (hex.length() == 1) {
-                        sb.append('0');
-                    }
-                    sb.append(hex);
-                }
-                Client ci = cif.find(request.getParameter("username"), sb.toString());
-                if (ci != null) {
-                    out.println("Connection Reussie");
-                    session.setAttribute("client", ci);
-                } else {
-                    out.println("Erreur de login/mdp");
-                }
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Client ci = cif.find(request.getParameter("username"), request.getParameter("pass"));
+            if (ci != null) {
+                out.println("Connection Reussie");
+                session.setAttribute("client", ci);
+            } else {
+                out.println("Erreur de login/mdp");
             }
 
         } else {

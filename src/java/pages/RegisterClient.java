@@ -6,18 +6,12 @@ package pages;
 
 import ejb.ClientFacade;
 import command.Cart;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Enumeration;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import user.Client;
 import user.data.Address;
 
@@ -37,6 +31,7 @@ public class RegisterClient extends AbstractPage {
 
     @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(true);
 
         if (request.getParameter("address") != null && request.getParameter("name") != null && request.getParameter("surname") != null && request.getParameter("username") != null && request.getParameter("password") != null && !request.getParameter("address").isEmpty() && !request.getParameter("name").isEmpty() && !request.getParameter("surname").isEmpty() && !request.getParameter("username").isEmpty() && !request.getParameter("password").isEmpty()) {
             Address ai = new Address();
@@ -47,44 +42,35 @@ public class RegisterClient extends AbstractPage {
             ci.setFirstname(request.getParameter("name"));
             ci.setSurname(request.getParameter("surname"));
             ci.setUsername(request.getParameter("username"));
-            try {
-                MessageDigest md = MessageDigest.getInstance("SHA-256");
-                md.update(request.getParameter("password").getBytes());
-                byte byteData[] = md.digest();
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < byteData.length; i++) {
-                    String hex = Integer.toHexString(0xff & byteData[i]);
-                    if (hex.length() == 1) {
-                        sb.append('0');
-                    }
-                    sb.append(hex);
-                }
-                ci.setPassword(sb.toString());
-                ci.setCart(new Cart());
-                try {
-                    cif.edit(ci);
-                    out.print("Inscription Réussie");
-                } catch (EJBException e) {
-                    out.println(e.getMessage());
-                }
-            } catch (NoSuchAlgorithmException e) {
-                out.println("Impossible de hasher le password");
+
+            ci.setPassword(request.getParameter("password"));
+            if (session.getAttribute("cart") == null) {
+                session.setAttribute("cart", new Cart());
             }
+            ci.setCart((Cart) session.getAttribute("cart"));
+            try {
+                cif.edit(ci);
+                session.setAttribute("client", ci);
+                out.print("Inscription Réussie");
+            } catch (EJBException e) {
+                out.println(e.getMessage());
+            }
+
         } else {
             if (request.getParameter("username") != null) {
                 out.println("Veuillez renseigner tous les champs.<br />");
             }
             out.println("<form name=\"register\" action=\"?page=RegisterClient\" method=\"POST\">"
-                    + "<label for=\"username\">Username</label>\n"
+                    + "<label for=\"username\">Identifiant</label>\n"
                     + "            <input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"password\">Password</label>\n"
+                    + "            <label for=\"password\">Mot de passe</label>\n"
                     + "            <input id=\"password\" type=\"password\" name=\"password\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"name\">First name</label>\n"
+                    + "            <label for=\"name\">Prénom</label>\n"
                     + "            <input id=\"name\" type=\"text\" name=\"name\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"surname\">Surname</label>\n"
+                    + "            <label for=\"surname\">Nom de famille</label>\n"
                     + "            <input id=\"surname\" type=\"text\" name=\"surname\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"address\">Address</label>\n"
-                    + "            <input id=\"address\" type=\"text\" name=\"address\" value=\"\" size=\"100\" /><br/>\n"
+                    + "            <label for=\"address\">Addresse</label><br />\n"
+                    + "            <textarea style=\"resize:none\" rows=\"4\" cols=\"50\" name=\"address\"></textarea><br /><br />"
                     + "            <input type=\"submit\" value=\"Submit\" />\n"
                     + "</form>\n");
 
