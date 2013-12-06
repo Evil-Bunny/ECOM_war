@@ -6,6 +6,7 @@ package pages;
 
 import ejb.CategoryFacade;
 import ejb.CharacteristicFacade;
+import ejb.LineCharacteristicFacade;
 import ejb.ProductFacade;
 import java.io.PrintWriter;
 import java.util.List;
@@ -22,6 +23,8 @@ import product.type.Category;
 import product.type.LineCharacteristic;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,12 +46,18 @@ public class Products extends AbstractPage {
     @EJB
     CharacteristicFacade chf;
     
+    @EJB
+    LineCharacteristicFacade lcf;
+    
     public static final int PRODUCTSBYPAGE = 10;
     public static final int PAGESAROUND = 5;
     
     @Override
     protected String getTitle(HttpServletRequest request) {
         if (request.getParameter("category") != null && request.getParameter("manufacturer") != null) {
+            return "Produits - Recherche";
+        }
+        if (request.getParameter("search") != null) {
             return "Produits - Recherche";
         }
         if (request.getParameter("category") != null && ! request.getParameter("category").equals("")) {
@@ -66,8 +75,21 @@ public class Products extends AbstractPage {
         int start, nbPages;
         String tmp;
         
-        if (request.getParameter("category") != null && request.getParameter("manufacturer") != null) {
-            // Search
+        if (request.getParameter("search") != null) {
+            String search = request.getParameter("search");
+            Set<Product> p = new HashSet(pf.search(search));
+            for (Manufacturer m : mf.search(search)) {
+                p.addAll(m.getProducts());
+            }
+            for (Category c : cf.search(search)) {
+                p.addAll(c.getProducts());
+            }
+            for (LineCharacteristic lc : lcf.search(search)) {
+                p.add(lc.getProduct());
+            }
+            products = new ArrayList(p);
+        } else if (request.getParameter("category") != null && request.getParameter("manufacturer") != null) {
+            // Advanced search
             String param;
             Category c = null;
             Manufacturer m = null;

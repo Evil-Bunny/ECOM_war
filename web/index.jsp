@@ -47,9 +47,13 @@
 				<div id="cart"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include> articles)</a>
                                         <jsp:include page="ViewCart"><jsp:param name="menu" value="true"/></jsp:include>
 				</div><!--cart-->
-				<form id="search" action="search">
+				<form id="search" action="." method='GET'>
 					<fieldset><legend>Recherche rapide</legend>
-						<input id="search_query" type="text" name="query"/>
+                                            <input id="search_query" type="text" name="search" value="<%
+                                                if (request.getParameter("search") != null)
+                                                    out.print(request.getParameter("search"));
+                                            %>"/>
+                                                <input type='hidden' name='page' value='Products'/>
 						<input id="search_button" type="submit" value="Rechercher"/>
 					</fieldset>
 				</form>
