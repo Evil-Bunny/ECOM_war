@@ -16,45 +16,7 @@
 		<link rel="stylesheet" type="text/css" href="common.css" />
 		<link rel="stylesheet" type="text/css" href="small.css" media="screen and (max-width:1134px)" /><!--max-device-width-->
 		<link rel="stylesheet" type="text/css" href="<%=requestPage%>.css" />
-		<script type="text/javascript">
-			function positionBand() {
-				band = document.getElementById('band');
-				header = document.getElementById('header');
-				left = document.getElementById('left');
-				if (window.pageYOffset > header.clientHeight - band.clientHeight -2) {
-					band.style.position = "fixed";
-					header.style.paddingBottom = band.clientHeight+2 + "px";
-					band.style.width = document.body.clientWidth-4 + "px";
-					if (document.documentElement.clientWidth > document.body.clientWidth) 
-						band.style.left = (document.documentElement.clientWidth - document.body.clientWidth)/2 + "px";
-					else
-						band.style.left = -(document.documentElement.scrollLeft+document.body.scrollLeft) + "px";
-					band.style.marginLeft = "2px";
-					if (left.offsetWidth !== 260) {
-						left.style.position = "fixed";
-						left.style.width = document.body.clientWidth-4 + "px";
-						left.style.top = "32px";
-						header.style.marginBottom = left.clientHeight+2 + "px";
-						if (document.documentElement.clientWidth > document.body.clientWidth) 
-							left.style.left = (document.documentElement.clientWidth - document.body.clientWidth)/2 + "px";
-						else
-							left.style.left = -(document.documentElement.scrollLeft+document.body.scrollLeft)+2 + "px";
-					}
-				} else {
-					band.style.position = "";
-					header.style.paddingBottom = "";
-					band.style.width = "";
-					band.style.left = "";
-					band.style.marginLeft = "";
-					left.style.position = "";
-					left.style.width = "";
-					left.style.top = "";
-					header.style.marginBottom = "";
-				}
-			}
-			window.onscroll = positionBand;
-			window.onresize = positionBand;
-                </script>
+                <script type="text/javascript" src="scripts.js"></script>
 	</head>
 	<body>
 		<div id="central">
@@ -67,7 +29,7 @@
 				<div id="band">
 					<a id="nav" href="" title="Retour à  ..."><img src="img/previous.png" width="30px" height="30px" alt=""/>Retour</a>
 					<h1><jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></h1>
-					<span id="options"><a href="cart">Panier (10)</a><a href="?page=Login">Connexion</a><a href="?page=RegisterClient">Inscription</a></span>
+					<span id="options"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="menu" value="true"/></jsp:include>)</a><a href="log">Connexion</a><a href="register">Inscription</a></span>
 				</div><!--band-->
 			</div><!--header-->
 			<div id="left">
@@ -80,15 +42,15 @@
                                              <jsp:include page="Manufacturers"/>
 					</li>
 					<!--<li><a href="search">Recherche</a></li>-->
-					<li><a href="advanced_search">Recherche avancée</a></li>
+					<li><a href="?page=Search">Recherche avancée</a></li>
 				</ul><!--menu-->
-				<div id="cart"><a href="cart">Panier (10 articles)</a>
+				<div id="cart"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="menu" value="true"/></jsp:include> articles)</a>
 					<ul>
 						<li><a href="toto" title="Toto">Toto</a></li>
 						<li><a href="tata" title="Tata">Tata</a></li>
 						<li><a href="titi" title="Titi et Gros Minet sont sur un bateau">Titi et Gros Minet sont sur un bateau</a></li>
 					</ul>
-					<a href="cart" id="cart_more">voir la suite ...</a>
+					<a href="?page=ViewCart" id="cart_more">voir la suite ...</a>
 				</div><!--cart-->
 				<form id="search" action="search">
 					<fieldset><legend>Recherche rapide</legend>

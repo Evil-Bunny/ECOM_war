@@ -48,7 +48,7 @@ h2 a {
 
 #content td:last-child:before {
 	content:":";
-        margin:0 0.5ex;
+        margin:0 0.6ex 0 0.3ex;
 }
 
 #content td:first-child {

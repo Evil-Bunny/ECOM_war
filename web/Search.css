@@ -1,0 +1,65 @@
+/* 
+    Document   : Search
+    Created on : 5 déc. 2013, 09:33:41
+    Author     : bousky
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#content label {
+    display:block;
+    margin-bottom:10px;
+}
+
+#content form>* {
+    width:386px;
+    position:relative;
+    margin-bottom:10px;
+}
+
+#content label>input, #content label>select {
+    position:absolute;
+    left:175px;
+}
+
+#content label>select {
+    width:213px;
+}
+
+#content label>input {
+    width:207px;
+}
+
+#content fieldset {
+    padding:5px;
+}
+
+#content table {
+    width:100%;
+}
+
+#content td input, #content td select {
+    width:160px;
+}
+
+#content legend {
+    padding:0 5px;
+}
+
+#content form {
+    position:relative;
+    margin:auto;
+    width:820px;
+}
+
+#content form > #carac {
+    position:absolute;
+    left:420px;
+    top:0;
+    height:100%;
+}
+
+#carac div {
+    overflow-y:scroll;
+    height:100%;
+}

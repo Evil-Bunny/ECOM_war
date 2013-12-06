@@ -4,40 +4,37 @@
  */
 package web;
 
-import ejb.ClientFacade;
 import command.Cart;
 import command.LineCommand;
+import ejb.ClientFacade;
 import ejb.CommandFacade;
-import product.Product;
 import ejb.ProductFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import product.Manufacturer;
-import product.type.Category;
+import product.Product;
 import user.Client;
 
 /**
  *
  * @author Samy
  */
-@WebServlet(name = "testCart", urlPatterns = {"/testCart"})
-public class testCart extends HttpServlet {
+public class AddToCart extends HttpServlet {
 
     @EJB
-    private ProductFacade pef;
-    private Cart cart;
+    ClientFacade cif;
+    @EJB
+    ProductFacade pf;
     @EJB
     private CommandFacade cef;
-    @EJB
-    private ClientFacade cif;
+    private Cart cart;
 
     /**
      * Processes requests for both HTTP
@@ -51,61 +48,39 @@ public class testCart extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
+        Enumeration paramNames = request.getParameterNames();
+        if (paramNames.hasMoreElements()) {
             HttpSession session = request.getSession(true);
             if (session.getAttribute("client") == null) {
-                if (session.getAttribute("cart") != null) {
-                    cart = (Cart) session.getAttribute("cart");
-                } else {
+                if (session.getAttribute("cart") == null) {
                     session.setAttribute("cart", new Cart());
-                    cart = (Cart) session.getAttribute("cart");
                 }
+                cart = (Cart) session.getAttribute("cart");
+
             } else {
                 cart = (Cart) ((Client) session.getAttribute("client")).getCart();
             }
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet testCart</title>");
-            out.println("</head>");
-            out.println("<body>");
-            Enumeration paramNames = request.getParameterNames();
-            if (!paramNames.hasMoreElements()) {
-                out.println("<h1>Voici le Cart</h1>");
-                for (LineCommand p : cart.getProducts()) {
-                    out.println(p.toString());
+
+            Product p = pf.find(new Long(request.getParameter("product")));
+            p.setStock(10);
+            if (p.getStock() > 0) {
+                p.setStock(p.getStock() - 1);
+                if (cart.getQuantity(p) != null) {
+                    cart.setQuantity(p, cart.getQuantity(p) + 1);
+                } else {
+                    cart.setQuantity(p, 1);
                 }
-
-            } else {
-                out.println("<h1>Merci de l'achat pigeon</h1>");
-                Manufacturer m = new Manufacturer();
-                Category c = new Category();
-                Product pe = new Product();
-
-                m.setName(request.getParameter("brand"));
-                c.setCategorie(request.getParameter("category"));
-                pe.setBrand(m);
-                pe.setCategorie(c);
-                pe.setName(request.getParameter("name"));
-                pe.setPrice(Float.parseFloat(request.getParameter("price")));
-                pef.create(pe);
-                cart.setQuantity(pe, 1);
-
+                
                 if (session.getAttribute("client") == null) {
                     session.setAttribute("cart", cart);
                 } else {
                     ((Client) session.getAttribute("client")).setCart(cart);
                     cif.edit((Client) session.getAttribute("client"));
                 }
-
+                pf.edit(p);
             }
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
         }
+        response.sendRedirect(response.encodeRedirectURL("?" + request.getParameter("old")));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
