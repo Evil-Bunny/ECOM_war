@@ -29,7 +29,7 @@
 				<div id="band">
 					<a id="nav" href="" title="Retour à  ..."><img src="img/previous.png" width="30px" height="30px" alt=""/>Retour</a>
 					<h1><jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></h1>
-					<span id="options"><a href="cart">Panier (10)</a><a href="log">Connexion</a><a href="register">Inscription</a></span>
+					<span id="options"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include>)</a><a href="log">Connexion</a><a href="register">Inscription</a></span>
 				</div><!--band-->
 			</div><!--header-->
 			<div id="left">
@@ -44,13 +44,8 @@
 					<!--<li><a href="search">Recherche</a></li>-->
 					<li><a href="?page=Search">Recherche avancée</a></li>
 				</ul><!--menu-->
-				<div id="cart"><a href="cart">Panier (10 articles)</a>
-					<ul>
-						<li><a href="toto" title="Toto">Toto</a></li>
-						<li><a href="tata" title="Tata">Tata</a></li>
-						<li><a href="titi" title="Titi et Gros Minet sont sur un bateau">Titi et Gros Minet sont sur un bateau</a></li>
-					</ul>
-					<a href="cart" id="cart_more">voir la suite ...</a>
+				<div id="cart"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include> articles)</a>
+                                        <jsp:include page="ViewCart"><jsp:param name="menu" value="true"/></jsp:include>
 				</div><!--cart-->
 				<form id="search" action="search">
 					<fieldset><legend>Recherche rapide</legend>
@@ -72,6 +67,6 @@
 			</div><!--content-->
 			<div class="clear_footer"></div>
 		</div><!--central-->
-		<div id="footer"><a href="contact">Nous contacter</a><a href="legal">Mentions légales</a><span>©EvilBunny</span></div>
+		<div id="footer"><a href="?page=Contact">Nous contacter</a><a href="?page=Legal">Mentions légales</a><span>©EvilBunny</span></div>
 	</body>
 </html>

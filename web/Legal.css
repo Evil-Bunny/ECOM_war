@@ -1,0 +1,53 @@
+/* 
+    Document   : Legal
+    Created on : 5 déc. 2013, 17:01:47
+    Author     : Pierrick
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+#TextLegal {
+    padding-left: 52px;
+    padding-top: 10px;
+}
+
+h2 {
+    color: #00a300;
+    font-family: "Courier New";
+    margin:3px 3px -5px;
+}
+
+h3 {
+    color: #00a300;
+    font-family: "Courier New";
+    margin-bottom: 5px;
+}
+
+#ad {
+    padding-left: 52px;
+    padding-bottom: 10px;
+}
+
+#PresLegal {
+    border:2px solid #666666;
+    border-radius:7px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    /*margin-left: 50px;*/
+    margin-right: 20px;
+    overflow: hidden;
+}
+
+#logo-home {
+    margin: 5px -5px 0 0;
+    float: left;
+}
+
+#ballon {
+    position: relative;
+    z-index: 5;
+    left: 3px;
+    float: left;
+    
+}

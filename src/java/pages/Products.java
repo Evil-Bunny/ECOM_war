@@ -20,6 +20,10 @@ import product.Manufacturer;
 import product.Product;
 import product.type.Category;
 import product.type.LineCharacteristic;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -137,7 +141,11 @@ public class Products extends AbstractPage {
                 out.println("<div class='stock stock_no'>Rupture de stock</div>");
             } else {
                 out.println("<div class='stock stock_yes'>En stock</div>");
-                out.println("<a href='?page=cart&amp;add="+p.getId()+"'>Ajouter au panier</a><br/>");
+                try {
+                    out.println("<a href='AddToCart?&amp;product="+p.getId()+"&amp;old="+URLEncoder.encode(request.getQueryString(), "UTF-8") + "'>Ajouter au panier</a><br/>");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(Products.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             out.println("<a href='?page=Product&amp;id="+p.getId()+"'>Plus d'info</a></div>");
             out.println("<h2><a href='?page=Product&amp;id="+p.getId()+"'>"+p.getName()+"</a></h2>");
