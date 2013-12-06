@@ -29,7 +29,7 @@
 				<div id="band">
 					<a id="nav" href="" title="Retour à  ..."><img src="img/previous.png" width="30px" height="30px" alt=""/>Retour</a>
 					<h1><jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></h1>
-					<span id="options"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include>)</a><a href="?page=Login">Connexion</a><a href="?page=RegisterClient">Inscription</a></span>
+					<span id="options"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include>)</a><a href="log">Connexion</a><a href="register">Inscription</a></span>
 				</div><!--band-->
 			</div><!--header-->
 			<div id="left">
@@ -47,15 +47,19 @@
 				<div id="cart"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include> articles)</a>
                                         <jsp:include page="ViewCart"><jsp:param name="menu" value="true"/></jsp:include>
 				</div><!--cart-->
-				<form id="search" action="search">
+				<form id="search" action="." method='GET'>
 					<fieldset><legend>Recherche rapide</legend>
-						<input id="search_query" type="text" name="query"/>
-						<input id="search_button" type="submit" value="Rechercher"/>
+                                            <input type='hidden' name='page' value='Products'/>
+                                            <input id="search_query" type="text" name="search" value="<%
+                                                if (request.getParameter("search") != null)
+                                                    out.print(request.getParameter("search"));
+                                            %>"/>
+                                            <input id="search_button" type="submit" value="Rechercher"/>
 					</fieldset>
 				</form>
-                                <form id="log" action="?page=Login" method="POST">
+				<form id="log" action="log">
 					<fieldset><legend>Connexion rapide</legend>
-						<label>Identifiant : <input type="text" name="username"/></label>
+						<label>Identifiant : <input type="text" name="login"/></label>
 						<label>Mot de passe : <input type="password" name="pass"/></label>
 						<input type="submit" value="Se connecter"/>
 					</fieldset>
