@@ -7,7 +7,6 @@ package pages;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,24 +28,23 @@ public abstract class AbstractPage extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-         if (request.getParameter("get") != null) {
+        if (request.getParameter("get") != null) {
             try {
-                out.print(this.getClass().getDeclaredMethod("get"+request.getParameter("get"), HttpServletRequest.class).invoke(this, request));
+                out.print(this.getClass().getDeclaredMethod("get" + request.getParameter("get"), HttpServletRequest.class).invoke(this, request));
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
-                out.print("&lt;"+request.getParameter("get")+"&gt");
+                out.print("&lt;" + request.getParameter("get") + "&gt");
             }
         } else {
             printPage(out, request, response);
         }
     }
-    
+
     abstract protected String getTitle(HttpServletRequest request);
-    
+
     abstract protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response);
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

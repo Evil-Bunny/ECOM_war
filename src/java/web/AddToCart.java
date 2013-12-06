@@ -30,8 +30,6 @@ public class AddToCart extends HttpServlet {
     ClientFacade cif;
     @EJB
     ProductFacade pf;
-    @EJB
-    private CommandFacade cef;
     private Cart cart;
 
     /**
@@ -60,7 +58,6 @@ public class AddToCart extends HttpServlet {
             }
 
             Product p = pf.find(new Long(request.getParameter("product")));
-            p.setStock(10);
             if (p.getStock() > 0) {
                 p.setStock(p.getStock() - 1);
                 if (cart.getQuantity(p) != null) {

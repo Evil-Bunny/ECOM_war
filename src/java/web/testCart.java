@@ -65,7 +65,7 @@ public class testCart extends HttpServlet {
             } else {
                 cart = (Cart) ((Client) session.getAttribute("client")).getCart();
             }
-response.sendRedirect("/Home");
+            response.sendRedirect("/Home");
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");

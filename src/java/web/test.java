@@ -4,27 +4,12 @@
  */
 package web;
 
-import ejb.ClientFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.ejb.EJB;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user.Client;
-import user.data.Address;
 
 /**
  *
@@ -42,24 +27,22 @@ public class test extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-         if (request.getParameter("param") != null) {
+        if (request.getParameter("param") != null) {
             try {
                 out.print(this.getClass().getDeclaredField(request.getParameter("param")).get(null));
             } catch (NoSuchFieldException | IllegalAccessException ex) {
-                out.print("&lt;"+request.getParameter("param")+"&gt");
+                out.print("&lt;" + request.getParameter("param") + "&gt");
             }
         } else {
             printPage(out, request, response);
         }
     }
-    
     static final String title = "Test";
-    
+
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         out.println("page...");
     }

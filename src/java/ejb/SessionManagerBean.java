@@ -20,10 +20,8 @@ public class SessionManagerBean implements HttpSessionListener {
 
 //    @EJB
     private Cart pan;
-    
     @EJB
     private CommandFacade cef;
-    
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
@@ -33,7 +31,7 @@ public class SessionManagerBean implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        
+
         cef.create(pan);
     }
 
