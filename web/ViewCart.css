@@ -1,0 +1,98 @@
+/* 
+    Document   : ViewCart
+    Created on : 6 déc. 2013, 09:19:15
+    Author     : Pierrick
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+h2 {
+    color: #00a300;
+    font-family: "Courier New";
+    margin:3px 3px -5px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+div#content {
+    padding: 10px 10px;
+    margin-right: 5px;
+}
+
+table {
+    margin: 0px 0px 0px 40px;
+    /*border: 2px solid rgb(153, 153, 153);*/
+    border-collapse: collapse;
+}
+
+td {
+    padding: 7px 7px 7px 7px;
+    border-right: 2px solid rgb(153, 153, 153);
+}
+
+th {
+    padding: 5px 5px 5px 5px;
+    border: 2px solid rgb(153, 153, 153);
+}
+
+tr:nth-child(odd) {
+    background:#d1d1d1
+}
+
+td.prems {
+    border-left: 2px solid rgb(153, 153, 153);
+}
+
+td.priceLine {
+    text-align:right;
+}
+
+td.priceTotal{
+    color: #00a300;
+    font-family: "Courier New";
+    font-weight: bold;
+    text-align:right;
+    border-right: 2px solid rgb(153, 153, 153);
+    border-bottom: 2px solid rgb(153, 153, 153)
+}
+
+td.tittleTotal{
+    color: #00a300;
+    font-family: "Courier New";
+    font-weight: bold;
+    text-align:right;
+    border-right: none;
+    border-bottom: 2px solid rgb(153, 153, 153);
+}
+
+td.lineTotal1{
+    border-right: none;
+    border-top: 2px solid rgb(153, 153, 153);
+    background: #e9f0e9;
+}
+
+td.lineTotal2{
+    border-top: 2px solid rgb(153, 153, 153);
+    background: #e9f0e9;
+}
+
+
+td.price {
+    text-align:right;
+}
+
+td.quant {
+    text-align:center;
+}
+
+div.info {
+    width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align:left;
+}
+
+input#valid {
+    margin: 5px 0px 0px 50px;
+}

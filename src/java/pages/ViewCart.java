@@ -37,11 +37,16 @@ public class ViewCart extends AbstractPage {
         }
 
         if (request.getParameter("total") == null && request.getParameter("menu") == null) {
-            out.println("<h2>Panier</h2>");
+            out.println("<h2>Contenu du panier</h2>");
+            out.println("<table>");
+            out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th></tr>");
             for (LineCommand p : cart.getProducts()) {
-                out.println(p.getQuantity() + "x " + p.getProduct().getName() + ": " + String.format("<div class='price'>%.2f &euro;</div>", p.storePrice()) + "<br/>");
+                out.println("<tr><td class='prems'><div class='info'>"+p.getProduct().getName()+"</div></td><td class='quant'>"+p.getQuantity()+"</td><td class='price'>"+ String.format("%.2f &euro;", p.getProduct().getPrice()) +"</td><td class='priceLine'>" + String.format("%.2f &euro;", p.storePrice()) + "</td></tr>");
+                //out.println( + "x " +  + " : " + String.format("<div class='price'>%.2f &euro;</div>", p.storePrice()) + "<br/>");
             }
-            out.println("Total: " + String.format("<div class='price'>%.2f &euro;</div>", cart.getTotal()));
+            out.println("<tr><td class='lineTotal1'></td><td class='lineTotal2'></td><td class='tittleTotal'>Total : </td><td class='priceTotal'>"+ String.format("%.2f &euro;", cart.getTotal()) +"</td></tr> ");
+            out.println("</table>");
+            out.println("<input type='submit' value='Acheter le Panier (TODO)' id='valid'></input>");
         } else if (request.getParameter("menu") == null) {
             Integer total = 0;
             for (LineCommand p : cart.getProducts()) {
@@ -54,10 +59,6 @@ public class ViewCart extends AbstractPage {
                 out.println("<li><a href='?page=Product&amp;id="+p.getProduct().getId()+"'>" + p.getProduct().getName() + "</a></li>");
             }
             out.println("</ul>");
-//						<li><a href="toto" title="Toto">Toto</a></li>
-//						<li><a href="tata" title="Tata">Tata</a></li>
-//						<li><a href="titi" title="Titi et Gros Minet sont sur un bateau">Titi et Gros Minet sont sur un bateau</a></li>
-//					</ul>        }
         }
     }
 }
