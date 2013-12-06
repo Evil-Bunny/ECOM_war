@@ -261,11 +261,12 @@ fieldset {
 	margin-bottom:-2px;
 }
 
-a#cart_more {
+#cart ul a#cart_more {
 	text-align:right;
 	font-size:96%;
 	width:auto;
 	float:right;
+        padding:0 5px 0;
 }
 
 #content {

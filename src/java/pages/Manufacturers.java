@@ -25,7 +25,7 @@ public class Manufacturers extends AbstractPage {
 
     @Override
     protected String getTitle(HttpServletRequest request){
-        return "Marques &amp; Constructeurs";
+        return "Marques & Constructeurs";
     }
     
     @Override
@@ -34,7 +34,7 @@ public class Manufacturers extends AbstractPage {
         Collections.sort(manufacturers);
         out.println("<ul>");
         for (Manufacturer m : manufacturers) {
-            out.println("<li><a href='?page=Products&amp;manufacturer="+m.getId()+"'>"+m.getName()+"</a></li>");
+            out.println("<li><a href='?page=Products&amp;manufacturer="+m.getId()+"'>"+HTMLEncode(m.getName())+"</a></li>");
         }
         out.println("</ul>");
 

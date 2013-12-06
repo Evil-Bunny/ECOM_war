@@ -40,8 +40,8 @@ var rows = 1;
 
 function addCarac() {
     var table = document.getElementById("caracs");
-    table.insertRow(table.rows.length-1).innerHTML += table.rows[1].innerHTML.replace(/_[1-9]+/g, "_"+rows);
     rows++;
+    table.insertRow(table.rows.length-1).innerHTML += table.rows[1].innerHTML.replace(/_[1-9]+/g, "_"+rows);
     table.parentNode.scrollTop = 100000000;
 }
 
@@ -49,4 +49,6 @@ function delCarac(t) {
     var table = document.getElementById("caracs");
     if (table.rows.length > 3)
         document.getElementById("caracs").deleteRow(t.parentNode.parentNode.rowIndex);
+    else
+        t.parentNode.parentNode.cells[1].firstChild.value = "";
 }

@@ -65,7 +65,7 @@ public class Home extends AbstractPage {
         out.println("<td><a href='"+ad.getProduct().getId()+"'>");
         out.println("<img alt='' src='img/category.png' width='256px' height='150px' style='background: white'/>");
         out.println(String.format("<span class='price'>%.2f &euro;</span>", ad.getProduct().getPrice()));
-        out.println("<div class='name'>"+ad.getName()+"</div>");
+        out.println("<div class='name'>"+HTMLEncode(ad.getName())+"</div>");
         out.println("</a></td>");
     }
     

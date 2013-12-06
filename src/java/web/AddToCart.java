@@ -5,7 +5,6 @@
 package web;
 
 import command.Cart;
-import command.LineCommand;
 import ejb.ClientFacade;
 import ejb.CommandFacade;
 import ejb.ProductFacade;

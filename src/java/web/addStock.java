@@ -1,28 +1,27 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package web;
 
-import ejb.ClientFacade;
-import ejb.CommandFacade;
+import ejb.ProductFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import user.Client;
+import product.Product;
 
 /**
  *
- * @author Samy
+ * @author msi
  */
-public class login extends HttpServlet {
-
+public class addStock extends HttpServlet {
+    
     @EJB
-    ClientFacade cif;
-    @EJB
-    private CommandFacade cef;
+    private ProductFacade pf;
 
     /**
      * Processes requests for both HTTP
@@ -39,25 +38,40 @@ public class login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session = request.getSession(true);
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet login</title>");
+            out.println("<title>Servlet addStock</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet login at " + request.getContextPath() + "</h1>");
-            Enumeration paramNames = request.getParameterNames();
-            if (paramNames.hasMoreElements()) {
-                Client ci = cif.find(request.getParameter("username"), request.getParameter("pass"));
-                if (ci != null) {
-                    out.println("<h1> Connection Reussie </h1>");
-                    session.setAttribute("client", ci);
+            out.println("<h1>Servlet addStock at " + request.getContextPath() + "</h1>");
+            
+            if (request.getParameterNames().hasMoreElements()) {
+                if (request.getParameter("number") != null) {
+                    try {
+                        Product p = pf.find(Long.parseLong(request.getParameter("id")));
+                        int stock = Integer.parseInt(request.getParameter("number"));
+                        p.setStock(p.getStock() + stock);
+                        pf.edit(p);
+                    } catch (Exception e) {
+                        out.print(e.getMessage());
+                    }
                 } else {
-                    out.println("<h1> Erreur de login/mdp </h1>");
-                }
-            }
+                    out.print("<form name=\"buy\" action=\"addStock\" method=\"POST\">");
+                    out.print("<label for=\"name\">Ajout de stock</label><br />");
 
+//                for (Product pe : pf.findAll()) {
+//                    out.print("<input type=\"checkbox\" name=\"id\" value=" + pe.getId() + ">Name : " + pe.getName() + "\tBrand : " + pe.getBrand().getName() + "\tPrice : " + pe.getPrice() + "<br />");
+//                }
+                    out.print("<input type=\"hidden\" name=\"id\" value=\"" + request.getParameter("id") + "\"> ");
+                    out.print("<input id=\"number\" type=\"text\" name=\"number\" value=\"\" size=\"10\" /><br />");
+                    out.print("<input type=\"submit\" value=\"Submit\" />");
+                    out.print("</form>");
+                }
+            } else {
+                out.print("Vous ne devez pas venir sur cette page sans suivre un lien");
+//            response.sendRedirect("");
+            }
             out.println("</body>");
             out.println("</html>");
         } finally {

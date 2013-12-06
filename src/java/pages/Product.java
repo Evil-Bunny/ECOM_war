@@ -53,14 +53,14 @@ public class Product extends AbstractPage {
         out.println(product.getName());
         out.println("</h2><table><tr><td>Caractéristiques</td><td><table>");
         for (LineCharacteristic carac : product.getProductCaracteristics()) {
-            out.println("<tr><td>"+carac.getCharacteristic().getName()+"</td><td>"+carac.getName()+"</td><tr>");
+            out.println("<tr><td>"+HTMLEncode(carac.getCharacteristic().getName())+"</td><td>"+HTMLEncode(carac.getName())+"</td><tr>");
         }
         out.print("</table></td></tr><tr><td>Catégorie</td><td>");
         if (category.getParent() != null)
-            out.println("<a href='?page=Products&amp;category="+category.getParent().getId()+"'>"+category.getParent().getCategorie()+"</a> &gt; ");
-        out.println("<a href='?page=Products&amp;category="+category.getId()+"'>"+category.getCategorie()+"</a>");
+            out.println("<a href='?page=Products&amp;category="+category.getParent().getId()+"'>"+HTMLEncode(category.getParent().getCategorie())+"</a> &gt; ");
+        out.println("<a href='?page=Products&amp;category="+category.getId()+"'>"+HTMLEncode(category.getCategorie())+"</a>");
         out.print("</td></tr><tr><td>Marque</td><td>");
-        out.println("<a href='?page=Products&amp;manufacturer="+product.getBrand().getId()+"'>"+product.getBrand().getName()+"</a>");
+        out.println("<a href='?page=Products&amp;manufacturer="+product.getBrand().getId()+"'>"+HTMLEncode(product.getBrand().getName())+"</a>");
         out.println("</td></tr></table>");
     }
     
