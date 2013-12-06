@@ -42,11 +42,11 @@ public class Categories extends AbstractPage {
             out.println("<li><a href='?page=Products&amp;category="+c.getId()+"'>");
             if (request.getParameter("menu") == null)
                 out.println("<img height='200px' width='200px' src='img/category.png' alt=''/>");
-            out.println(c.getCategorie()+"</a><ul>");
+            out.println(HTMLEncode(c.getCategorie())+"</a><ul>");
             subCategories = c.getSubCategories();
             Collections.sort(subCategories);
             for (Category s : subCategories) {
-                out.println("<li><a href='?page=Products&amp;category="+s.getId()+"'>"+s.getCategorie()+"</a></li>");
+                out.println("<li><a href='?page=Products&amp;category="+s.getId()+"'>"+HTMLEncode(s.getCategorie())+"</a></li>");
             }
             out.println("</ul></li>");
         }
