@@ -21,7 +21,6 @@ import product.Manufacturer;
 import ejb.ManufacturerFacade;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 import product.type.Category;
 import product.type.Characteristic;
 import product.type.LineCharacteristic;

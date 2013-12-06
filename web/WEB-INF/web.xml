@@ -80,9 +80,9 @@
         <servlet-name>populusDatabasus</servlet-name>
         <servlet-class>web.populusDatabasus</servlet-class>
     </servlet>
-        <servlet>
-        <servlet-name>populusDatabasus</servlet-name>
-        <servlet-class>web.populusDatabasus</servlet-class>
+    <servlet>
+        <servlet-name>ConfirmAddress</servlet-name>
+        <servlet-class>pages.ConfirmAddress</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
@@ -164,7 +164,7 @@
         <servlet-name>populusDatabasus</servlet-name>
         <url-pattern>/populusDatabasus</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ConfirmAddress</servlet-name>
         <url-pattern>/ConfirmAddress</url-pattern>
     </servlet-mapping>

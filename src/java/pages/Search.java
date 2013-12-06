@@ -6,7 +6,6 @@ package pages;
 
 import ejb.CategoryFacade;
 import ejb.CharacteristicFacade;
-import ejb.ProductFacade;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
@@ -14,13 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ejb.ManufacturerFacade;
 import java.util.Collections;
-import static pages.Products.PAGESAROUND;
-import static pages.Products.PRODUCTSBYPAGE;
 import product.Manufacturer;
-import product.Product;
 import product.type.Category;
 import product.type.Characteristic;
-import product.type.LineCharacteristic;
 
 /**
  *

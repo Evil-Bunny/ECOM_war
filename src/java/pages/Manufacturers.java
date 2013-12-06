@@ -6,7 +6,6 @@ package pages;
 
 import ejb.ManufacturerFacade;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
@@ -19,22 +18,22 @@ import product.Manufacturer;
  * @author bousky
  */
 public class Manufacturers extends AbstractPage {
-    
+
     @EJB
     ManufacturerFacade mf;
 
     @Override
-    protected String getTitle(HttpServletRequest request){
+    protected String getTitle(HttpServletRequest request) {
         return "Marques & Constructeurs";
     }
-    
+
     @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         List<Manufacturer> manufacturers = mf.findAll();
         Collections.sort(manufacturers);
         out.println("<ul>");
         for (Manufacturer m : manufacturers) {
-            out.println("<li><a href='?page=Products&amp;manufacturer="+m.getId()+"'>"+HTMLEncode(m.getName())+"</a></li>");
+            out.println("<li><a href='?page=Products&amp;manufacturer=" + m.getId() + "'>" + HTMLEncode(m.getName()) + "</a></li>");
         }
         out.println("</ul>");
 
