@@ -49,4 +49,6 @@ function delCarac(t) {
     var table = document.getElementById("caracs");
     if (table.rows.length > 3)
         document.getElementById("caracs").deleteRow(t.parentNode.parentNode.rowIndex);
+    else
+        t.parentNode.parentNode.cells[1].firstChild.value = "";
 }

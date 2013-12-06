@@ -9,6 +9,7 @@ import ejb.ClientFacade;
 import ejb.CommandFacade;
 import ejb.ProductFacade;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -67,7 +68,7 @@ public class AddToCart extends HttpServlet {
                 } else {
                     cart.setQuantity(p, 1);
                 }
-                
+
                 if (session.getAttribute("client") == null) {
                     session.setAttribute("cart", cart);
                 } else {

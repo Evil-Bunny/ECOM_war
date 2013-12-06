@@ -65,6 +65,14 @@
         <servlet-class>web.AddToCart</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Contact</servlet-name>
+        <servlet-class>pages.Contact</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>Legal</servlet-name>
+        <servlet-class>pages.Legal</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ViewCart</servlet-name>
         <servlet-class>pages.ViewCart</servlet-class>
     </servlet>
@@ -133,10 +141,20 @@
         <url-pattern>/AddToCart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>Contact</servlet-name>
+        <url-pattern>/Contact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Legal</servlet-name>
+        <url-pattern>/Legal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewCart</servlet-name>
         <url-pattern>/ViewCart</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>
+            30
+        </session-timeout>
     </session-config>
 </web-app>

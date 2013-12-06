@@ -24,6 +24,10 @@ import product.Manufacturer;
 import product.Product;
 import product.type.Category;
 import product.type.LineCharacteristic;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
