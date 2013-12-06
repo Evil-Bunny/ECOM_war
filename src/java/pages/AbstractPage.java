@@ -36,7 +36,7 @@ public abstract class AbstractPage extends HttpServlet {
         PrintWriter out = response.getWriter();
          if (request.getParameter("get") != null) {
             try {
-                out.print(this.getClass().getDeclaredMethod("get"+request.getParameter("get"), HttpServletRequest.class).invoke(this, request));
+                out.print(HTMLEncode((String)this.getClass().getDeclaredMethod("get"+request.getParameter("get"), HttpServletRequest.class).invoke(this, request)));
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
                 out.print("&lt;"+request.getParameter("get")+"&gt");
             }
@@ -48,6 +48,10 @@ public abstract class AbstractPage extends HttpServlet {
     abstract protected String getTitle(HttpServletRequest request);
     
     abstract protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response);
+    
+    static String HTMLEncode(String s) {
+        return s.replace(">", "&gt;").replace("<", "&lt;").replace("&", "&amp;");
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

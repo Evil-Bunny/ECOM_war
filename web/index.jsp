@@ -41,7 +41,6 @@
 					<li><a href="?page=Manufacturers">Marques &amp; Constructeurs</a>
                                              <jsp:include page="Manufacturers"/>
 					</li>
-					<!--<li><a href="search">Recherche</a></li>-->
 					<li><a href="?page=Search">Recherche avancée</a></li>
 				</ul><!--menu-->
 				<div id="cart"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include> articles)</a>

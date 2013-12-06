@@ -54,13 +54,13 @@ public class Search extends AbstractPage {
         out.println("<option value=''>Choisir une marque</option>");
         Collections.sort(manufacturers);
         for (Manufacturer m : manufacturers) {
-            out.println("<option value='"+m.getId()+"'>"+m.getName()+"</option>");
+            out.println("<option value='"+m.getId()+"'>"+HTMLEncode(m.getName())+"</option>");
         }
         out.println("</select></label>");
         out.println("<label>Catégorie<select name='category'>");
         out.println("<option value=''>Choisir une catégorie</option>");
         for (Category c : cf.findAll()) {
-            out.println("<option value='"+c.getId()+"'>"+c.getCategorie()+"</option>");
+            out.println("<option value='"+c.getId()+"'>"+HTMLEncode(c.getCategorie())+"</option>");
         }
         out.println("</select></label>");
         out.println("<label>En stock<input type='checkbox' name='stock' checked='checked'/></label>");
@@ -70,7 +70,7 @@ public class Search extends AbstractPage {
         out.println("<tr><td><select name='caracName_1'>");
         Collections.sort(caracteristics);
         for (Characteristic c : caracteristics) {
-            out.println("<option value='"+c.getId()+"'>"+c.getName()+"</option>");
+            out.println("<option value='"+c.getId()+"'>"+HTMLEncode(c.getName())+"</option>");
         }
         out.println("</select></td><td><input type='text' name='caracVal_1'/></td><td><button type='button' onclick='delCarac(this)'>X</button></td></tr>");
         out.println("<tr><td><button type='button' onclick='addCarac()'>+</button></td><td></td></tr>");
