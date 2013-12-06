@@ -5,13 +5,10 @@
 package web;
 
 import command.Cart;
-import command.LineCommand;
 import ejb.ClientFacade;
 import ejb.CommandFacade;
 import ejb.ProductFacade;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;

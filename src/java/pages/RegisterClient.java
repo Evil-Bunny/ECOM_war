@@ -37,8 +37,8 @@ public class RegisterClient extends AbstractPage {
 
     @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
-        
-        if (request.getParameter("address")!=null && request.getParameter("name")!=null && request.getParameter("surname")!=null && request.getParameter("username")!=null && request.getParameter("password")!=null){
+
+        if (request.getParameter("address") != null && request.getParameter("name") != null && request.getParameter("surname") != null && request.getParameter("username") != null && request.getParameter("password") != null && !request.getParameter("address").isEmpty() && !request.getParameter("name").isEmpty() && !request.getParameter("surname").isEmpty() && !request.getParameter("username").isEmpty() && !request.getParameter("password").isEmpty()) {
             Address ai = new Address();
             ai.setName(request.getParameter("address"));
             Client ci = new Client();
@@ -70,18 +70,20 @@ public class RegisterClient extends AbstractPage {
             } catch (NoSuchAlgorithmException e) {
                 out.println("Impossible de hasher le password");
             }
-
         } else {
+            if (request.getParameter("username") != null) {
+                out.println("Veuillez renseigner tous les champs.<br />");
+            }
             out.println("<form name=\"register\" action=\"?page=RegisterClient\" method=\"POST\">"
-                    + "<label for=\"username\">username</label>\n"
+                    + "<label for=\"username\">Username</label>\n"
                     + "            <input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"password\">password</label>\n"
+                    + "            <label for=\"password\">Password</label>\n"
                     + "            <input id=\"password\" type=\"password\" name=\"password\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"name\">first name</label>\n"
+                    + "            <label for=\"name\">First name</label>\n"
                     + "            <input id=\"name\" type=\"text\" name=\"name\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"surname\">surname</label>\n"
+                    + "            <label for=\"surname\">Surname</label>\n"
                     + "            <input id=\"surname\" type=\"text\" name=\"surname\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"address\">address</label>\n"
+                    + "            <label for=\"address\">Address</label>\n"
                     + "            <input id=\"address\" type=\"text\" name=\"address\" value=\"\" size=\"100\" /><br/>\n"
                     + "            <input type=\"submit\" value=\"Submit\" />\n"
                     + "</form>\n");

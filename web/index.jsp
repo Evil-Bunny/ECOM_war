@@ -29,7 +29,7 @@
 				<div id="band">
 					<a id="nav" href="" title="Retour à  ..."><img src="img/previous.png" width="30px" height="30px" alt=""/>Retour</a>
 					<h1><jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></h1>
-					<span id="options"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="menu" value="true"/></jsp:include>)</a><a href="log">Connexion</a><a href="register">Inscription</a></span>
+					<span id="options"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="menu" value="true"/></jsp:include>)</a><a href="?page=Login">Connexion</a><a href="?page=RegisterClient">Inscription</a></span>
 				</div><!--band-->
 			</div><!--header-->
 			<div id="left">

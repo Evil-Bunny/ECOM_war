@@ -6,21 +6,25 @@ package web;
 
 import ejb.CategoryFacade;
 import ejb.CharacteristicFacade;
+import ejb.LineCharacteristicFacade;
 import product.Product;
 import ejb.ProductFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.persistence.NoResultException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import product.Manufacturer;
 import ejb.ManufacturerFacade;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import product.type.Category;
 import product.type.Characteristic;
+import product.type.LineCharacteristic;
 
 /**
  *
@@ -36,6 +40,8 @@ public class addProd extends HttpServlet {
     private ManufacturerFacade mf;
     @EJB
     private CharacteristicFacade charaf;
+    @EJB
+    private LineCharacteristicFacade lcf;
 
     /**
      * Processes requests for both HTTP
@@ -62,13 +68,10 @@ public class addProd extends HttpServlet {
             out.println("<title>Ajout de produit</title>");
             out.println("</head>");
             out.println("<body>");
-
-
-
-
             out.println("<h1>Servlet addProd at " + request.getContextPath() + "</h1>");
 
             if (!request.getParameterNames().hasMoreElements()) {
+                out.println("<script type=\"text/javascript\" src=\"scripts.js\"></script>");
                 out.println("<form name=\"addProduct\" action=\"addProd\" method=\"POST\">");
                 out.println("<label for=\"name\">Product name</label>");
                 out.println("<input id=\"name\" type=\"text\" name=\"name\" value=\"\" size=\"30\" /><br/>");
@@ -85,35 +88,24 @@ public class addProd extends HttpServlet {
                 out.println("</select><br />");
                 out.println("<label for=\"price\">Price</label>");
                 out.println("<input id=\"price\" type=\"text\" name=\"price\" value=\"\" size=\"10\" />  <br/>");
-                out.print("<table id = \"tableDesc\" border=1>");
+                out.print("<table id = \"caracs\">");
                 out.print("<tr>");
-                out.println("<th><label for=\"idDes\">Nom du descripteur</label></th>");
-                out.println("<th><label for=\"idDes\">Valeur</label></th>");
+                out.println("<th>Nom du descripteur</th>");
+                out.println("<th>Valeur</th><th></th>");
                 out.println("</tr>");
                 out.print("<tr>");
-                out.println("<td><input list=\"idDesc\" id=\"idDes\" name=\"idDes1\"> ");
+                out.println("<td><input list=\"idDesc\" name=\"idDes_1\"> ");
                 out.println("<datalist id = \"idDesc\">");
                 for (Characteristic c : charaf.findAll()) {
                     out.println("<option value=\"" + c.getName() + "\">");
                 }
-
                 out.println("</datalist></td>");
-                out.println("<td><input id=\"descr\" type=\"text\" name=\"descr1\" value=\"\" size=\"30\" /></td> ");
+                out.println("<td><input type=\"text\" name=\"descr_1\" value=\"\" size=\"30\"/></td> ");
+                out.println("<td><button type='button' onclick='delCarac(this)'>X</button></td> ");
                 out.print("</tr>");
-
+                out.println("<tr><td><button type='button' onclick='addCarac()'>+</button></td><td></td><td></td></tr>");
                 out.print("</table>");
-//
-//                out.print("<script>\n"
-//                        + "var i =2;\n"
-//                        + "function addRow()\n"
-//                        + "{\n"
-//                        + "var table=document.getElementById(\"tableDesc\");\n"
-//                        + "table.insertRow().innerHTML=\"<td><input list=\'idDesc\' id=\'idDes\' name=\'descr\'+i></td><td><input id=\'descr\' type=\'text\' name=\'descr\'+i value=\'\' size=\'30\' /></td>\"\n"
-//                        + "i++;"
-//                        + "}\n"
-//                        + "</script>");
 
-//                out.print("<button type=\"button\" onclick=\"addRow()\">Add Row</button><br />");
                 out.println("<input type=\"submit\" value=\"Submit\" />\n");
                 out.println("</form>");
 
@@ -127,12 +119,48 @@ public class addProd extends HttpServlet {
                     m = new Manufacturer();
                     m.setName(request.getParameter("brand"));
                 }
-
                 pe.setBrand(m);
                 pe.setName(request.getParameter("name"));
-                pe.setCategorie(cf.find(Long.parseLong(request.getParameter("category"))));
 
-                pe.setPrice(Float.parseFloat(request.getParameter("price")));
+                pe.setCategorie(cf.find(Long.parseLong(request.getParameter("category"))));
+                try {
+                    pe.setPrice(Float.parseFloat(request.getParameter("price")));
+                } catch (NumberFormatException e) {
+                    out.print("Veuillez rentrer un nombre dans le champ prix.");
+
+                }
+                Enumeration<String> paramsNames = request.getParameterNames();
+                String parName = new String();
+                String charName = new String();
+                String charVal = new String();
+                String parVal = new String();
+                ArrayList<LineCharacteristic> list = new ArrayList<LineCharacteristic>();
+                while (paramsNames.hasMoreElements()) {
+
+                    parName = paramsNames.nextElement();
+                    if (parName.startsWith("idDes_") && !request.getParameter(parName).isEmpty()) {
+                        charName = request.getParameter(parName);
+                        //}
+                        parVal = paramsNames.nextElement();
+                        if (parVal.startsWith("descr_") && !request.getParameter(parVal).isEmpty()) {
+                            charVal = request.getParameter(parVal);
+                            LineCharacteristic line = new LineCharacteristic();
+                            Characteristic charac;
+                            if ((charac = charaf.findByName(charName)) != null) {//si ca existe
+                            } else { //sinon
+                                charac = new Characteristic();
+                                charac.setName(charName);
+
+                            }
+                            line.setCharacteristic(charac);
+                            line.setName(charVal);
+                            list.add(line);
+                        }
+                    }
+                }
+                if (!list.isEmpty()) {
+                    pe.setProductCaracteristics(list);
+                }
                 try {
                     pef.edit(pe);
                     out.println("Produit " + request.getParameter("name") + " ajouté.");
