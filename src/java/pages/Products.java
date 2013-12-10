@@ -78,9 +78,11 @@ public class Products extends AbstractPage {
         if (request.getParameter("search") != null) {
             String search = request.getParameter("search");
             Set<Product> p = new HashSet(pf.search(search));
+//            out.println(p+"<br/>");
             for (Manufacturer m : mf.search(search)) {
                 p.addAll(m.getProducts());
             }
+//            out.println(p+"<br/>");
             for (Category c : cf.search(search)) {
                 p.addAll(c.getProducts());
                 if (c.getSubCategories() != null) {
@@ -88,10 +90,13 @@ public class Products extends AbstractPage {
                         p.addAll(sc.getProducts());
                 }
             }
+//            out.println(p+"<br/>");
             for (LineCharacteristic lc : lcf.search(search)) {
                 p.add(lc.getProduct());
             }
             products = new ArrayList(p);
+//            out.println(p+"<br/>");
+//            return;
         } else if (request.getParameter("category") != null && request.getParameter("manufacturer") != null) {
             // Advanced search
             String param;

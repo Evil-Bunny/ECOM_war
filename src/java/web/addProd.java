@@ -153,6 +153,7 @@ public class addProd extends HttpServlet {
                             }
                             line.setCharacteristic(charac);
                             line.setName(charVal);
+                            line.setProduct(pe);
                             list.add(line);
                         }
                     }

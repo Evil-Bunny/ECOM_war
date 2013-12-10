@@ -42,7 +42,7 @@ public class Search extends AbstractPage {
         List<Manufacturer> manufacturers = mf.findAll();
         List<Characteristic> caracteristics = chf.findAll();
         // TODO: passer en post une fois débuggé
-        out.println("<form action='.' method='GET'>");
+        out.println("<form action='.' method='GET' onsubmit='return checkSearch();'>");
         out.println("<input type='hidden' name='page' value='Products'/>");
         out.println("<label>Nom du produit<input name='name' type='text'/></label>");
         out.println("<label>Marque & Constructeur<select name='manufacturer'>");
@@ -59,7 +59,7 @@ public class Search extends AbstractPage {
         }
         out.println("</select></label>");
         out.println("<label>En stock<input type='checkbox' name='stock' checked='checked'/></label>");
-        out.println("<fieldset><legend>Prix</legend><label>supérieur à<input type='text' name='minPrice'/></label><label>inférieur à<input type='text' name='maxPrice'/></label></fieldset>");
+        out.println("<fieldset><legend>Prix</legend><label>supérieur à<input id='minPrice' type='text' name='minPrice'/></label><label>inférieur à<input id='maxPrice' type='text' name='maxPrice'/></label></fieldset>");
         out.println("<fieldset id='carac'><legend>Caractéristiques</legend><div><table id='caracs'>");
         out.println("<tr><td>Nom</td><td>Valeur</td><td></td></tr>");
         out.println("<tr><td><select name='caracName_1'>");

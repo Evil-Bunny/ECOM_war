@@ -35,6 +35,14 @@ public class Login extends AbstractPage {
                 session.setAttribute("client", ci);
             } else {
                 out.println("Erreur de login/mdp");
+
+                out.println("        <form name=\"register\" action=\"?page=Login\" method=\"POST\">\n"
+                        + "            <label for=\"username\">Username</label>\n"
+                        + "            <input id=\"username\" type=\"text\" name=\"username\" value=\""+request.getParameter("username")+"\" size=\"30\" /><br/>\n"
+                        + "            <label for=\"pass\">Password</label>\n"
+                        + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" size=\"30\" />   <br/>     \n"
+                        + "            <input type=\"submit\" value=\"Log in\" />\n"
+                        + "        </form>");
             }
 
         } else {

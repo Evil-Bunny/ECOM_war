@@ -10,12 +10,12 @@
             }
         %>
         <title>Evil Bunny - <jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></title>
-            <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-            <meta name      ="author"       content="Nicolas Bouscarle" />
-            <!--<link rel="shortcut icon" href="favicon.ico" />-->
-            <link rel="stylesheet" type="text/css" href="common.css" />
-            <link rel="stylesheet" type="text/css" href="small.css" media="screen and (max-width:1134px)" /><!--max-device-width-->
-            <link rel="stylesheet" type="text/css" href="<%=requestPage%>.css" />
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <meta name      ="author"       content="Nicolas Bouscarle" />
+        <!--<link rel="shortcut icon" href="favicon.ico" />-->
+        <link rel="stylesheet" type="text/css" href="common.css" />
+        <link rel="stylesheet" type="text/css" href="small.css" media="screen and (max-width:1134px)" /><!--max-device-width-->
+        <link rel="stylesheet" type="text/css" href="<%=requestPage%>.css" />
         <script type="text/javascript" src="scripts.js"></script>
     </head>
     <body>
