@@ -61,7 +61,7 @@ public class RegisterClient extends AbstractPage {
                     + "<label for=\"username\">Identifiant</label>\n"
                     + "            <input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /><br/>\n"
                     + "            <label for=\"password\">Mot de passe</label>\n"
-                    + "            <input id=\"password\" type=\"password\" name=\"password\" value=\"\" size=\"30\" /><br/>\n"
+                    + "            <input title='toto' id=\"password\" type=\"password\" name=\"password\" value=\"\" size=\"30\" /><br/>\n"
                     + "            <label for=\"name\">Prénom</label>\n"
                     + "            <input id=\"name\" type=\"text\" name=\"name\" value=\"\" size=\"30\" /><br/>\n"
                     + "            <label for=\"surname\">Nom de famille</label>\n"
