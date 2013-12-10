@@ -208,10 +208,10 @@ public class Products extends AbstractPage {
             if (currentPage != 1)
                 out.println("<a href='"+baseURL+(start-PRODUCTSBYPAGE)+"'>Précédent</a>");
             for (int i = Math.max(1, currentPage-PAGESAROUND) ; i < currentPage ; i++)
-                out.println("<a href='"+baseURL+i+"'>"+i+"</a>");
+                out.println("<a href='"+baseURL+((i-1)*PRODUCTSBYPAGE)+"'>"+i+"</a>");
             out.println("<span>"+currentPage+"</span>");
             for (int i = currentPage+1; i<= Math.min(nbPages, currentPage+PAGESAROUND) ; i++)
-                out.println("<a href='"+baseURL+i+"'>"+i+"</a>");
+                out.println("<a href='"+baseURL+((i-1)*PRODUCTSBYPAGE)+"'>"+i+"</a>");
             if (currentPage != nbPages)
                 out.println("<a href='"+baseURL+(start+PRODUCTSBYPAGE)+"'>Suivant</a>");
             out.println("<a href='"+baseURL+((nbPages-1)*PRODUCTSBYPAGE)+"'>Fin</a></div>");
