@@ -84,6 +84,10 @@
         <servlet-name>ConfirmAddress</servlet-name>
         <servlet-class>pages.ConfirmAddress</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DelToCart</servlet-name>
+        <servlet-class>web.DelToCart</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
@@ -167,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>ConfirmAddress</servlet-name>
         <url-pattern>/ConfirmAddress</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DelToCart</servlet-name>
+        <url-pattern>/DelToCart</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
