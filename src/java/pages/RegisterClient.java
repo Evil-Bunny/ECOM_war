@@ -33,7 +33,7 @@ public class RegisterClient extends AbstractPage {
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
 
-        if (request.getParameter("address") != null && request.getParameter("name") != null && request.getParameter("surname") != null && request.getParameter("username") != null && request.getParameter("password") != null && !request.getParameter("address").isEmpty() && !request.getParameter("name").isEmpty() && !request.getParameter("surname").isEmpty() && !request.getParameter("username").isEmpty() && !request.getParameter("password").isEmpty()) {
+        if (request.getParameter("address") != null && request.getParameter("confirmPass") != null && request.getParameter("mail") != null && request.getParameter("name") != null && request.getParameter("surname") != null && request.getParameter("username") != null && request.getParameter("password") != null && !request.getParameter("address").isEmpty() && !request.getParameter("name").isEmpty() && !request.getParameter("surname").isEmpty() && !request.getParameter("username").isEmpty() && !request.getParameter("password").isEmpty() && !request.getParameter("confirmPass").isEmpty() && !request.getParameter("mail").isEmpty() && request.getParameter("password").equals(request.getParameter("confirmPass")) && request.getParameter("password").length() >= 3 && request.getParameter("username").length() >= 3 && request.getParameter("mail").contains("@")) {
             Address ai = new Address();
             ai.setName(request.getParameter("address"));
             Client ci = new Client();
@@ -41,6 +41,7 @@ public class RegisterClient extends AbstractPage {
             ci.setAddressPayement(ai);
             ci.setFirstname(request.getParameter("name"));
             ci.setSurname(request.getParameter("surname"));
+            ci.setMail(request.getParameter("mail"));
             ci.setUsername(request.getParameter("username"));
 
             ci.setPassword(request.getParameter("password"));
@@ -57,21 +58,62 @@ public class RegisterClient extends AbstractPage {
             }
 
         } else {
-            if (request.getParameter("username") != null) {
-                out.println("Veuillez renseigner tous les champs.<br />");
+            if (request.getParameterNames().hasMoreElements()) {
+                if (request.getParameter("address") == null || request.getParameter("confirmPass") == null || request.getParameter("mail") == null || request.getParameter("name") == null || request.getParameter("surname") == null || request.getParameter("username") == null || request.getParameter("password") == null || request.getParameter("address").isEmpty() || request.getParameter("name").isEmpty() || request.getParameter("surname").isEmpty() || request.getParameter("username").isEmpty() || request.getParameter("password").isEmpty() || request.getParameter("confirmPass").isEmpty() || request.getParameter("mail").isEmpty()) {
+                    out.println("Veuillez renseigner tous les champs.<br />");
+                }
+                if (request.getParameter("username") != null && request.getParameter("username").length() < 3) {
+                    out.println("Le nom d'utilisateur doit faire plus de 3 charactères.<br />");
+                }
+                if (request.getParameter("password") != null && request.getParameter("password").length() < 3) {
+                    out.println("Le mot de passe doit faire plus de 3 charactères.<br />");
+                }
+                if (request.getParameter("password") != null && request.getParameter("confirmPass") != null && !request.getParameter("password").equals(request.getParameter("confirmPass"))) {
+                    out.println("Les mots de passe sont différents.<br />");
+                }
+                if (request.getParameter("mail") != null && !request.getParameter("mail").contains("@")) {
+                    out.println("L'email n'est pas valide<br />");
+                }
             }
-            out.println("<form name=\"register\" action=\"?page=RegisterClient\" method=\"POST\">"
-                    + "<label for=\"username\">Identifiant</label>\n"
-                    + "            <input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"password\">Mot de passe</label>\n"
-                    + "            <input id=\"password\" type=\"password\" name=\"password\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"name\">Prénom</label>\n"
-                    + "            <input id=\"name\" type=\"text\" name=\"name\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"surname\">Nom de famille</label>\n"
-                    + "            <input id=\"surname\" type=\"text\" name=\"surname\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"address\">Addresse</label><br />\n"
-                    + "            <textarea style=\"resize:none\" rows=\"4\" cols=\"50\" name=\"address\"></textarea><br /><br />"
-                    + "            <input type=\"submit\" value=\"Submit\" />\n"
+            out.print("<form name=\"register\" action=\"?page=RegisterClient\" method=\"POST\">\n");
+            
+            out.print("<label for=\"username\">Identifiant :<input name='username' id='username' type='text'");
+            if (request.getParameter("username") != null) {
+                out.print(" value='" + request.getParameter("username") + "'");
+            }
+            out.println("/></label>");
+            out.print("            <label for=\"password\">Mot de passe :\n"
+                    + "            <input name=\"password\" id=\"password\" type=\"password\" value=\"\" size=\"30\" /></label>\n"
+                    + "            <label for=\"confirmPass\">Confirmation Mot de passe :\n"
+                    + "            <input name=\"confirmPass\" id=\"confirmPass\" type=\"password\" value=\"\" size=\"30\" /></label>\n");
+
+
+            out.print("<label for='name'>Prénom :<input name='name' id='name' type='text'");
+            if (request.getParameter("name") != null) {
+                out.print(" value='" + request.getParameter("name") + "'");
+            }
+            out.println("/></label>");
+
+            out.print("<label for='surname'>Nom de famille :<input name='surname' id='surname' type='text'");
+            if (request.getParameter("surname") != null) {
+                out.print(" value='" + request.getParameter("surname") + "'");
+            }
+            out.println("/></label>");
+
+
+            out.print("<label for='mail'>Mail :<input name='mail' id='mail' type='text'");
+            if (request.getParameter("mail") != null) {
+                out.print(" value='" + request.getParameter("mail") + "'");
+            }
+            out.println("/></label>");
+
+            out.print("<label for='address'>Addresse :<textarea style='resize:none' rows='4' cols='50' name='address'>");
+            if (request.getParameter("address") != null) {
+                out.print(request.getParameter("address"));
+            }
+            out.println("</textarea></label>");
+
+            out.println("            <input type=\"submit\" value=\"Submit\" />\n"
                     + "</form>\n");
 
         }
