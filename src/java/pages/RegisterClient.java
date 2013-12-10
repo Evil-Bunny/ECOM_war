@@ -57,10 +57,7 @@ public class RegisterClient extends AbstractPage {
             }
 
         } else {
-            if (request.getParameter("username") != null) {
-                out.println("Veuillez renseigner tous les champs.<br />");
-            }
-            out.println("<form name=\"register\" action=\"?page=RegisterClient\" method=\"POST\">"
+            out.println("<form action=\"?page=RegisterClient\" method=\"POST\" onsubmit='return checkRegister();'>"
                     + "<label for=\"username\">Identifiant</label>\n"
                     + "            <input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /><br/>\n"
                     + "            <label for=\"password\">Mot de passe</label>\n"
@@ -70,8 +67,8 @@ public class RegisterClient extends AbstractPage {
                     + "            <label for=\"surname\">Nom de famille</label>\n"
                     + "            <input id=\"surname\" type=\"text\" name=\"surname\" value=\"\" size=\"30\" /><br/>\n"
                     + "            <label for=\"address\">Addresse</label><br />\n"
-                    + "            <textarea style=\"resize:none\" rows=\"4\" cols=\"50\" name=\"address\"></textarea><br /><br />"
-                    + "            <input type=\"submit\" value=\"Submit\" />\n"
+                    + "            <textarea id='address' style=\"resize:none\" rows=\"4\" cols=\"50\" name=\"address\"></textarea><br /><br />"
+                    + "            <input type=\"submit\" value=\"Submit\"/>\n"
                     + "</form>\n");
 
         }

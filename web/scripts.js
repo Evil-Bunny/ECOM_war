@@ -52,3 +52,33 @@ function delCarac(t) {
     else
         t.parentNode.parentNode.cells[1].firstChild.value = "";
 }
+
+/*
+ * Teste si un input est valide. Doit aussi être testé côté serveur.
+ * @param String input : id de l'input à vérifier
+ * @param RegExp regex : expression régulière permettant de vérifier le champ
+ * @param String msg : message à afficher au survol de l'input s'il n'est pas correct
+ * @returns Boolean : true si le contenu de l'input est correct
+ */
+function check(input, regex, msg) {
+    var tag = document.getElementById(input);
+    //alert(tag.value.match(regex).prototype);
+    if (tag.value.match(regex) !== null) {
+        return true;
+    } else {
+        tag.style.borderColor = "red";
+        if (msg !== undefined)
+            tag.title = msg;
+        return false;
+    }
+}
+
+function checkRegister() {
+    var ok = 0;
+    ok &= check("username", /.../, "L'identifiant doit contenir au moins 3 charactères.");
+    ok &= check("password", /.../, "Le mot de passe doit faire 3 charactères minimum");
+    ok &= check("name", /./, "Champ requis");
+    ok &= check("surname", /./, "Champ requis");
+    ok &= check("address", /./, "Champ requis");
+    return ok === 1;
+}
