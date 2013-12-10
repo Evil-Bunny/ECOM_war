@@ -1,3 +1,4 @@
+<%@page import="user.Client"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -22,24 +23,30 @@
         <div id="central">
             <div id="header">
                 <a href="."><img height="136px" width="640px" id="logo" src="img/logo.png" alt="Evil Bunny, fournisseur de matériel informatique rétro"/></a>
-                <span id="lang">
+                <!--<span id="lang">
                     <a href="?fr"><img id="current_lang" src="img/fr.png" alt="Français / French" title="Français / French"/></a>
                     <a href="?en"><img src="img/en.png" alt="Anglais / English" title="Anglais / English"/></a>
-                </span>
+                </span>-->
                 <div id="band">
                     <a id="nav" href="" title="Retour à  ..."><img src="img/previous.png" width="30px" height="30px" alt=""/>Retour</a>
                     <h1><jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></h1>
-                    <span id="options"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include>)</a><a href="?page=Login">Connexion</a><a href="?page=RegisterClient">Inscription</a></span>
+                    <span id="options"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include>)</a><%
+                        if (request.getSession(true).getAttribute("client") == null) {
+                            %><a href="?page=Login">Connexion</a><a href="?page=RegisterClient">Inscription</a><%
+                        } else {
+                            %><a href="?page=Logout">Déconnexion</a><a href="?page=Account">Voir mon compte</a><%
+                        }%></span>
                     </div><!--band-->
                 </div><!--header-->
                 <div id="left">
                     <ul id="menu">
                         <li>
                             <a href="?page=Categories">Catégories</a>
-                        <jsp:include page="Categories"><jsp:param name="menu" value="true"/></jsp:include>
+                            <jsp:include page="Categories"><jsp:param name="menu" value="true"/></jsp:include>
                         </li>
-                        <li><a href="?page=Manufacturers">Marques &amp; Constructeurs</a>
-                        <jsp:include page="Manufacturers"/>
+                        <li>
+                            <a href="?page=Manufacturers">Marques &amp; Constructeurs</a>
+                            <jsp:include page="Manufacturers"/>
                     </li>
                     <!--<li><a href="search">Recherche</a></li>-->
                     <li><a href="?page=Search">Recherche avancée</a></li>
@@ -58,6 +65,7 @@
                         <input id="search_button" type="submit" value="Rechercher"/>
                     </fieldset>
                 </form>
+                <% if (request.getSession(true).getAttribute("client") == null) { %>
                 <form id="log" action="?page=Login" method="POST">
                     <fieldset><legend>Connexion rapide</legend>
                         <label>Identifiant : <input type="text" name="username"/></label>
@@ -65,6 +73,12 @@
                         <input type="submit" value="Se connecter"/>
                     </fieldset>
                 </form>
+                <% } else { %>
+                <div id="log">
+                    <span>Vous êtes connectés en tant que <%=((Client)request.getSession(true).getAttribute("client")).getUsername()%></span>
+                    <a href="?page=Account">Voir mon compte</a>
+                </div>
+                <% } %>
             </div><!--left-->
             <div id="ariane"><a href="."><img src="img/home.png" alt="EvilBunny" width="20px" height="20px"/></a> &gt; Catégories</div>
             <div id="content">

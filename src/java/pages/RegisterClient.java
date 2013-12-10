@@ -60,11 +60,11 @@ public class RegisterClient extends AbstractPage {
             formOK = false;
         }
         if (request.getParameter("name") == null || request.getParameter("name").isEmpty()) {
-            out.println("Le prénom est requise<br/>");
+            out.println("Le prénom est requis<br/>");
             formOK = false;
         }
         if (request.getParameter("surname") == null || request.getParameter("surname").isEmpty()) {
-            out.println("Le nom de famille est requise<br/>");
+            out.println("Le nom de famille est requis<br/>");
             formOK = false;
         }
         out.println("</noscript>");
@@ -127,13 +127,12 @@ public class RegisterClient extends AbstractPage {
         }
         out.println("/></label>");
 
-        out.print("<label>Addresse :<textarea id='address' style='resize:none' rows='4' cols='50' name='address'>");
+        out.print("<label>Addresse :<textarea id='address' name='address'>");
         if (request.getParameter("address") != null) {
             out.print(request.getParameter("address"));
         }
         out.println("</textarea></label>");
 
         out.println("<input type='submit' value=\"S'inscrire\" /></form>");
-
     }
 }

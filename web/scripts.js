@@ -96,3 +96,14 @@ function checkSearch() {
     ok &= check("maxPrice", /^([0-9]+(\.[0-9]+)?)?$/, "Le prix doit être au format 123.45");
     return ok === 1;
 }
+
+function chekAccount() {
+    var ok = 1;
+    ok &= check("username", /.../, "L'identifiant doit contenir au moins 3 charactères.");
+    ok &= check("name", /./, "Champ requis");
+    ok &= check("surname", /./, "Champ requis");
+    ok &= check("addressPayement", /./, "Champ requis");
+    ok &= check("addressDelivery", /./, "Champ requis");
+    ok &= check("mail", /.@./, "Adresse e-mail invalide");
+    return ok === 1;    
+}

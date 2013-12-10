@@ -294,3 +294,8 @@ fieldset {
 #ariane img {
 	vertical-align:bottom;
 }
+
+#log span {
+    margin:2px 5px;
+    font-size: 110%;
+}
