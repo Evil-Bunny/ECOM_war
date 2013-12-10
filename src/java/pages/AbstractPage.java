@@ -39,13 +39,20 @@ public abstract class AbstractPage extends HttpServlet {
                 out.print("&lt;" + request.getParameter("get") + "&gt");
             }
         } else {
-            printPage(out, request, response);
+            if (request.getMethod().equals("GET"))
+                printPage(out, request, response);
+            else
+                printPagePost(out, request, response);
         }
     }
 
     abstract protected String getTitle(HttpServletRequest request);
 
     abstract protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response);
+    
+    protected void printPagePost(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
+        printPage(out, request, response);
+    }
     
     public static String HTMLEncode(String s) {
         return s.replace(">", "&gt;").replace("<", "&lt;").replace("&", "&amp;");

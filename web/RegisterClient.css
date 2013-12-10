@@ -1,0 +1,24 @@
+#content label {
+    display:block;
+/*    min-height:25px;*/
+    clear:both;
+}
+
+#content form {
+    width:500px;
+    margin:auto;
+}
+
+#content label input {
+    float:right;
+    width:270px;
+    margin-bottom:3px;
+}
+
+#content textarea {
+    width:494px;
+}
+
+#content form>input {
+    float:right;
+}
