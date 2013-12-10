@@ -38,6 +38,7 @@ public class RegisterClient extends AbstractPage {
         Client ci = new Client();
         boolean formOK = true;        
         
+        out.println("<noscript>");
         if (request.getParameter("username") == null || request.getParameter("username").length() < 3) {
             out.println("Le nom d'utilisateur doit faire plus de 3 charactères.<br />");
             formOK = false;
@@ -66,8 +67,10 @@ public class RegisterClient extends AbstractPage {
             out.println("Le nom de famille est requise<br/>");
             formOK = false;
         }
+        out.println("</noscript>");
         if (! formOK) {
             printPage(out, request, response);
+            out.println("<script type='text/javascript'>checkRegister();</script>");
             return;
         }
         
@@ -103,8 +106,8 @@ public class RegisterClient extends AbstractPage {
         }
         out.println("/></label>");
         
-        out.println("<label for='password'>Mot de passe :<input name='password' id='password' type='password'/></label>");
-        out.println("<label for='confirmPass'>Confirmation Mot de passe :<input name='confirmPass' id='confirmPass' type='password' /></label>");
+        out.println("<label>Mot de passe :<input name='password' id='password' type='password'/></label>");
+        out.println("<label>Confirmation du mot de passe :<input name='confirmPass' id='confirmPass' type='password' /></label>");
 
         out.print("<label>Prénom :<input name='name' id='name' type='text'");
         if (request.getParameter("name") != null) {

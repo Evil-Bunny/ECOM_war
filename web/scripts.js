@@ -56,26 +56,24 @@ function delCarac(t) {
 /*
  * Teste si un input est valide. Doit aussi être testé côté serveur.
  * @param String input : id de l'input à vérifier
- * @param RegExp|String test : expression régulière ou chaine à comparer
- * @param String msg : message à afficher au survol de l'input s'il n'est pas correct (optionnel)
+ * @param RegExp|String test : expression régulière ou chaine à comparer à la valeur de l'input
+ * @param String msg : message à afficher au survol de l'input s'il n'est pas correct
  * @returns Boolean : true si le contenu de l'input est correct
  */
 function check(input, test, msg) {
     var tag = document.getElementById(input);
     if (tag.originalTitle === undefined)
         tag.originalTitle = tag.title;
-    if (tag.value === test || tag.value.match(test) !== null) {
+    if (tag.value === test || (test.constructor === RegExp && tag.value.match(test) !== null)) {
         tag.style.borderColor = "";
         tag.title = tag.originalTitle;
         return true;
     } else {
         tag.style.borderColor = "red";
-        if (msg !== undefined) {
-            if (tag.originalTitle === "")
-                tag.title = msg;
-            else
-                tag.title = tag.originalTitle + " - " + msg;                
-        }
+        if (tag.originalTitle === "")
+            tag.title = msg;
+        else
+            tag.title = tag.originalTitle + " - " + msg;                
         return false;
     }
 }
@@ -89,5 +87,12 @@ function checkRegister() {
     ok &= check("surname", /./, "Champ requis");
     ok &= check("address", /./, "Champ requis");
     ok &= check("mail", /.@./, "Adresse e-mail invalide");
+    return ok === 1;
+}
+
+function checkSearch() {
+    var ok = 1;
+    ok &= check("minPrice", /^([0-9]+(\.[0-9]+)?)?$/, "Le prix doit être au format 123.45");
+    ok &= check("maxPrice", /^([0-9]+(\.[0-9]+)?)?$/, "Le prix doit être au format 123.45");
     return ok === 1;
 }
