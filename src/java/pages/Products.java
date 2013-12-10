@@ -75,6 +75,8 @@ public class Products extends AbstractPage {
         int start, nbPages;
         String tmp;
         
+        // récupération de la liste des produits
+        
         if (request.getParameter("search") != null) {
             String search = request.getParameter("search");
             Set<Product> p = new HashSet(pf.search(search));
@@ -153,6 +155,9 @@ public class Products extends AbstractPage {
         } else {
             start = 0;
         }
+        
+        // affichage de la liste des produits
+        
         nbPages = (products.size()-1)/PRODUCTSBYPAGE +1;
         products = products.subList(start, Math.min(products.size(),start+PRODUCTSBYPAGE));
         
@@ -178,7 +183,7 @@ public class Products extends AbstractPage {
             out.print("<table><tr><td>Caractéristiques</td><td>");
             tmp = "";
             for (LineCharacteristic carac : p.getProductCaracteristics()) {
-                tmp += " - "+carac.getCharacteristic().getName()+" : "+carac.getName();
+                tmp += " - "+HTMLEncode(carac.getCharacteristic().getName())+" : "+HTMLEncode(carac.getName());
             }
             if (tmp.length() != 0)
                 out.println(tmp.substring(3));
@@ -191,6 +196,9 @@ public class Products extends AbstractPage {
             out.println("</td></tr></table><div class='clear_footer'></div></li>");
         }
         out.println("</ul>");
+        
+        // pagination
+        
         if (nbPages != 1) {
             int currentPage = start/PRODUCTSBYPAGE +1;
             String baseURL = "?page=Products";

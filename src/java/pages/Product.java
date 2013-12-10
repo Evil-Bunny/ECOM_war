@@ -47,7 +47,7 @@ public class Product extends AbstractPage {
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
         }
-        out.println(product.getName());
+        out.println(HTMLEncode(product.getName()));
         out.println("</h2><table><tr><td>Caractéristiques</td><td><table>");
         for (LineCharacteristic carac : product.getProductCaracteristics()) {
             out.println("<tr><td>"+HTMLEncode(carac.getCharacteristic().getName())+"</td><td>"+HTMLEncode(carac.getName())+"</td><tr>");

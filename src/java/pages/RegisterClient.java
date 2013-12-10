@@ -102,7 +102,7 @@ public class RegisterClient extends AbstractPage {
 
         out.print("<label>Identifiant :<input name='username' id='username' type='text'");
         if (request.getParameter("username") != null) {
-            out.print(" value='" + request.getParameter("username") + "'");
+            out.print(" value='" + HTMLEncode(request.getParameter("username")) + "'");
         }
         out.println("/></label>");
         
@@ -111,25 +111,25 @@ public class RegisterClient extends AbstractPage {
 
         out.print("<label>Prénom :<input name='name' id='name' type='text'");
         if (request.getParameter("name") != null) {
-            out.print(" value='" + request.getParameter("name") + "'");
+            out.print(" value='" + HTMLEncode(request.getParameter("name")) + "'");
         }
         out.println("/></label>");
 
         out.print("<label>Nom de famille :<input name='surname' id='surname' type='text'");
         if (request.getParameter("surname") != null) {
-            out.print(" value='" + request.getParameter("surname") + "'");
+            out.print(" value='" + HTMLEncode(request.getParameter("surname")) + "'");
         }
         out.println("/></label>");
 
         out.print("<label>Mail :<input name='mail' id='mail' type='text'");
         if (request.getParameter("mail") != null) {
-            out.print(" value='" + request.getParameter("mail") + "'");
+            out.print(" value='" + HTMLEncode(request.getParameter("mail")) + "'");
         }
         out.println("/></label>");
 
         out.print("<label>Addresse :<textarea id='address' name='address'>");
         if (request.getParameter("address") != null) {
-            out.print(request.getParameter("address"));
+            out.print(HTMLEncode(request.getParameter("address")));
         }
         out.println("</textarea></label>");
 
