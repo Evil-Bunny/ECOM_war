@@ -5,6 +5,7 @@
 package web;
 
 import ejb.CategoryFacade;
+import ejb.CharacteristicFacade;
 import ejb.ClientFacade;
 import ejb.ManufacturerFacade;
 import ejb.ProductFacade;
@@ -21,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 import product.Manufacturer;
 import product.Product;
 import product.type.Category;
+import product.type.Characteristic;
+import product.type.LineCharacteristic;
 
 /**
  *
@@ -36,6 +39,8 @@ public class populusDatabasus extends HttpServlet {
     ManufacturerFacade mf;
     @EJB
     CategoryFacade cf;
+    @EJB
+    CharacteristicFacade chf;
 
     /**
      * Processes requests for both HTTP
@@ -84,16 +89,27 @@ public class populusDatabasus extends HttpServlet {
             manufacturers.add("IBM");
             manufacturers.add("Macintosh");
             manufacturers.add("Hewlett-Packard");
-            manufacturers.add("IBM");
-
-
+            ArrayList<String> charac = new ArrayList();
+            charac.add("Résolution");
+            charac.add("Fréquence");
+            charac.add("Capacité");
+            charac.add("Tours/Minute");
+            charac.add("Ports");
+            charac.add("Alimentation");
+            charac.add("Type");
+            charac.add("DPI");
+            charac.add("PPP");
+            charac.add("Format");
+            charac.add("Socket");
+            charac.add("Taille");
+            charac.add("Poids");
 
 
 
             Category c = new Category();
             Manufacturer m = new Manufacturer();
             Product p = new Product();
-
+            Characteristic ch = new Characteristic();
             for (String s : categories) {
                 c.setCategorie(s);
                 cf.edit(c);
@@ -107,6 +123,10 @@ public class populusDatabasus extends HttpServlet {
                 m.setName(s);
                 mf.edit(m);
             }
+            for (String s : charac) {
+                ch.setName(s);
+                chf.edit(ch);
+            }
 
 
             for (int i = 0; i < subCategories.size(); i++) {
@@ -115,20 +135,23 @@ public class populusDatabasus extends HttpServlet {
                     m = mf.findByName((String) manufacturers.get(new Random().nextInt(manufacturers.size())));
                     p.setCategorie(c);
                     p.setBrand(m);
-                    p.setName(c.getCategorie()+j);
-                    p.setPrice(10.0f+new Random().nextFloat()*((1000.0f-10.0f)+1.0f));
+                    p.setName(c.getCategorie() + j);
+                    p.setPrice(10.0f + new Random().nextFloat() * ((1000.0f - 10.0f) + 1.0f));
                     p.setStock(10);
-                    out.println(m.toString() + " lol");
+                    ArrayList<LineCharacteristic> lcs = new ArrayList<>();
+                    for (int k = 0; k < 5; k++) {
+                        k += new Random().nextInt(5);
+                        ch = chf.findByName((String) charac.get(new Random().nextInt(charac.size())));
+                       LineCharacteristic lc = new LineCharacteristic();
+                        lc.setProduct(p);
+                        lc.setCharacteristic(ch);
+                        lc.setName(c.getCategorie()+ch.getName()+k);
+                        lcs.add(lc);
+                    }
+                    p.setProductCaracteristics(lcs);
                     pf.edit(p);
                 }
-
             }
-
-
-
-
-
-
 
 
 
