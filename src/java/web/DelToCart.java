@@ -5,8 +5,8 @@
 package web;
 
 import command.Cart;
+import command.LineCommand;
 import ejb.ClientFacade;
-import ejb.CommandFacade;
 import ejb.ProductFacade;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -21,16 +21,14 @@ import user.Client;
 
 /**
  *
- * @author Samy
+ * @author Pierrick
  */
-public class AddToCart extends HttpServlet {
+public class DelToCart extends HttpServlet {
 
     @EJB
     ClientFacade cif;
     @EJB
     ProductFacade pf;
-    @EJB
-    CommandFacade cf;
     private Cart cart;
 
     /**
@@ -48,32 +46,26 @@ public class AddToCart extends HttpServlet {
         Enumeration paramNames = request.getParameterNames();
         if (paramNames.hasMoreElements()) {
             HttpSession session = request.getSession(true);
+            
             if (session.getAttribute("client") == null) {
-                if (session.getAttribute("cart") == null) {
-                    session.setAttribute("cart", new Cart());
-                }
                 cart = (Cart) session.getAttribute("cart");
-
             } else {
                 cart = (Cart) ((Client) session.getAttribute("client")).getCart();
             }
-
-            Product p = pf.find(new Long(request.getParameter("product")));
-            if (p.getStock() > 0) {
-                p.setStock(p.getStock() - 1);
-                if (cart.getQuantity(p) != null) {
-                    cart.setQuantity(p, cart.getQuantity(p) + 1);
-                } else {
-                    cart.setQuantity(p, 1);
+            
+            if(cart != null) {
+                Product p = pf.find(new Long(request.getParameter("product")));
+                if (p != null) {
+                    p.setStock(p.getStock() + cart.getQuantity(p));
+                    cart.delProduct(new LineCommand(p, p.getStock()));
+                    if (session.getAttribute("client") == null) {
+                        session.setAttribute("cart", cart);
+                    } else {
+                        ((Client) session.getAttribute("client")).setCart(cart);
+                        cif.edit((Client) session.getAttribute("client"));
+                    }
+                    pf.edit(p);
                 }
-
-                if (session.getAttribute("client") == null) {
-                    session.setAttribute("cart", cart);
-                } else {
-                    ((Client) session.getAttribute("client")).setCart(cart);
-                    cf.edit(cart);
-                }
-                pf.edit(p);
             }
         }
         response.sendRedirect(response.encodeRedirectURL("?" + request.getParameter("old")));

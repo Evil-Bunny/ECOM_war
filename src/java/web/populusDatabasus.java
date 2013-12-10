@@ -4,7 +4,9 @@
  */
 package web;
 
+import command.Cart;
 import ejb.CategoryFacade;
+import ejb.CharacteristicFacade;
 import ejb.ClientFacade;
 import ejb.ManufacturerFacade;
 import ejb.ProductFacade;
@@ -21,6 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 import product.Manufacturer;
 import product.Product;
 import product.type.Category;
+import product.type.Characteristic;
+import product.type.LineCharacteristic;
+import user.Client;
+import user.data.Address;
 
 /**
  *
@@ -36,6 +42,10 @@ public class populusDatabasus extends HttpServlet {
     ManufacturerFacade mf;
     @EJB
     CategoryFacade cf;
+    @EJB
+    CharacteristicFacade chf;
+    @EJB   
+    ClientFacade clf;
 
     /**
      * Processes requests for both HTTP
@@ -84,15 +94,82 @@ public class populusDatabasus extends HttpServlet {
             manufacturers.add("IBM");
             manufacturers.add("Macintosh");
             manufacturers.add("Hewlett-Packard");
-            manufacturers.add("IBM");
+            ArrayList<String> charac = new ArrayList();
+            charac.add("Résolution");
+            charac.add("Fréquence");
+            charac.add("Capacité");
+            charac.add("Tours/Minute");
+            charac.add("Ports");
+            charac.add("Alimentation");
+            charac.add("Type");
+            charac.add("DPI");
+            charac.add("PPP");
+            charac.add("Format");
+            charac.add("Socket");
+            charac.add("Taille");
+            charac.add("Poids");
+            ArrayList<ArrayList> names = new ArrayList();
+            names.add(new ArrayList(Arrays.asList("Hyde", "Megan")));
+            names.add(new ArrayList(Arrays.asList("Reilly", "Abbot")));
+            names.add(new ArrayList(Arrays.asList("Lynn", "Armando")));
+            names.add(new ArrayList(Arrays.asList("Murphy", "Thor")));
+            names.add(new ArrayList(Arrays.asList("Dillon", "Leila")));
+            names.add(new ArrayList(Arrays.asList("Cherry", "Carly")));
+            names.add(new ArrayList(Arrays.asList("Best", "Lars")));
+            names.add(new ArrayList(Arrays.asList("Kirk", "Dale")));
+            names.add(new ArrayList(Arrays.asList("Moran", "Zenaida")));
+            names.add(new ArrayList(Arrays.asList("Gregory", "Dieter")));
+            names.add(new ArrayList(Arrays.asList("Gentry", "Joshua")));
+            names.add(new ArrayList(Arrays.asList("Herrera", "Kiayada")));
+            names.add(new ArrayList(Arrays.asList("Haynes", "Sloane")));
+            names.add(new ArrayList(Arrays.asList("Mooney", "Wendy")));
+            names.add(new ArrayList(Arrays.asList("Dillon", "Yetta")));
+            names.add(new ArrayList(Arrays.asList("Ball", "Nigel")));
+            names.add(new ArrayList(Arrays.asList("Mooney", "Reed")));
+            names.add(new ArrayList(Arrays.asList("Pate", "Chase")));
+            names.add(new ArrayList(Arrays.asList("Solomon", "Gray")));
+            names.add(new ArrayList(Arrays.asList("Brady", "Bert")));
+            names.add(new ArrayList(Arrays.asList("Watson", "Diana")));
+            names.add(new ArrayList(Arrays.asList("Elliott", "Akeem")));
+            names.add(new ArrayList(Arrays.asList("Shields", "Quinlan")));
+            names.add(new ArrayList(Arrays.asList("Doyle", "Jillian")));
+            names.add(new ArrayList(Arrays.asList("Reyes", "Lysandra")));
+            names.add(new ArrayList(Arrays.asList("Randall", "Beau")));
+            names.add(new ArrayList(Arrays.asList("Buck", "Carol")));
+            ArrayList<String> addresses = new ArrayList();
 
-
-
-
-
+            addresses.add("P.O. Box 281, 7217 Magna Ave" + " Lawrenceville");
+            addresses.add("938-7401 Non, Street" + " Salisbury");
+            addresses.add("294-5933 Vivamus Av." + " Covington");
+            addresses.add("Ap #893-7214 Luctus, Av." + " Santa Clarita");
+            addresses.add("466-4175 Molestie Rd." + " Keene");
+            addresses.add("P.O. Box 530, 2920 Porttitor St." + " Somerville");
+            addresses.add("P.O. Box 433, 7618 Aliquam Av." + " Spokane Valley");
+            addresses.add("Ap #477-801 Aliquam Av." + " Fresno");
+            addresses.add("P.O. Box 235, 1092 Elit St." + " Sunbury");
+            addresses.add("369-7963 Ac, Road" + " Saint Joseph");
+            addresses.add("8698 Egestas Street" + " Provo");
+            addresses.add("Ap #973-8286 Cursus Ave" + " Bay St. Louis");
+            addresses.add("P.O. Box 626, 4107 Et Ave" + " Normal");
+            addresses.add("887-8747 Bibendum Ave" + " Indianapolis");
+            addresses.add("426-1183 Nec, Ave" + " Orlando");
+            addresses.add("463-7448 Vitae Av." + " Evanston");
+            addresses.add("8254 Odio Av." + " Springfield");
+            addresses.add("Ap #547-1125 Sem. Av." + " Citrus Heights");
+            addresses.add("6254 Vulputate, Ave" + " Aberdeen");
+            addresses.add("708-2489 Nisi Rd." + " Salem");
+            addresses.add("275-2426 Quam, Road" + " Springfield");
+            addresses.add("P.O. Box 756, 8639 Facilisis Avenue" + " Cairo");
+            addresses.add("4469 Mattis. Ave" + " Fort Dodge");
+            addresses.add("409-2914 Tempor Rd." + " Forest Lake");
+            addresses.add("P.O. Box 514, 6990 Et Street" + " Paramount");
+            addresses.add("Ap #147-9202 Nibh Rd." + " Urbana");
+            addresses.add("Ap #338-9110 Pharetra Ave" + " Dubuque");
             Category c = new Category();
             Manufacturer m = new Manufacturer();
             Product p = new Product();
+            Characteristic ch = new Characteristic();
+            Client cl = new Client();
 
             for (String s : categories) {
                 c.setCategorie(s);
@@ -107,6 +184,10 @@ public class populusDatabasus extends HttpServlet {
                 m.setName(s);
                 mf.edit(m);
             }
+            for (String s : charac) {
+                ch.setName(s);
+                chf.edit(ch);
+            }
 
 
             for (int i = 0; i < subCategories.size(); i++) {
@@ -115,22 +196,38 @@ public class populusDatabasus extends HttpServlet {
                     m = mf.findByName((String) manufacturers.get(new Random().nextInt(manufacturers.size())));
                     p.setCategorie(c);
                     p.setBrand(m);
-                    p.setName(c.getCategorie()+j);
-                    p.setPrice(10.0f+new Random().nextFloat()*((1000.0f-10.0f)+1.0f));
+                    p.setName(c.getCategorie() + j);
+                    p.setPrice(10.0f + new Random().nextFloat() * ((1000.0f - 10.0f) + 1.0f));
                     p.setStock(10);
-                    out.println(m.toString() + " lol");
+                    ArrayList<LineCharacteristic> lcs = new ArrayList<>();
+                    for (int k = 0; k < 5; k++) {
+                        k += new Random().nextInt(5);
+                        ch = chf.findByName((String) charac.get(new Random().nextInt(charac.size())));
+                        LineCharacteristic lc = new LineCharacteristic();
+                        lc.setProduct(p);
+                        lc.setCharacteristic(ch);
+                        lc.setName(c.getCategorie() + ch.getName() + k);
+                        lcs.add(lc);
+                    }
+                    p.setProductCaracteristics(lcs);
                     pf.edit(p);
                 }
-
             }
 
-
-
-
-
-
-
-
+            for (int i = 0; i < names.size(); i++) {
+                String fn = (String) names.get(i).get(1);
+                String ln = (String) names.get(i).get(0);
+                cl.setFirstname(fn);
+                cl.setSurname(ln);
+                cl.setMail(fn + "." + ln + "@gmail.com");
+                cl.setUsername(fn + ln);
+                cl.setPassword(ln + fn);
+                Address ai = new Address(addresses.get(i));
+                cl.setAddressDelivery(ai);
+                cl.setAddressPayement(ai);
+                cl.setCart(new Cart());
+                clf.edit(cl);
+            }
 
 
 

@@ -10,19 +10,19 @@ h2 {
     color: #00a300;
     font-family: "Courier New";
     margin:3px 3px -5px;
-    padding-left: 20px;
     padding-bottom: 20px;
 }
 
 div#content {
-    padding: 10px 10px;
+    /*padding: 10px 10px;*/
     margin-right: 5px;
 }
 
 table {
-    margin: 0px 0px 0px 40px;
+    /*margin: 0px 0px 0px 40px;*/
     /*border: 2px solid rgb(153, 153, 153);*/
     border-collapse: collapse;
+    width: 820px;
 }
 
 td {
@@ -83,6 +83,16 @@ td.price {
 
 td.quant {
     text-align:center;
+}
+
+td.suppr {
+    border-bottom: 2px solid rgb(153, 153, 153);
+    text-align: center;
+    width: 70px;
+}
+
+td.quant, td.price, td.priceLine {
+     width: 150px;
 }
 
 div.info {
