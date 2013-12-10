@@ -6,14 +6,9 @@ package pages;
 
 import ejb.CategoryFacade;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static pages.AbstractPage.HTMLEncode;
-import product.type.Category;
 import user.Client;
 import user.data.Address;
 
@@ -88,10 +83,41 @@ public class Account extends AbstractPage {
                     
                 }
             }
+            printPage(out, request, response);
+        } else {
+            out.println("<form action='?page=Account' method='POST' onsubmit='return checkAccount();'>");
 
-        }
-        printPage(out, request, response);
-        if (! formOK) {
+            out.print("<label>Identifiant :<input name='username' id='username' type='text' value='");
+            if (request.getParameter("username") != null)
+                out.print(request.getParameter("username"));
+            out.println("'/></label>");
+
+            out.print("<label>Prénom :<input name='name' id='name' type='text' value='");
+            if (request.getParameter("name") != null)
+                out.print(request.getParameter("name"));
+            out.println("'/></label>");
+
+            out.print("<label>Nom de famille :<input name='surname' id='surname' type='text' value='");
+            if (request.getParameter("surname") != null)
+                out.print(request.getParameter("surname"));
+            out.println("'></label>");
+
+            out.print("<label>Mail :<input name='mail' id='mail' type='text' value='");
+            if (request.getParameter("mail") != null)
+                out.print(request.getParameter("mail"));
+            out.println("'/></label>");
+
+            out.print("<label>Addresse de facturation :<textarea id='addressPayement' name='addressPayement'>");
+            if (request.getParameter("addressPayement") != null)
+                out.print(request.getParameter("addressPayement"));
+            out.println("</textarea></label>");
+
+            out.print("<label>Addresse de livraison :<textarea id='addressDelivery' name='addressDelivery'>");
+            if (request.getParameter("addressDelivery") != null)
+                out.print(request.getParameter("addressDelivery"));
+            out.println("</textarea></label>");
+
+            out.println("<input type='submit' value='Enregistrer les modifications'/></form>");
             out.println("<script type='text/javascript'>checkAccount();</script>");
         }
 
@@ -106,11 +132,11 @@ public class Account extends AbstractPage {
         out.println("<label>Prénom :<input name='name' id='name' type='text' value='"+c.getFirstname()+"'/></label>");
         out.println("<label>Nom de famille :<input name='surname' id='surname' type='text' value='"+c.getSurname()+"'></label>");
         out.println("<label>Mail :<input name='mail' id='mail' type='text' value='"+c.getMail()+"'/></label>");
-        out.println("<label>Addresse de facturation :<textarea id='addressPayement' name='addressPayement'>");
-        out.println(c.getAddressPayement().getName());
+        out.print("<label>Addresse de facturation :<textarea id='addressPayement' name='addressPayement'>");
+        out.print(c.getAddressPayement().getName());
         out.println("</textarea></label>");
-        out.println("<label>Addresse de livraison :<textarea id='addressDelivery' name='addressDelivery'>");
-        out.println(c.getAddressDelivery().getName());
+        out.print("<label>Addresse de livraison :<textarea id='addressDelivery' name='addressDelivery'>");
+        out.print(c.getAddressDelivery().getName());
         out.println("</textarea></label>");
         out.println("<input type='submit' value='Enregistrer les modifications'/></form>");
         

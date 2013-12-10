@@ -97,7 +97,7 @@ function checkSearch() {
     return ok === 1;
 }
 
-function chekAccount() {
+function checkAccount() {
     var ok = 1;
     ok &= check("username", /.../, "L'identifiant doit contenir au moins 3 charactères.");
     ok &= check("name", /./, "Champ requis");
