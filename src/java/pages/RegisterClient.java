@@ -75,9 +75,9 @@ public class RegisterClient extends AbstractPage {
                     out.println("L'email n'est pas valide<br />");
                 }
             }
-            out.print("<form name=\"register\" action=\"?page=RegisterClient\" method=\"POST\">\n");
+            out.print("<form action=\"?page=RegisterClient\" method=\"POST\" onsubmit='return checkRegister();'>\n");
             
-            out.print("<label for=\"username\">Identifiant :<input name='username' id='username' type='text'");
+            out.print("<label>Identifiant :<input name='username' id='username' type='text'");
             if (request.getParameter("username") != null) {
                 out.print(" value='" + request.getParameter("username") + "'");
             }
@@ -88,26 +88,26 @@ public class RegisterClient extends AbstractPage {
                     + "            <input name=\"confirmPass\" id=\"confirmPass\" type=\"password\" value=\"\" size=\"30\" /></label>\n");
 
 
-            out.print("<label for='name'>Prénom :<input name='name' id='name' type='text'");
+            out.print("<label>Prénom :<input name='name' id='name' type='text'");
             if (request.getParameter("name") != null) {
                 out.print(" value='" + request.getParameter("name") + "'");
             }
             out.println("/></label>");
 
-            out.print("<label for='surname'>Nom de famille :<input name='surname' id='surname' type='text'");
+            out.print("<label>Nom de famille :<input name='surname' id='surname' type='text'");
             if (request.getParameter("surname") != null) {
                 out.print(" value='" + request.getParameter("surname") + "'");
             }
             out.println("/></label>");
 
 
-            out.print("<label for='mail'>Mail :<input name='mail' id='mail' type='text'");
+            out.print("<label>Mail :<input name='mail' id='mail' type='text'");
             if (request.getParameter("mail") != null) {
                 out.print(" value='" + request.getParameter("mail") + "'");
             }
             out.println("/></label>");
 
-            out.print("<label for='address'>Addresse :<textarea style='resize:none' rows='4' cols='50' name='address'>");
+            out.print("<label>Addresse :<textarea id='address' style='resize:none' rows='4' cols='50' name='address'>");
             if (request.getParameter("address") != null) {
                 out.print(request.getParameter("address"));
             }
