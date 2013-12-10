@@ -6,6 +6,7 @@ package web;
 
 import command.Cart;
 import ejb.ClientFacade;
+import ejb.CommandFacade;
 import ejb.ProductFacade;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -28,6 +29,8 @@ public class AddToCart extends HttpServlet {
     ClientFacade cif;
     @EJB
     ProductFacade pf;
+    @EJB
+    CommandFacade cf;
     private Cart cart;
 
     /**
@@ -68,7 +71,7 @@ public class AddToCart extends HttpServlet {
                     session.setAttribute("cart", cart);
                 } else {
                     ((Client) session.getAttribute("client")).setCart(cart);
-                    cif.edit((Client) session.getAttribute("client"));
+                    cf.edit(cart);
                 }
                 pf.edit(p);
             }
