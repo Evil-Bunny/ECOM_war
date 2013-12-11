@@ -91,6 +91,7 @@ public class RegisterClient extends AbstractPage {
             cif.edit(ci);
             session.setAttribute("client", ci);
             out.print("Inscription Réussie");
+            throw new HTTPRedirect("?page=Account");
         } catch (EJBException e) {
             out.println(e.getMessage());
         }        

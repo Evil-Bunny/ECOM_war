@@ -31,8 +31,9 @@ public class Login extends AbstractPage {
         if (request.getParameter("pass") != null && request.getParameter("username") != null) {
             Client ci = cif.find(request.getParameter("username"), request.getParameter("pass"));
             if (ci != null) {
-                out.println("Connection Reussie");
                 session.setAttribute("client", ci);
+                out.println("Connection Reussie");
+                throw new HTTPRedirect(".");
             } else {
                 out.println("Erreur de login/mdp");
 

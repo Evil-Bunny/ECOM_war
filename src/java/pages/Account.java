@@ -4,7 +4,10 @@
  */
 package pages;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import user.Client;
@@ -26,6 +29,9 @@ public class Account extends AbstractPage {
         Client c = (Client)request.getSession(true).getAttribute("client");
         boolean formOK = true;
         
+        if (c == null)
+            throw new HTTPErrorException(403);
+ 
         out.println("<noscript>");
         if (request.getParameter("username") == null || request.getParameter("username").length() < 3) {
             out.println("Le nom d'utilisateur doit faire plus de 3 charactères.<br />");
@@ -121,6 +127,9 @@ public class Account extends AbstractPage {
     @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         Client c = (Client)request.getSession(true).getAttribute("client");
+        
+        if (c == null)
+            throw new HTTPErrorException(403);
         
         out.println("<form action='?page=Account' method='POST' onsubmit='return checkAccount();'>");
         out.println("<label>Identifiant :<input name='username' id='username' type='text' value='"+HTMLEncode(c.getUsername())+"'/></label>");

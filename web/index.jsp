@@ -1,3 +1,5 @@
+<%@page import="pages.HTTPRedirect"%>
+<%@page import="pages.HTTPErrorException"%>
 <%@page import="user.Client"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -34,7 +36,7 @@
                         if (request.getSession(true).getAttribute("client") == null) {
                             %><a href="?page=Login">Connexion</a><a href="?page=RegisterClient">Inscription</a><%
                         } else {
-                            %><a href="?page=Logout">Déconnexion</a><a href="?page=Account">Voir mon compte</a><%
+                            %><a href="Logout">Déconnexion</a><a href="?page=Account">Voir mon compte</a><%
                         }%></span>
                     </div><!--band-->
                 </div><!--header-->
@@ -82,7 +84,13 @@
             </div><!--left-->
             <div id="ariane"><a href="."><img src="img/home.png" alt="EvilBunny" width="20px" height="20px"/></a> &gt; Catégories</div>
             <div id="content">
-                <jsp:include page="<%=requestPage%>"/>
+                <% try { %>
+                    <jsp:include page="<%=requestPage%>"/>
+                <% } catch (HTTPErrorException e) {
+                    response.sendError(e.getErrorCode());
+                } catch (HTTPRedirect e) {
+                    response.sendRedirect(e.getMessage());
+                }%>
             </div><!--content-->
             <div class="clear_footer"></div>
         </div><!--central-->
