@@ -1,5 +1,6 @@
 package pages;
 
+import command.Cart;
 import ejb.ClientFacade;
 import ejb.CommandFacade;
 import java.io.PrintWriter;
@@ -32,7 +33,10 @@ public class Login extends AbstractPage {
             Client ci = cif.find(request.getParameter("username"), request.getParameter("pass"));
             if (ci != null) {
                 out.println("Connection Reussie");
+                ci.getCart().merge((Cart)session.getAttribute("cart"));
+                cef.edit(ci.getCart());
                 session.setAttribute("client", ci);
+                
             } else {
                 out.println("Erreur de login/mdp");
 

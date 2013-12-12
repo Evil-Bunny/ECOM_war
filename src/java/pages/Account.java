@@ -4,7 +4,9 @@
  */
 package pages;
 
+import ejb.ClientFacade;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import user.Client;
@@ -16,6 +18,9 @@ import user.data.Address;
  */
 public class Account extends AbstractPage {
 
+    @EJB
+    ClientFacade cf;
+    
     @Override
     protected String getTitle(HttpServletRequest request){
         return "Compte client";
@@ -78,6 +83,7 @@ public class Account extends AbstractPage {
                     
                 }
             }
+            cf.edit(c);
             printPage(out, request, response);
         } else {
             out.println("<form action='?page=Account' method='POST' onsubmit='return checkAccount();'>");
