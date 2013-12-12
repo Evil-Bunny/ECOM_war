@@ -32,7 +32,11 @@ public class Product extends AbstractPage {
     
     @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
-        product.Product product = pf.find(new Long(request.getParameter("id")));
+        product.Product product = pf.find(Long.parseLong(request.getParameter("id")));
+        
+        if (product == null)
+            throw new HTTPErrorException(404);
+        
         Category category = product.getCategorie();
         out.println("<img id='photo' src='img/category.png' alt='' height='300px' width='300px' style='background:white;'/>");
         out.println("<div class='prod_right'>");
@@ -47,7 +51,7 @@ public class Product extends AbstractPage {
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
         }
-        out.println(product.getName());
+        out.println(HTMLEncode(product.getName()));
         out.println("</h2><table><tr><td>Caractéristiques</td><td><table>");
         for (LineCharacteristic carac : product.getProductCaracteristics()) {
             out.println("<tr><td>"+HTMLEncode(carac.getCharacteristic().getName())+"</td><td>"+HTMLEncode(carac.getName())+"</td><tr>");

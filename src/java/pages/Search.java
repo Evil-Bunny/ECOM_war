@@ -41,8 +41,7 @@ public class Search extends AbstractPage {
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         List<Manufacturer> manufacturers = mf.findAll();
         List<Characteristic> caracteristics = chf.findAll();
-        // TODO: passer en post une fois débuggé
-        out.println("<form action='.' method='GET' onsubmit='return checkSearch();'>");
+        out.println("<form action='?page=Products' method='POST' onsubmit='return checkSearch();'>");
         out.println("<input type='hidden' name='page' value='Products'/>");
         out.println("<label>Nom du produit<input name='name' type='text'/></label>");
         out.println("<label>Marque & Constructeur<select name='manufacturer'>");

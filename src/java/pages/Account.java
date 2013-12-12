@@ -4,9 +4,10 @@
  */
 package pages;
 
-import ejb.CategoryFacade;
+import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import user.Client;
@@ -17,9 +18,6 @@ import user.data.Address;
  * @author bousky
  */
 public class Account extends AbstractPage {
-    
-    @EJB
-    CategoryFacade cf;
 
     @Override
     protected String getTitle(HttpServletRequest request){
@@ -31,6 +29,9 @@ public class Account extends AbstractPage {
         Client c = (Client)request.getSession(true).getAttribute("client");
         boolean formOK = true;
         
+        if (c == null)
+            throw new HTTPErrorException(403);
+ 
         out.println("<noscript>");
         if (request.getParameter("username") == null || request.getParameter("username").length() < 3) {
             out.println("Le nom d'utilisateur doit faire plus de 3 charactères.<br />");
@@ -89,32 +90,32 @@ public class Account extends AbstractPage {
 
             out.print("<label>Identifiant :<input name='username' id='username' type='text' value='");
             if (request.getParameter("username") != null)
-                out.print(request.getParameter("username"));
+                out.print(HTMLEncode(request.getParameter("username")));
             out.println("'/></label>");
 
             out.print("<label>Prénom :<input name='name' id='name' type='text' value='");
             if (request.getParameter("name") != null)
-                out.print(request.getParameter("name"));
+                out.print(HTMLEncode(request.getParameter("name")));
             out.println("'/></label>");
 
             out.print("<label>Nom de famille :<input name='surname' id='surname' type='text' value='");
             if (request.getParameter("surname") != null)
-                out.print(request.getParameter("surname"));
+                out.print(HTMLEncode(request.getParameter("surname")));
             out.println("'></label>");
 
             out.print("<label>Mail :<input name='mail' id='mail' type='text' value='");
             if (request.getParameter("mail") != null)
-                out.print(request.getParameter("mail"));
+                out.print(HTMLEncode(request.getParameter("mail")));
             out.println("'/></label>");
 
             out.print("<label>Addresse de facturation :<textarea id='addressPayement' name='addressPayement'>");
             if (request.getParameter("addressPayement") != null)
-                out.print(request.getParameter("addressPayement"));
+                out.print(HTMLEncode(request.getParameter("addressPayement")));
             out.println("</textarea></label>");
 
             out.print("<label>Addresse de livraison :<textarea id='addressDelivery' name='addressDelivery'>");
             if (request.getParameter("addressDelivery") != null)
-                out.print(request.getParameter("addressDelivery"));
+                out.print(HTMLEncode(request.getParameter("addressDelivery")));
             out.println("</textarea></label>");
 
             out.println("<input type='submit' value='Enregistrer les modifications'/></form>");
@@ -127,16 +128,19 @@ public class Account extends AbstractPage {
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         Client c = (Client)request.getSession(true).getAttribute("client");
         
+        if (c == null)
+            throw new HTTPErrorException(403);
+        
         out.println("<form action='?page=Account' method='POST' onsubmit='return checkAccount();'>");
-        out.println("<label>Identifiant :<input name='username' id='username' type='text' value='"+c.getUsername()+"'/></label>");
-        out.println("<label>Prénom :<input name='name' id='name' type='text' value='"+c.getFirstname()+"'/></label>");
-        out.println("<label>Nom de famille :<input name='surname' id='surname' type='text' value='"+c.getSurname()+"'></label>");
-        out.println("<label>Mail :<input name='mail' id='mail' type='text' value='"+c.getMail()+"'/></label>");
+        out.println("<label>Identifiant :<input name='username' id='username' type='text' value='"+HTMLEncode(c.getUsername())+"'/></label>");
+        out.println("<label>Prénom :<input name='name' id='name' type='text' value='"+HTMLEncode(c.getFirstname())+"'/></label>");
+        out.println("<label>Nom de famille :<input name='surname' id='surname' type='text' value='"+HTMLEncode(c.getSurname())+"'></label>");
+        out.println("<label>Mail :<input name='mail' id='mail' type='text' value='"+HTMLEncode(c.getMail())+"'/></label>");
         out.print("<label>Addresse de facturation :<textarea id='addressPayement' name='addressPayement'>");
-        out.print(c.getAddressPayement().getName());
+        out.print(HTMLEncode(c.getAddressPayement().getName()));
         out.println("</textarea></label>");
         out.print("<label>Addresse de livraison :<textarea id='addressDelivery' name='addressDelivery'>");
-        out.print(c.getAddressDelivery().getName());
+        out.print(HTMLEncode(c.getAddressDelivery().getName()));
         out.println("</textarea></label>");
         out.println("<input type='submit' value='Enregistrer les modifications'/></form>");
         

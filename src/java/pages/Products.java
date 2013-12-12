@@ -61,10 +61,10 @@ public class Products extends AbstractPage {
             return "Produits - Recherche";
         }
         if (request.getParameter("category") != null && ! request.getParameter("category").equals("")) {
-            return cf.find(new Long(request.getParameter("category"))).getCategorie();
+            return cf.find(Long.parseLong(request.getParameter("category"))).getCategorie();
         }
         if (request.getParameter("manufacturer") != null && ! request.getParameter("manufacturer").equals("")) {
-            return mf.find(new Long(request.getParameter("manufacturer"))).getName();
+            return mf.find(Long.parseLong(request.getParameter("manufacturer"))).getName();
         }
         return "Produits";
     }
@@ -74,6 +74,8 @@ public class Products extends AbstractPage {
         List<Product> products;
         int start, nbPages;
         String tmp;
+        
+        // récupération de la liste des produits
         
         if (request.getParameter("search") != null) {
             String search = request.getParameter("search");
@@ -101,19 +103,19 @@ public class Products extends AbstractPage {
             float minPrice = 0, maxPrice = 0;
             param = request.getParameter("category");
             if (param != null && ! param.equals(""))
-                c = cf.find(new Long(param));
+                c = cf.find(Long.parseLong(param));
             param = request.getParameter("manufacturer");
             if (param != null && ! param.equals(""))
-                m = mf.find(new Long(param));
+                m = mf.find(Long.parseLong(param));
             param = request.getParameter("stock");
             if (param != null && ! param.equals(""))
                 stock = true;
             param = request.getParameter("minPrice");
             if (param != null && ! param.equals(""))
-                minPrice = new Float(param);
+                minPrice = Long.parseLong(param);
             param = request.getParameter("maxPrice");
             if (param != null && ! param.equals(""))
-                maxPrice = new Float(param);
+                maxPrice = Long.parseLong(param);
             // LineCharacteristic
             Enumeration<String> params = request.getParameterNames();
             HashMap<Integer, Long> caracName = new HashMap();
@@ -138,21 +140,30 @@ public class Products extends AbstractPage {
             }
             products = pf.findAdvanced(c, m, request.getParameter("name"), stock, minPrice, maxPrice, characs);
         } else if (request.getParameter("category") != null) {
-            Category category = cf.find(new Long(request.getParameter("category")));
+            Category category = cf.find(Long.parseLong(request.getParameter("category")));
+            if (category == null)
+                throw new HTTPErrorException(404);
             products = category.getProducts();
             for (Category c : category.getSubCategories()) {
                 products.addAll(c.getProducts());
             }
         } else if (request.getParameter("manufacturer") != null) {
-            products = mf.find(new Long(request.getParameter("manufacturer"))).getProducts();
+            try {
+                products = mf.find(Long.parseLong(request.getParameter("manufacturer"))).getProducts();
+            } catch(NullPointerException e) {
+                throw new HTTPErrorException(404);
+            }
         } else {
             products = pf.findAll();
         }
         if (request.getParameter("start") != null) {
-            start = new Integer(request.getParameter("start"));
+            start = Integer.parseInt(request.getParameter("start"));
         } else {
             start = 0;
         }
+        
+        // affichage de la liste des produits
+        
         nbPages = (products.size()-1)/PRODUCTSBYPAGE +1;
         products = products.subList(start, Math.min(products.size(),start+PRODUCTSBYPAGE));
         
@@ -178,7 +189,7 @@ public class Products extends AbstractPage {
             out.print("<table><tr><td>Caractéristiques</td><td>");
             tmp = "";
             for (LineCharacteristic carac : p.getProductCaracteristics()) {
-                tmp += " - "+carac.getCharacteristic().getName()+" : "+carac.getName();
+                tmp += " - "+HTMLEncode(carac.getCharacteristic().getName())+" : "+HTMLEncode(carac.getName());
             }
             if (tmp.length() != 0)
                 out.println(tmp.substring(3));
@@ -191,6 +202,9 @@ public class Products extends AbstractPage {
             out.println("</td></tr></table><div class='clear_footer'></div></li>");
         }
         out.println("</ul>");
+        
+        // pagination
+        
         if (nbPages != 1) {
             int currentPage = start/PRODUCTSBYPAGE +1;
             String baseURL = "?page=Products";
