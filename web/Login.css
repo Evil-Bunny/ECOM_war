@@ -1,0 +1,57 @@
+/* 
+    Document   : Login
+    Created on : 11 déc. 2013, 16:27:37
+    Author     : Pierrick
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#content h2 {
+    font-family: "Courier New";
+    padding: 10px 0px;
+    font-size: 125%;
+    width: 450px;
+    margin: auto;
+}
+
+#content h3 {
+    color: red;
+    font-family: "Courier New";
+    font-size: 100%;
+    padding-bottom: 5px;
+    width: 450px;
+    margin: auto;
+}
+
+#content form>* {
+    margin:3px 0px 3px;
+    width: 450px;
+    margin: auto;
+}
+
+#content {
+    width: 500px;
+    margin: auto;
+}
+
+#content input {
+    float: right;
+    width: 28ex;
+    margin-right: 150px;
+}
+
+#content form {
+    margin-top: 15px;
+}
+
+#content input#button {
+     width: 150px;
+     margin-right: 175px;
+}
+
+#content label {
+    display: block;
+    clear: both;
+}
+
+
