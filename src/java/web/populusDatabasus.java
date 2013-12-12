@@ -8,6 +8,7 @@ import command.Cart;
 import ejb.CategoryFacade;
 import ejb.CharacteristicFacade;
 import ejb.ClientFacade;
+import ejb.HomeAdFacade;
 import ejb.ManufacturerFacade;
 import ejb.ProductFacade;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import product.HomeAd;
 import product.Manufacturer;
 import product.Product;
 import product.type.Category;
@@ -46,6 +48,8 @@ public class populusDatabasus extends HttpServlet {
     CharacteristicFacade chf;
     @EJB   
     ClientFacade clf;
+    @EJB
+    HomeAdFacade haf;
 
     /**
      * Processes requests for both HTTP
@@ -228,22 +232,14 @@ public class populusDatabasus extends HttpServlet {
                 cl.setCart(new Cart());
                 clf.edit(cl);
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            
+            int[] range = {0, 6};
+            HomeAd ad = new HomeAd();
+            for (Product pa : pf.findRange(range)) {
+                ad.setName(pa.getName());
+                ad.setProduct(pa);
+                haf.edit(ad);
+            }
 
         } finally {
             out.close();

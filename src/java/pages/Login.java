@@ -36,26 +36,28 @@ public class Login extends AbstractPage {
                 ci.getCart().merge((Cart)session.getAttribute("cart"));
                 cef.edit(ci.getCart());
                 session.setAttribute("client", ci);
-                
+                out.println("Connection Reussie");
+                throw new HTTPRedirect(".");
             } else {
-                out.println("Erreur de login/mdp");
-
+                out.println("<h2>Veuillez vous identifier de nouveau</h2>");
+                out.println("<h3>Identifiant ou de mot de passe inconnu</h3>");
                 out.println("        <form name=\"register\" action=\"?page=Login\" method=\"POST\">\n"
-                        + "            <label for=\"username\">Username</label>\n"
-                        + "            <input id=\"username\" type=\"text\" name=\"username\" value=\""+HTMLEncode(request.getParameter("username"))+"\" size=\"30\" /><br/>\n"
-                        + "            <label for=\"pass\">Password</label>\n"
-                        + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" size=\"30\" />   <br/>     \n"
-                        + "            <input type=\"submit\" value=\"Log in\" />\n"
+                        + "            <label for=\"username\">Identifiant : "
+                        + "            <input id=\"username\" type=\"text\" name=\"username\" value=\""+HTMLEncode(request.getParameter("username"))+"\" /></label><br/>\n"
+                        + "            <label for=\"pass\">Mot de passe : "
+                        + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" /> </label>  <br/>     \n"
+                        + "            <input id=\"button\" type=\"submit\" value=\"Se connecter\" />\n"
                         + "        </form>");
             }
 
         } else {
+            out.println("<h2>Veuillez vous identifier</h2>");
             out.println("        <form name=\"register\" action=\"?page=Login\" method=\"POST\">\n"
-                    + "            <label for=\"username\">Username</label>\n"
-                    + "            <input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /><br/>\n"
-                    + "            <label for=\"pass\">Password</label>\n"
-                    + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" size=\"30\" />   <br/>     \n"
-                    + "            <input type=\"submit\" value=\"Log in\" />\n"
+                    + "            <label for=\"username\">Identifiant : "
+                    + "            <input id=\"username\" type=\"text\" name=\"username\" value=\"\" /></label><br/>\n"
+                    + "            <label for=\"pass\">Mot de passe : "
+                    + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" />  </label> <br/>     \n"
+                    + "            <input id=\"button\" type=\"submit\" value=\"Se connecter\" />\n"
                     + "        </form>");
 
         }

@@ -2,21 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pages;
+package web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Bousky
+ * @author bousky
  */
-public abstract class AbstractPage extends HttpServlet {
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -30,32 +30,10 @@ public abstract class AbstractPage extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        if (request.getParameter("get") != null) {
-            try {
-                out.print(HTMLEncode((String)this.getClass().getDeclaredMethod("get"+request.getParameter("get"), HttpServletRequest.class).invoke(this, request)));
-            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
-                out.print("&lt;" + request.getParameter("get") + "&gt");
-            }
-        } else {
-            if (request.getMethod().equals("GET"))
-                printPage(out, request, response);
-            else if (request.getMethod().equals("POST"))
-                printPagePost(out, request, response);
-        }
-    }
-
-    abstract protected String getTitle(HttpServletRequest request);
-
-    abstract protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response);
-    
-    protected void printPagePost(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
-        printPage(out, request, response);
-    }
-    
-    public static String HTMLEncode(String s) {
-        return s.replace(">", "&gt;").replace("<", "&lt;").replace("&", "&amp;");
+        HttpSession session = request.getSession(true);
+        session.removeAttribute("client");
+        session.removeAttribute("cart");
+        response.sendRedirect(".");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

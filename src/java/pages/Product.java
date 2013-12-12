@@ -32,7 +32,11 @@ public class Product extends AbstractPage {
     
     @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
-        product.Product product = pf.find(new Long(request.getParameter("id")));
+        product.Product product = pf.find(Long.parseLong(request.getParameter("id")));
+        
+        if (product == null)
+            throw new HTTPErrorException(404);
+        
         Category category = product.getCategorie();
         out.println("<img id='photo' src='img/category.png' alt='' height='300px' width='300px' style='background:white;'/>");
         out.println("<div class='prod_right'>");
