@@ -32,7 +32,7 @@ public class Login extends AbstractPage {
         if (request.getParameter("pass") != null && request.getParameter("username") != null) {
             Client ci = cif.find(request.getParameter("username"), request.getParameter("pass"));
             if (ci != null) {
-                out.println("Connection Reussie");
+                out.println("<h2>Connection Réussie</h2>");
                 ci.getCart().merge((Cart)session.getAttribute("cart"));
                 cef.edit(ci.getCart());
                 session.setAttribute("client", ci);

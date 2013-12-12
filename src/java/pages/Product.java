@@ -38,7 +38,7 @@ public class Product extends AbstractPage {
             throw new HTTPErrorException(404);
         
         Category category = product.getCategorie();
-        out.println("<img id='photo' src='img/category.png' alt='' height='300px' width='300px' style='background:white;'/>");
+        out.println("<img id='photo' src='img/prod/"+product.getId()+".jpg' alt='' height='300px' width='300px' style='background:white;'/>");
         out.println("<div class='prod_right'>");
         out.println(String.format("<div class='price'>%.2f &euro;</div>", product.getPrice()));
         if (product.getStock() == 0) {
