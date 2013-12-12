@@ -33,6 +33,8 @@ public class Login extends AbstractPage {
             if (ci != null) {
                 out.println("<h2>Connection Réussie</h2>");
                 session.setAttribute("client", ci);
+                out.println("Connection Reussie");
+                throw new HTTPRedirect(".");
             } else {
                 out.println("<h2>Veuillez vous identifier de nouveau</h2>");
                 out.println("<h3>Identifiant ou de mot de passe inconnu</h3>");
