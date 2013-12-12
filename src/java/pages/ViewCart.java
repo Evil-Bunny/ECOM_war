@@ -60,8 +60,30 @@ public class ViewCart extends AbstractPage {
                 out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th><th>Supprimer</th></tr>");
                 for (LineCommand p : cart.getProducts()) {
                     try{
-                        out.println("<tr><td class='prems'><div class='info'>"+p.getProduct().getName()
-                                + "</div></td><td class='quant'>"+p.getQuantity()+"</td><td class='price'>"
+                        out.print("<tr><td class='prems'><div class='info'><a href=\"?page=Product&id="+ p.getProduct().getId()
+                                + "\">"+p.getProduct().getName()+"</a>"
+                                + "</div></td><td class='quant'><p id='nb'>"+p.getQuantity()
+                                
+                                + "</p><div id=\"buttom_mod\"><form id=\"modif_quant_add\" method=\"POST\" action=\"ModifQuant\">"
+                                + "<input type=\"hidden\" name=\"id\" value=\""+ p.getProduct().getId() +"\" />"
+                                + "<input type=\"hidden\" name=\"do\" value=\"add\" />"
+                                + "<input id=\"add\" type=\"submit\" value=\"+\"");
+                        
+                        if(p.getProduct().getStock() <= 0){
+                            out.print(" disabled=\"disabled\"");
+                        }
+                                
+                        out.print("/></form>"
+                                + "<form id=\"modif_quant_minus\" method=\"POST\" action=\"ModifQuant\">"
+                                + "<input type=\"hidden\" name=\"id\" value=\""+ p.getProduct().getId() +"\"/>"
+                                + "<input type=\"hidden\" name=\"do\" value=\"minus\" />"
+                                + "<input id=\"minus\" type=\"submit\" value=\"-\"");
+                        
+                        if(cart.getQuantity(p.getProduct()) <= 1){
+                            out.print(" disabled=\"disabled\"");
+                        }
+                                
+                        out.println("/></form></div></td><td class='price'>"
                                 + String.format("%.2f &euro;", p.getProduct().getPrice()) +"</td><td class='priceLine'>" 
                                 + String.format("%.2f &euro;", p.storePrice()) + "</td><td class='suppr'>"
                                 + "<a href='DelToCart?&amp;product=" + p.getProduct().getId() + "&amp;old="

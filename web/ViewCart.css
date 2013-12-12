@@ -85,6 +85,22 @@ td.quant {
     text-align:center;
 }
 
+td.quant * {
+    display: inline;
+    margin: 0px 2px;
+}
+
+input#add, input#minus {
+    padding: 0px 2px;
+}
+
+div#buttom_mod {
+    width: 100px;
+    text-align:right;
+}
+
+
+
 td.suppr {
     /*border-bottom: 2px solid rgb(153, 153, 153);*/
     text-align: center;
@@ -110,3 +126,4 @@ div.info {
 input#valid {
     margin: 5px 0px 0px 50px;
 }
+
