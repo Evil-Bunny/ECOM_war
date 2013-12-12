@@ -7,6 +7,7 @@ package web;
 import command.Cart;
 import command.LineCommand;
 import ejb.ClientFacade;
+import ejb.CommandFacade;
 import ejb.ProductFacade;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -29,6 +30,8 @@ public class DelToCart extends HttpServlet {
     ClientFacade cif;
     @EJB
     ProductFacade pf;
+    @EJB
+    CommandFacade cf;
     private Cart cart;
 
     /**
@@ -46,26 +49,43 @@ public class DelToCart extends HttpServlet {
         Enumeration paramNames = request.getParameterNames();
         if (paramNames.hasMoreElements()) {
             HttpSession session = request.getSession(true);
-            
+
             if (session.getAttribute("client") == null) {
                 cart = (Cart) session.getAttribute("cart");
             } else {
                 cart = (Cart) ((Client) session.getAttribute("client")).getCart();
             }
-            
-            if(cart != null) {
-                Product p = pf.find(new Long(request.getParameter("product")));
-                if (p != null) {
-                    p.setStock(p.getStock() + cart.getQuantity(p));
-                    cart.delProduct(new LineCommand(p, p.getStock()));
-                    if (session.getAttribute("client") == null) {
-                        session.setAttribute("cart", cart);
-                    } else {
-                        ((Client) session.getAttribute("client")).setCart(cart);
-                        cif.edit((Client) session.getAttribute("client"));
+
+            if (cart != null) {
+//                LineCommand p = pf.find(new Long(request.getParameter("product")));
+//                if (p != null) {
+                Product p = null;
+                LineCommand lineCommand = null;
+
+                for (LineCommand lc : cart.getProducts()) {
+                    System.out.println(lc.getProduct().getId() + ":  " + request.getParameter("product"));
+                    if (lc.getProduct().getId().equals(new Long(request.getParameter("product")))) {
+                        lineCommand = lc;
+                        System.out.println("trouvééééééééééééé");
+                        break;
                     }
+                }
+
+                if (lineCommand != null) {
+                    p = lineCommand.getProduct();
+                    System.out.println(p.getId());
+                    p.setStock(p.getStock() + cart.getQuantity(p));
+                    cart.getProducts().remove(lineCommand);
                     pf.edit(p);
                 }
+
+                if (session.getAttribute("client") == null) {
+                    session.setAttribute("cart", cart);
+                } else {
+                    ((Client) session.getAttribute("client")).setCart(cart);
+                    cf.edit(cart);
+                }
+                cf.edit(cart);
             }
         }
         response.sendRedirect(response.encodeRedirectURL("?" + request.getParameter("old")));
