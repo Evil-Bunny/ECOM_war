@@ -40,7 +40,7 @@ public class Login extends AbstractPage {
                 out.println("<h3>Identifiant ou de mot de passe inconnu</h3>");
                 out.println("        <form name=\"register\" action=\"?page=Login\" method=\"POST\">\n"
                         + "            <label for=\"username\">Identifiant : "
-                        + "            <input id=\"username\" type=\"text\" name=\"username\" value=\""+request.getParameter("username")+"\" /></label><br/>\n"
+                        + "            <input id=\"username\" type=\"text\" name=\"username\" value=\""+HTMLEncode(request.getParameter("username"))+"\" /></label><br/>\n"
                         + "            <label for=\"pass\">Mot de passe : "
                         + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" /> </label>  <br/>     \n"
                         + "            <input id=\"button\" type=\"submit\" value=\"Se connecter\" />\n"
