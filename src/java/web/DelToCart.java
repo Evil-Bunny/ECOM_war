@@ -59,25 +59,31 @@ public class DelToCart extends HttpServlet {
             if (cart != null) {
 //                LineCommand p = pf.find(new Long(request.getParameter("product")));
 //                if (p != null) {
-                Product p = null;
-                LineCommand lineCommand = null;
-
+                Product p;
+                int indexProd;
                 for (LineCommand lc : cart.getProducts()) {
                     System.out.println(lc.getProduct().getId() + ":  " + request.getParameter("product"));
                     if (lc.getProduct().getId().equals(new Long(request.getParameter("product")))) {
-                        lineCommand = lc;
-                        System.out.println("trouvééééééééééééé");
+                        p = lc.getProduct();
+                        System.out.println("trouvééééééééééééé : "+p);
+                        p.setStock(p.getStock() + cart.getQuantity(p));
+                        indexProd = cart.IndexProduit(p);
+                        System.out.println("index: "+indexProd);
+                        if(indexProd != -1) {
+                            cart.getProducts().remove(indexProd);
+                            System.out.println("trouvééé index: "+indexProd);
+                        }
+                        pf.edit(p);
                         break;
                     }
                 }
 
-                if (lineCommand != null) {
-                    p = lineCommand.getProduct();
-                    System.out.println(p.getId());
+                /*if (p != null) {
+                    System.out.println("trouvé : "+p );
                     p.setStock(p.getStock() + cart.getQuantity(p));
                     cart.getProducts().remove(lineCommand);
                     pf.edit(p);
-                }
+                }*/
 
                 if (session.getAttribute("client") == null) {
                     session.setAttribute("cart", cart);

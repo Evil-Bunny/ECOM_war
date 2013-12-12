@@ -6,10 +6,10 @@
         Purpose of the stylesheet follows.
 */
 
-h2 {
+p {
     /*color: #00a300;*/
-    font-family: "Courier New";
-    font-size: 125%;
+    /*font-family: "Courier New";*/
+    font-size: 110%;
     margin:3px 3px -5px;
     padding-bottom: 20px;
 }
@@ -66,17 +66,16 @@ td.tittleTotal{
     border-bottom: 2px solid rgb(153, 153, 153);
 }
 
-td.lineTotal1{
+td.lineTotal1, td.lineTotal3 {
     border-right: none;
     border-top: 2px solid rgb(153, 153, 153);
     background: #e9f0e9;
 }
 
-td.lineTotal2{
+td.lineTotal2 {
     border-top: 2px solid rgb(153, 153, 153);
     background: #e9f0e9;
 }
-
 
 td.price {
     text-align:right;
@@ -87,9 +86,13 @@ td.quant {
 }
 
 td.suppr {
-    border-bottom: 2px solid rgb(153, 153, 153);
+    /*border-bottom: 2px solid rgb(153, 153, 153);*/
     text-align: center;
     width: 70px;
+}
+
+td:last-child(suppr) {
+    border-bottom: 2px solid rgb(153, 153, 153);
 }
 
 td.quant, td.price, td.priceLine {

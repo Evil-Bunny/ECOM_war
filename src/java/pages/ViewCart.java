@@ -46,13 +46,13 @@ public class ViewCart extends AbstractPage {
                  Prod = Prod + p.getQuantity();
              }
              if(Prod <= 0){
-                 out.println("<h2>Votre panier ne contient aucun élément</h2>");
+                 out.println("<p>Votre panier ne contient aucun élément</p>");
              }
              else if(Prod == 1){
-                 out.println("<h2>Votre panier contient "+ Prod  +" élément</h2>");
+                 out.println("<p>Votre panier contient "+ Prod  +" élément</p>");
              }
              else if(Prod > 1){
-                 out.println("<h2>Votre panier contient "+ Prod  +" éléments</h2>");
+                 out.println("<p>Votre panier contient "+ Prod  +" éléments</p>");
              }
             
              if (Prod > 0) {
@@ -72,7 +72,7 @@ public class ViewCart extends AbstractPage {
                     //out.println( + "x " +  + " : " + String.format("<div class='price'>%.2f &euro;</div>", p.storePrice()) + "<br/>");
                 }
                 out.println("<tr><td class='lineTotal1'></td><td class='lineTotal2'></td><td class='tittleTotal'>Total : </td><td class='priceTotal'>"
-                        + String.format("%.2f &euro;", cart.getTotal()) +"</td></tr> ");
+                        + String.format("%.2f &euro;", cart.getTotal()) +"</td><td class='lineTotal3'></td></tr> ");
                 out.println("</table>");
                 out.println("<button type=\"button\" id=\"valid\">Acheter le Panier (TODO)</button>");
              }
