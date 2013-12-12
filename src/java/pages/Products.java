@@ -171,7 +171,7 @@ public class Products extends AbstractPage {
         for (Product p : products) {
             Category category = p.getCategorie();
             out.println("<li><a href='?page=Product&amp;id="+p.getId()+"'>");
-            out.println("<img src='img/category.png' alt='' height='100px' width='100px' style='background:white;'/>");
+            out.println("<img src='img/prod/"+p.getId()+".jpg' alt='' height='100px' width='100px' style='background:white;'/>");
             out.println("</a><div class='prod_right'>");
             out.println(String.format("<div class='price'>%.2f &euro;</div>", p.getPrice()));
             if (p.getStock() == 0) {
