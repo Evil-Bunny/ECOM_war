@@ -76,10 +76,10 @@ public class ConfirmAddress extends AbstractPage {
                     + "<textarea style=\"resize:none\" rows=\"4\" cols=\"50\" name=\"addressLivr\">" + c.getAddressDelivery().getName() + "</textarea></fieldset><br />"
                     
                     + "<fieldset><legend>Contact</legend>"
-                    + "<label for=\"mail\">E-mail de contact : </label>"
-                    + "            <input id=\"input_mail\" type=\"text\" name=\"mail\" value=\"\" /><br/>\n"
-                    + "<label for=\"tel\">Téléphone de contact : </label>"
-                    + "            <input id=\"input_tel\" type=\"text\" name=\"tel\" value=\"\" /><fieldset/>\n"
+                    + "<label for=\"mail\">E-mail : </label>"
+                    + "            <input id=\"input_mail\" type=\"text\" name=\"mail\" value=\"" + c.getMail() + "\" /><br/>\n"
+                    + "<label for=\"tel\">Téléphone : </label>"
+                    + "            <input id=\"input_tel\" type=\"text\" name=\"tel\" value=\"\" /></fieldset>\n"
                     
                     + "<input id=\"confirm\" type=\"submit\" value=\"Confirmer les informations\" />"
                     + "</form>");
