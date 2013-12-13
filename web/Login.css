@@ -36,14 +36,16 @@
 
 #content input {
     float: right;
-    width: 28ex;
+    width: 26ex;
     margin-right: 150px;
 }
 
 #content form {
     margin-top: 15px;
 }
-
+#content a {
+    margin-left:25px;
+}
 #content input#button {
      width: 150px;
      margin-right: 175px;

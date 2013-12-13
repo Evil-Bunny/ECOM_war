@@ -47,7 +47,8 @@ public class Login extends AbstractPage {
                         + "            <label for=\"pass\">Mot de passe : "
                         + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" /> </label>  <br/>     \n"
                         + "            <input id=\"button\" type=\"submit\" value=\"Se connecter\" />\n"
-                        + "        </form>");
+                        + "        </form>"
+                        +"<a href=\"?page=RegisterClient\">Pas encore inscrit ?</a>");
             }
 
         } else {
@@ -58,7 +59,8 @@ public class Login extends AbstractPage {
                     + "            <label for=\"pass\">Mot de passe : "
                     + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" />  </label> <br/>     \n"
                     + "            <input id=\"button\" type=\"submit\" value=\"Se connecter\" />\n"
-                    + "        </form>");
+                    + "        </form>"
+                    +"<a href=\"?page=RegisterClient\">Pas encore inscrit ?</a>");
 
         }
     }
