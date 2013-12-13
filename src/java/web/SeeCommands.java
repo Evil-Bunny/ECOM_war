@@ -4,40 +4,34 @@
  */
 package web;
 
-import ejb.ClientFacade;
-import command.Cart;
+import command.Command;
 import command.LineCommand;
-import ejb.CartFacade;
-import product.Product;
-import ejb.ProductFacade;
+import ejb.CommandFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import product.Manufacturer;
-import product.type.Category;
+import pages.HTTPRedirect;
+import product.Product;
 import user.Client;
 
 /**
  *
  * @author Samy
  */
-@WebServlet(name = "testCart", urlPatterns = {"/testCart"})
-public class testCart extends HttpServlet {
+public class SeeCommands extends HttpServlet {
 
     @EJB
-    private ProductFacade pef;
-    private Cart cart;
-    @EJB
-    private CartFacade cef;
-    @EJB
-    private ClientFacade cif;
+    CommandFacade cf;
 
     /**
      * Processes requests for both HTTP
@@ -54,54 +48,47 @@ public class testCart extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session = request.getSession(true);
-            if (session.getAttribute("client") == null) {
-                if (session.getAttribute("cart") != null) {
-                    cart = (Cart) session.getAttribute("cart");
-                } else {
-                    session.setAttribute("cart", new Cart());
-                    cart = (Cart) session.getAttribute("cart");
-                }
-            } else {
-                cart = (Cart) ((Client) session.getAttribute("client")).getCart();
-            }
-            response.sendRedirect("/Home");
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet testCart</title>");
+            out.println("<title>Servlet VoirCommandes</title>");
             out.println("</head>");
-            out.println("<body>");
-            Enumeration paramNames = request.getParameterNames();
-            if (!paramNames.hasMoreElements()) {
-                out.println("<h1>Voici le Cart</h1>");
-                for (LineCommand p : cart.getProducts()) {
-                    out.println(p.toString());
-                }
-
+            HttpSession session = request.getSession(true);
+            if (session.getAttribute("client") == null) {
+                throw new HTTPRedirect(".");
             } else {
-                out.println("<h1>Merci de l'achat pigeon</h1>");
-                Manufacturer m = new Manufacturer();
-                Category c = new Category();
-                Product pe = new Product();
+                List<Command> commands = ((Client) session.getAttribute("client")).getCommands();
+                for (Command command : commands) {
+                    out.println("commande n° " + command.getId() + " :");
 
-                m.setName(request.getParameter("brand"));
-                c.setCategorie(request.getParameter("category"));
-                pe.setBrand(m);
-                pe.setCategorie(c);
-                pe.setName(request.getParameter("name"));
-                pe.setPrice(Float.parseFloat(request.getParameter("price")));
-                pef.create(pe);
-                cart.setQuantity(pe, 1);
+                    out.println("<table>");
+                    out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th><th>Supprimer</th></tr>");
+                    for (LineCommand lc : command.getProducts()) {
+                            out.print("<tr><td class='prems'><div class='info'><a href=\"?page=Product&id=" + lc.getProduct().getId()
+                                    + "\">" + lc.getProduct().getName() + "</a>"
+                                    + "</div></td><td class='quant'><p id='nb'>" + lc.getQuantity()
+                                    + "</p>");
+                            out.println("</td><td class='price'>"
+                                    + String.format("%.2f &euro;", lc.getProduct().getPrice()) + "</td><td class='priceLine'>"
+                                    + String.format("%.2f &euro;", lc.getPrice()) + "</td></tr>");
+                    }
+                    out.println("<tr><td class='lineTotal1'></td><td class='lineTotal2'></td><td class='tittleTotal'>Total : </td><td class='priceTotal'>"
+                            + String.format("%.2f &euro;", command.getTotal()) + "</td><td class='lineTotal3'></td></tr> ");
+                    out.println("</table>");
 
-                if (session.getAttribute("client") == null) {
-                    session.setAttribute("cart", cart);
-                } else {
-                    ((Client) session.getAttribute("client")).setCart(cart);
-                    cif.edit((Client) session.getAttribute("client"));
                 }
-
             }
+
+
+
+
+
+
+
+
+            out.println("<body>");
+            out.println("<h1>Servlet VoirCommandes at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } finally {

@@ -21,7 +21,7 @@ public class SessionManagerBean implements HttpSessionListener {
 //    @EJB
     private Cart pan;
     @EJB
-    private CommandFacade cef;
+    private CartFacade cef;
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
