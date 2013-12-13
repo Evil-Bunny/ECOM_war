@@ -96,7 +96,7 @@ public class ViewCart extends AbstractPage {
                 out.println("<tr><td class='lineTotal1'></td><td class='lineTotal2'></td><td class='tittleTotal'>Total : </td><td class='priceTotal'>"
                         + String.format("%.2f &euro;", cart.getTotal()) +"</td><td class='lineTotal3'></td></tr> ");
                 out.println("</table>");
-                out.println("<button type=\"button\" id=\"valid\">Acheter le Panier (TODO)</button>");
+                out.println("<form method=\"POST\" action=\"?page=ConfirmAddress\"><input id=\"valid\" type=\"submit\"  value=\"Acheter le Panier\"/></form>");
              }
         } else if (request.getParameter("menu") == null) {
             Integer total = 0;
