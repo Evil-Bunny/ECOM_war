@@ -100,6 +100,10 @@
         <servlet-name>ModifQuant</servlet-name>
         <servlet-class>web.ModifQuant</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConfirmPanier</servlet-name>
+        <servlet-class>pages.ConfirmPanier</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
@@ -199,6 +203,10 @@
     <servlet-mapping>
         <servlet-name>ModifQuant</servlet-name>
         <url-pattern>/ModifQuant</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmPanier</servlet-name>
+        <url-pattern>/ConfirmPanier</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
