@@ -107,3 +107,16 @@ function checkAccount() {
     ok &= check("mail", /.@./, "Adresse e-mail invalide");
     return ok === 1;    
 }
+
+function checkConfirmAddress() {
+    var ok = 1;
+    ok &= check("nameFact", /./, "Champ requis");
+    ok &= check("surnameFact", /./, "Champ requis");
+    ok &= check("addressFact", /./, "Champ requis");
+    ok &= check("nameLivr", /./, "Champ requis");
+    ok &= check("surnameLivr", /./, "Champ requis");
+    ok &= check("addressLivr", /./, "Champ requis");
+    ok &= check("mail", /.@./, "Adresse e-mail invalide");
+    ok &= check("tel", /./, "Champ requis");
+    return ok === 1;    
+}
