@@ -104,6 +104,10 @@
         <servlet-name>SeeCommands</servlet-name>
         <servlet-class>web.SeeCommands</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>populusDatabasusImages</servlet-name>
+        <servlet-class>web.populusDatabasusImages</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
@@ -207,6 +211,10 @@
     <servlet-mapping>
         <servlet-name>SeeCommands</servlet-name>
         <url-pattern>/SeeCommands</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>populusDatabasusImages</servlet-name>
+        <url-pattern>/populusDatabasusImages</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

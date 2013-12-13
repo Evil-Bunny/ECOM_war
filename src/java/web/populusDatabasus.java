@@ -4,6 +4,7 @@
  */
 package web;
 
+import com.google.common.io.Files;
 import command.Cart;
 import ejb.CategoryFacade;
 import ejb.CharacteristicFacade;
@@ -11,6 +12,7 @@ import ejb.ClientFacade;
 import ejb.HomeAdFacade;
 import ejb.ManufacturerFacade;
 import ejb.ProductFacade;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -193,7 +195,6 @@ public class populusDatabasus extends HttpServlet {
                 chf.edit(ch);
             }
 
-
             for (int i = 0; i < subCategories.size(); i++) {
                 c = cf.findByName((String) ((ArrayList) subCategories.get(i)).get(0));
                 for (int j = 1; j < 4; j++) {
@@ -244,6 +245,7 @@ public class populusDatabasus extends HttpServlet {
         } finally {
             out.close();
         }
+        response.sendRedirect("populusDatabasusImages");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
