@@ -31,47 +31,35 @@ public class SeeCommands extends AbstractPage {
 
     @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
-                   out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VoirCommandes</title>");
-            out.println("</head>");
             HttpSession session = request.getSession(true);
             if (session.getAttribute("client") == null) {
                 throw new HTTPRedirect(".");
             } else {
                 List<Command> commands = ((Client) session.getAttribute("client")).getCommands();
-                for (Command command : commands) {
-                    out.println("commande n° " + command.getId() + " :");
+                if (commands.isEmpty()){
+                    out.println("<p>Aucune commande n'est enregistrée pour votre profil.<p/>");
+                } else {
+                    out.println("toto");
+                    for (Command command : commands) {
+                        out.println("commande n° " + command.getId() + " :");
 
-                    out.println("<table>");
-                    out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th><th>Supprimer</th></tr>");
-                    for (LineCommand lc : command.getProducts()) {
-                            out.print("<tr><td class='prems'><div class='info'><a href=\"?page=Product&id=" + lc.getProduct().getId()
-                                    + "\">" + lc.getProduct().getName() + "</a>"
-                                    + "</div></td><td class='quant'><p id='nb'>" + lc.getQuantity()
-                                    + "</p>");
-                            out.println("</td><td class='price'>"
-                                    + String.format("%.2f &euro;", lc.getProduct().getPrice()) + "</td><td class='priceLine'>"
-                                    + String.format("%.2f &euro;", lc.getPrice()) + "</td></tr>");
+                        out.println("<table>");
+                        out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th><th>Supprimer</th></tr>");
+                        for (LineCommand lc : command.getProducts()) {
+                                out.print("<tr><td class='prems'><div class='info'><a href=\"?page=Product&id=" + lc.getProduct().getId()
+                                        + "\">" + lc.getProduct().getName() + "</a>"
+                                        + "</div></td><td class='quant'><p id='nb'>" + lc.getQuantity()
+                                        + "</p>");
+                                out.println("</td><td class='price'>"
+                                        + String.format("%.2f &euro;", lc.getProduct().getPrice()) + "</td><td class='priceLine'>"
+                                        + String.format("%.2f &euro;", lc.getPrice()) + "</td></tr>");
+                        }
+                        out.println("<tr><td class='lineTotal1'></td><td class='lineTotal2'></td><td class='tittleTotal'>Total : </td><td class='priceTotal'>"
+                                + String.format("%.2f &euro;", command.getTotal()) + "</td><td class='lineTotal3'></td></tr> ");
+                        out.println("</table>");
+
                     }
-                    out.println("<tr><td class='lineTotal1'></td><td class='lineTotal2'></td><td class='tittleTotal'>Total : </td><td class='priceTotal'>"
-                            + String.format("%.2f &euro;", command.getTotal()) + "</td><td class='lineTotal3'></td></tr> ");
-                    out.println("</table>");
-
                 }
             }
-
-
-
-
-
-
-
-
-            out.println("<body>");
-            out.println("<h1>Servlet VoirCommandes at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
     }
 }

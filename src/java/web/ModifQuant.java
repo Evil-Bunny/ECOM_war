@@ -89,7 +89,6 @@ public class ModifQuant extends HttpServlet {
                     session.setAttribute("cart", cart);
                 } else {
                     ((Client) session.getAttribute("client")).setCart(cart);
-                    cf.edit(cart);
                 }
                 cf.edit(cart);
             }
