@@ -2,7 +2,7 @@ package pages;
 
 import command.Cart;
 import ejb.ClientFacade;
-import ejb.CommandFacade;
+import ejb.CartFacade;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ public class Login extends AbstractPage {
     @EJB
     ClientFacade cif;
     @EJB
-    private CommandFacade cef;
+    private CartFacade cef;
 
     @Override
     protected String getTitle(HttpServletRequest request) {

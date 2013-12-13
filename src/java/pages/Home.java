@@ -36,8 +36,8 @@ public class Home extends AbstractPage {
             "    <div id=\"PresHome\">\n" +
             "        <h2>Evil Bunny</h2>\n" +
             "        <p id ='TextHome'>\n" +
-            "            Votre site de E-commerce spécialisé dans la vente de matériel informatique rétro.</br>\n" +
-            "            Du matériel d'occasion à votre disposition pour un prix incomparable.</br>\n" +
+            "            Votre site de E-commerce spécialisé dans la vente de matériel informatique rétro.<br/>\n" +
+            "            Du matériel d'occasion à votre disposition pour un prix incomparable.<br/>\n" +
             "            Présent pour vous satisfaire depuis 2014.\n" +
             "        </p>\n" +
             "    </div>\n" +
@@ -63,7 +63,7 @@ public class Home extends AbstractPage {
             return;
         }
         out.println("<td><a href='?page=Product&amp;id="+ad.getProduct().getId()+"'>");
-        out.println("<img alt='' src='img/category.png' width='256px' height='150px' style='background: white'/>");
+        out.println("<img alt='' src='img/home/"+ad.getId()+".jpg' width='256px' height='150px'/>");
         out.println(String.format("<span class='price'>%.2f &euro;</span>", ad.getProduct().getPrice()));
         out.println("<div class='name'>"+HTMLEncode(ad.getName())+"</div>");
         out.println("</a></td>");
