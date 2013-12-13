@@ -101,8 +101,12 @@
         <servlet-class>web.ModifQuant</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ConfirmPanier</servlet-name>
+        <servlet-class>pages.ConfirmPanier</servlet-class>
+    </servlet>
+    <servlet>        
         <servlet-name>SeeCommands</servlet-name>
-        <servlet-class>web.SeeCommands</servlet-class>
+        <servlet-class>pages.SeeCommands</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>populusDatabasusImages</servlet-name>
@@ -209,6 +213,10 @@
         <url-pattern>/ModifQuant</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ConfirmPanier</servlet-name>
+        <url-pattern>/ConfirmPanier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>        
         <servlet-name>SeeCommands</servlet-name>
         <url-pattern>/SeeCommands</url-pattern>
     </servlet-mapping>
