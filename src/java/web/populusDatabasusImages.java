@@ -5,6 +5,7 @@
 package web;
 
 import com.google.common.io.Files;
+import ejb.HomeAdFacade;
 import ejb.ProductFacade;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import product.HomeAd;
 import product.Product;
 
 /**
@@ -25,6 +27,9 @@ public class populusDatabasusImages extends HttpServlet {
 
     @EJB
     ProductFacade pf;
+    
+    @EJB
+    HomeAdFacade haf;
     
     /**
      * Processes requests for both HTTP
@@ -45,6 +50,12 @@ public class populusDatabasusImages extends HttpServlet {
             Files.copy(
                     new File(getServletContext().getRealPath("img/prod/pDb_"+rand.nextInt(3)+".jpg")),
                     new File(getServletContext().getRealPath("img/prod/"+p.getId()+".jpg")));
+        }
+        
+        for (HomeAd ad : haf.findAll()) {
+            Files.copy(
+                    new File(getServletContext().getRealPath("img/home/pDb_"+rand.nextInt(2)+".jpg")),
+                    new File(getServletContext().getRealPath("img/home/"+ad.getId()+".jpg")));
         }
     }
 
