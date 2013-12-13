@@ -78,7 +78,11 @@
                 <% } else { %>
                 <div id="log">
                     <span>Vous êtes connectés en tant que <%=((Client)request.getSession(true).getAttribute("client")).getUsername()%></span>
-                    <a href="?page=Account">Voir mon compte</a>
+                    <ul>
+                        <li><a href="?page=Account">Voir mon compte</a></li>
+                        <li><a href="?page=SeeCommands">Voir mes commandes</a></li>
+                        <li><a href="Logout">Déconnexion</a></li>
+                    </ul>
                 </div>
                 <% } %>
             </div><!--left-->
