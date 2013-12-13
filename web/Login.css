@@ -43,7 +43,9 @@
 #content form {
     margin-top: 15px;
 }
-
+#content a {
+    margin-left:25px;
+}
 #content input#button {
      width: 150px;
      margin-right: 175px;
