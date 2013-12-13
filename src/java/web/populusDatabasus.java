@@ -195,8 +195,6 @@ public class populusDatabasus extends HttpServlet {
                 chf.edit(ch);
             }
 
-            Long prodid;
-            Random rand = new Random();
             for (int i = 0; i < subCategories.size(); i++) {
                 c = cf.findByName((String) ((ArrayList) subCategories.get(i)).get(0));
                 for (int j = 1; j < 4; j++) {
@@ -218,10 +216,6 @@ public class populusDatabasus extends HttpServlet {
                     }
                     p.setProductCaracteristics(lcs);
                     pf.edit(p);
-                    prodid = pf.findAdvanced(null, null, p.getName(), false, 0, 0, new ArrayList()).get(0).getId();
-                    Files.copy(
-                            new File(getServletContext().getRealPath("img/prod/pDb_"+rand.nextInt(3)+".jpg")),
-                            new File(getServletContext().getRealPath("img/prod/"+prodid+".jpg")));
                 }
             }
 
@@ -251,6 +245,7 @@ public class populusDatabasus extends HttpServlet {
         } finally {
             out.close();
         }
+        response.sendRedirect("populusDatabasusImages");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
