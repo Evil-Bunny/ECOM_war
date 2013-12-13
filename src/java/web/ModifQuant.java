@@ -7,7 +7,7 @@ package web;
 import command.Cart;
 import command.LineCommand;
 import ejb.ClientFacade;
-import ejb.CommandFacade;
+import ejb.CartFacade;
 import ejb.ProductFacade;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -31,7 +31,7 @@ public class ModifQuant extends HttpServlet {
     @EJB
     ProductFacade pf;
     @EJB
-    CommandFacade cf;
+    CartFacade cf;
     private Cart cart;
 
     /**
