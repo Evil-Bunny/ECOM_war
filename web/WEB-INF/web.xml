@@ -102,7 +102,7 @@
     </servlet>
     <servlet>
         <servlet-name>SeeCommands</servlet-name>
-        <servlet-class>web.SeeCommands</servlet-class>
+        <servlet-class>pages.SeeCommands</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>populusDatabasusImages</servlet-name>
