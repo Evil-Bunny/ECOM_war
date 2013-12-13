@@ -4,6 +4,7 @@
  */
 package web;
 
+import com.google.common.io.Files;
 import command.Cart;
 import ejb.CategoryFacade;
 import ejb.CharacteristicFacade;
@@ -11,6 +12,7 @@ import ejb.ClientFacade;
 import ejb.HomeAdFacade;
 import ejb.ManufacturerFacade;
 import ejb.ProductFacade;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -193,7 +195,8 @@ public class populusDatabasus extends HttpServlet {
                 chf.edit(ch);
             }
 
-
+            Long prodid;
+            Random rand = new Random();
             for (int i = 0; i < subCategories.size(); i++) {
                 c = cf.findByName((String) ((ArrayList) subCategories.get(i)).get(0));
                 for (int j = 1; j < 4; j++) {
@@ -215,6 +218,10 @@ public class populusDatabasus extends HttpServlet {
                     }
                     p.setProductCaracteristics(lcs);
                     pf.edit(p);
+                    prodid = pf.findAdvanced(null, null, p.getName(), false, 0, 0, new ArrayList()).get(0).getId();
+                    Files.copy(
+                            new File(getServletContext().getRealPath("img/prod/pDb_"+rand.nextInt(3)+".jpg")),
+                            new File(getServletContext().getRealPath("img/prod/"+prodid+".jpg")));
                 }
             }
 

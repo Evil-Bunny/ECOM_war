@@ -141,23 +141,6 @@ public class addProd extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP
-     * <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-
-    }
-
     /**
      * Handles the HTTP
      * <code>POST</code> method.
@@ -192,11 +175,11 @@ public class addProd extends HttpServlet {
 
         }
         Enumeration<String> paramsNames = request.getParameterNames();
-        String parName = new String();
-        String charName = new String();
-        String charVal = new String();
-        String parVal = new String();
-        ArrayList<LineCharacteristic> list = new ArrayList<LineCharacteristic>();
+        String parName;
+        String charName;
+        String charVal;
+        String parVal;
+        ArrayList<LineCharacteristic> list = new ArrayList();
         while (paramsNames.hasMoreElements()) {
 
             parName = paramsNames.nextElement();
@@ -233,7 +216,7 @@ public class addProd extends HttpServlet {
             InputStream i = request.getPart("image").getInputStream();
             FileOutputStream s = new FileOutputStream(new File(getServletContext().getRealPath("img/prod/"+prodid+".jpg")));
             		byte[] bytes = new byte[1024];
-                int read = 0;
+                int read;
 		while ((read = i.read(bytes)) != -1) {
 			s.write(bytes, 0, read);
 		}
@@ -244,6 +227,23 @@ public class addProd extends HttpServlet {
             out.print(e.getMessage());
         }
 
+
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP
+     * <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
 
     }
 
