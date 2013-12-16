@@ -48,10 +48,12 @@ public class ViewCart extends AbstractPage {
         } else {
             cart = (Cart) ((Client) session.getAttribute("client")).getCart();
         }
+        //cf.edit(cart);
 
         if (request.getParameter("total") == null && request.getParameter("menu") == null) {
             int Prod = 0;
-             for (LineCommand p : cart.getProducts()) {
+            
+             for (LineCommand p : /*cf.find(cart).getProducts()*/cart.getProducts()) {
                  Prod = Prod + p.getQuantity();
              }
              if(Prod <= 0){
@@ -77,8 +79,7 @@ public class ViewCart extends AbstractPage {
                                 + "<input type=\"hidden\" name=\"id\" value=\""+ p.getProduct().getId() +"\" />"
                                 + "<input type=\"hidden\" name=\"do\" value=\"add\" />"
                                 + "<input id=\"add\" type=\"submit\" value=\"+\"");
-                        
-                        if(pf.find(p.getProduct().getId()).getStock() <= 0){
+                        if(p.getProduct().getStock() <= 0){
                             out.print(" disabled=\"disabled\"");
                         }
                                 
@@ -88,7 +89,7 @@ public class ViewCart extends AbstractPage {
                                 + "<input type=\"hidden\" name=\"do\" value=\"minus\" />"
                                 + "<input id=\"minus\" type=\"submit\" value=\"-\"");
                         
-                        if(/*cf.find(cart.getId()).getQuantity(p.getProduct())*/cart.getQuantity(p.getProduct()) <= 1){
+                        if(cart.getQuantity(p.getProduct()) <= 1){
                             out.print(" disabled=\"disabled\"");
                         }
                                 

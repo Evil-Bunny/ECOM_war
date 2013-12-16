@@ -32,7 +32,7 @@ public class SessionManagerBean implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
 
-        cef.create(pan);
+        
     }
 
     public Cart getCart() {

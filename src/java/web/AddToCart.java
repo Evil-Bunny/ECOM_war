@@ -60,7 +60,6 @@ public class AddToCart extends HttpServlet {
 
             Product p = pf.find(new Long(request.getParameter("product")));
             if (p.getStock() > 0) {
-                p.setStock(p.getStock() - 1);
                 if (cart.getQuantity(p) != null) {
                     cart.setQuantity(p, cart.getQuantity(p) + 1);
                 } else {

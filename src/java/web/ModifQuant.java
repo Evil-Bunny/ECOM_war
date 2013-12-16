@@ -32,7 +32,7 @@ public class ModifQuant extends HttpServlet {
     ProductFacade pf;
     @EJB
     CartFacade cf;
-    private Cart cart;
+    //private Cart cart;
 
     /**
      * Processes requests for both HTTP
@@ -46,6 +46,7 @@ public class ModifQuant extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Cart cart;
         Enumeration paramNames = request.getParameterNames();
         if (paramNames.hasMoreElements()) {
             HttpSession session = request.getSession(true);
@@ -59,32 +60,33 @@ public class ModifQuant extends HttpServlet {
             if (cart != null) {
                 Product p;
                 String todo;
-                for (LineCommand lc : cart.getProducts()) {
-                    if (lc.getProduct().getId().equals(new Long(request.getParameter("id")))) {
-                        //p = lc.getProduct();
-                        p = pf.find(lc.getProduct().getId());
-                        if(p != null) {
-                            todo = request.getParameter("do");
-                            if (todo!=null && todo.equals("add")){
-                                //System.out.print(p.getStock());
-                                if(p.getStock()>=1) {
-                                    p.setStock(p.getStock() - 1);
-                                    lc.setQuantity(lc.getQuantity()+1);
-                                }
-                            } else if (todo!=null && todo.equals("minus")) {
-                                if (lc.getQuantity() > 0) {
-                                    p.setStock(p.getStock() + 1);
-                                    lc.setQuantity(lc.getQuantity()-1);
-                                    if(lc.getQuantity() == 0) {
-                                        int indexProd = cart.IndexProduit(p);
-                                        if(indexProd != -1) {
-                                            cart.getProducts().remove(indexProd);
-                                        }
-                                    }
+                p = pf.find(new Long(request.getParameter("id")));
+                if (p != null) {
+                    todo = request.getParameter("do");
+                    if (todo != null && todo.equals("add")) {
+                        if (p.getStock() >= 1) {
+                            if (cart.getQuantity(p) != null) {
+                                cart.setQuantity(p, cart.getQuantity(p) + 1);
+                            }
+                        }
+                    } else if (todo != null && todo.equals("minus")) {
+                        if (cart.getQuantity(p) != null && cart.getQuantity(p) > 0) {
+                            cart.setQuantity(p, cart.getQuantity(p) - 1);
+                            if (cart.getQuantity(p) == 0) {
+                                int indexProd = cart.IndexProduit(p);
+                                if (indexProd != -1) {
+                                    cart.getProducts().remove(indexProd);
                                 }
                             }
-                            pf.edit(p);
-                            break;
+                        }
+                    }
+                    pf.edit(p);
+                    
+                    for (LineCommand lc : cart.getProducts()) {
+                        if (lc.getProduct().equals(p))
+                        {
+                         System.out.println(lc.getProduct().getStock());
+
                         }
                     }
                 }
@@ -93,13 +95,14 @@ public class ModifQuant extends HttpServlet {
                     session.setAttribute("cart", cart);
                 } else {
                     ((Client) session.getAttribute("client")).setCart(cart);
-                }
-                cf.edit(cart);
+                    cf.edit(cart);
+                }  
             }
         }
         response.sendRedirect(response.encodeRedirectURL("?page=ViewCart"));
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP
      * <code>GET</code> method.
