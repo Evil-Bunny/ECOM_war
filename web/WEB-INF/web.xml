@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>test</servlet-name>
-        <servlet-class>web.test</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>RegisterClient</servlet-name>
         <servlet-class>pages.RegisterClient</servlet-class>
     </servlet>
@@ -104,7 +100,7 @@
         <servlet-name>ConfirmPanier</servlet-name>
         <servlet-class>pages.ConfirmPanier</servlet-class>
     </servlet>
-    <servlet>        
+    <servlet>
         <servlet-name>SeeCommands</servlet-name>
         <servlet-class>pages.SeeCommands</servlet-class>
     </servlet>
@@ -112,10 +108,6 @@
         <servlet-name>populusDatabasusImages</servlet-name>
         <servlet-class>web.populusDatabasusImages</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>test</servlet-name>
-        <url-pattern>/test</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RegisterClient</servlet-name>
         <url-pattern>/RegisterClient</url-pattern>
@@ -216,7 +208,7 @@
         <servlet-name>ConfirmPanier</servlet-name>
         <url-pattern>/ConfirmPanier</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>        
+    <servlet-mapping>
         <servlet-name>SeeCommands</servlet-name>
         <url-pattern>/SeeCommands</url-pattern>
     </servlet-mapping>
