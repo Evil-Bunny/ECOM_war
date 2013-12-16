@@ -86,9 +86,7 @@
                 </div>
                 <% } %>
             </div><!--left-->
-            <div id="ariane">
-                <jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Ariane"/></jsp:include>
-            </div>
+            <jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Ariane"/></jsp:include>
             <div id="content">
                 <% try { %>
                     <jsp:include page="<%=requestPage%>"/>

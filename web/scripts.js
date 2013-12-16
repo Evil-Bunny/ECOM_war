@@ -117,6 +117,6 @@ function checkConfirmAddress() {
     ok &= check("surnameLivr", /./, "Champ requis");
     ok &= check("addressLivr", /./, "Champ requis");
     ok &= check("input_mail", /.@./, "Adresse e-mail invalide");
-    ok &= check("input_tel", /./, "Champ requis");
+    ok &= check("input_tel", /.../, "Numéro de téléhpone invalide");
     return ok === 1;    
 }

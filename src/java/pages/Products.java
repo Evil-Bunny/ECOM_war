@@ -212,11 +212,16 @@ public class Products extends AbstractPage {
         nbPages = (products.size()-1)/PRODUCTSBYPAGE +1;
         products = products.subList(start, Math.min(products.size(),start+PRODUCTSBYPAGE));
         
+        if (products.isEmpty()) {
+            out.println("Aucun produit ne correspond à ces critères.");
+            return;
+        }
+        
         out.println("<ul id='list_products'>");
         for (Product p : products) {
             Category category = p.getCategorie();
             out.println("<li><a href='?page=Product&amp;id="+p.getId()+"'>");
-            out.println("<img src='img/prod/"+p.getId()+".jpg' alt='' height='100px' width='100px' style='background:white;'/>");
+            out.println("<img src='img/prod/"+p.getId()+".jpg' alt='' height='100px' width='100px'/>");
             out.println("</a><div class='prod_right'>");
             out.println(String.format("<div class='price'>%.2f &euro;</div>", p.getPrice()));
             if (p.getStock() == 0) {

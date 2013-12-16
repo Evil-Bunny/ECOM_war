@@ -62,22 +62,22 @@ public abstract class AbstractPage extends HttpServlet {
     abstract protected String getTitle(HttpServletRequest request);
     
     private String getAriane(HttpServletRequest request) {
-        String ret = "<a href='.'><img src='img/home.png' alt='EvilBunny' width='20px' height='20px'/></a> &gt; ";
+        String ret = "<div id='ariane'><a href='.'><img src='img/home.png' alt='EvilBunny' width='20px' height='20px'/></a> &gt; ";
         List<String> names = getArianeNames(request);
         List<String> links = getArianeLinks(request);
-        if (names != null && links != null) {
-            Iterator<String> namesIter = names.iterator();
-            Iterator<String> linksIter = links.iterator();
-            while (namesIter.hasNext() && linksIter.hasNext()) {
-                String link = linksIter.next();
-                if (link != null) {
-                    ret += "<a href='"+link+"'>"+HTMLEncode(namesIter.next())+"</a> &gt; ";
-                } else {
-                    ret += HTMLEncode(namesIter.next())+" &gt; ";
-                }
+        if (names == null || links == null)
+            return "";
+        Iterator<String> namesIter = names.iterator();
+        Iterator<String> linksIter = links.iterator();
+        while (namesIter.hasNext() && linksIter.hasNext()) {
+            String link = linksIter.next();
+            if (link != null) {
+                ret += "<a href='"+link+"'>"+HTMLEncode(namesIter.next())+"</a> &gt; ";
+            } else {
+                ret += HTMLEncode(namesIter.next())+" &gt; ";
             }
         }
-        return ret + getTitle(request);
+        return ret + HTMLEncode(getTitle(request))+"</div>";
     }
     
     abstract protected List<String> getArianeNames(HttpServletRequest request);

@@ -58,7 +58,7 @@ img#current_lang {
 }
 
 #header {
-	margin-left:103px;
+	margin-left:102px;
 	background:#666666;
 	position:relative;
 }
@@ -68,7 +68,7 @@ img#current_lang {
 }
 
 #band {
-	margin-left:-103px;
+	margin-left:-102px;
 	border-top:2px solid #00a300;
 	background:#666666;
 	height:30px;
