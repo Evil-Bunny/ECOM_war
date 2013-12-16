@@ -16,6 +16,7 @@ import user.Client;
 import ejb.CartFacade;
 import ejb.LineCommandFacade;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.ejb.EJB;
 
 /**
@@ -46,26 +47,20 @@ public class Payer extends AbstractPage {
         if (c != null) {
             //if
             out.println("Payement accepté");
+            c.setDateCommand(new Date());
             cf.edit(c);
             Client cl = (Client) session.getAttribute("client");
             if (cl != null) {
                 Cart cartClient = cl.getCart();
                 for (LineCommand lc : cartClient.getProducts())
                 {
-                    out.println(lc.getProduct().getName()+"<br/>");
                     lcf.remove(lc);
                 }
                 cartClient.setProducts(new ArrayList<LineCommand>());
                 cartf.edit(cartClient);
             }
-            else
-            {
-                out.println("pas de client");
-            }
             session.removeAttribute("command");
             session.removeAttribute("cart");
-            //else
-//            out.print("Payement refusé");
         } else {
             out.println("Vous n'avez aucune commande à payer, peut être avez vous modifié votre panier.");
         }
