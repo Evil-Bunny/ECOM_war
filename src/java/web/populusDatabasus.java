@@ -121,7 +121,7 @@ public class populusDatabasus extends HttpServlet {
             charac.add("Taille");
             characUnit.add(" cm");
             charac.add("Poids");
-            characUnit.add(" kg");
+            characUnit.add(" g");
             ArrayList<ArrayList> names = new ArrayList();
             names.add(new ArrayList(Arrays.asList("Hyde", "Megan")));
             names.add(new ArrayList(Arrays.asList("Reilly", "Abbot")));

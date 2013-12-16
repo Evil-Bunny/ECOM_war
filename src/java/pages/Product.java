@@ -8,6 +8,8 @@ import ejb.ProductFacade;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -31,6 +33,28 @@ public class Product extends AbstractPage {
     }
     
     @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        ArrayList<String> l = new ArrayList();
+        product.Product p = pf.find(Long.parseLong(request.getParameter("id")));
+        l.add("Catégories");
+        if (p.getCategorie().getParent() != null)
+            l.add(p.getCategorie().getParent().getCategorie());
+        l.add(p.getCategorie().getCategorie());
+        return l;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        ArrayList<String> l = new ArrayList();
+        product.Product p = pf.find(Long.parseLong(request.getParameter("id")));
+        l.add("?page=Categories");
+        if (p.getCategorie().getParent() != null)
+            l.add("?page=Products&amp;category="+p.getCategorie().getParent().getId());
+        l.add("?page=Products&amp;category="+p.getCategorie().getId());
+        return l;
+    }
+    
+    @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         product.Product product = pf.find(Long.parseLong(request.getParameter("id")));
         
@@ -38,7 +62,7 @@ public class Product extends AbstractPage {
             throw new HTTPErrorException(404);
         
         Category category = product.getCategorie();
-        out.println("<img id='photo' src='img/prod/"+product.getId()+".jpg' alt='' height='300px' width='300px' style='background:white;'/>");
+        out.println("<img id='photo' src='img/prod/"+product.getId()+".jpg' alt='' height='300px' width='300px'/>");
         out.println("<div class='prod_right'>");
         out.println(String.format("<div class='price'>%.2f &euro;</div>", product.getPrice()));
         if (product.getStock() == 0) {

@@ -7,6 +7,8 @@ package pages;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,10 +35,21 @@ public abstract class AbstractPage extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         if (request.getParameter("get") != null) {
-            try {
-                out.print(HTMLEncode((String)this.getClass().getDeclaredMethod("get"+request.getParameter("get"), HttpServletRequest.class).invoke(this, request)));
-            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
-                out.print("&lt;" + request.getParameter("get") + "&gt");
+            switch (request.getParameter("get")) {
+                case "Title":
+                    out.print(HTMLEncode(getTitle(request)));
+                break;
+                case "Ariane":
+                    out.print(getAriane(request));
+                break;
+                case "PreviousLink":
+                    out.print(getPreviousLink(request));
+                break;
+                case "PreviousName":
+                    out.print(getPreviousName(request));
+                break;
+                default:
+                    out.print("&lt;" + HTMLEncode(request.getParameter("get")) + "&gt");
             }
         } else {
             if (request.getMethod().equals("GET"))
@@ -47,7 +60,52 @@ public abstract class AbstractPage extends HttpServlet {
     }
 
     abstract protected String getTitle(HttpServletRequest request);
+    
+    private String getAriane(HttpServletRequest request) {
+        String ret = "<div id='ariane'><a href='.'><img src='img/home.png' alt='EvilBunny' width='20px' height='20px'/></a> &gt; ";
+        List<String> names = getArianeNames(request);
+        List<String> links = getArianeLinks(request);
+        if (names == null || links == null)
+            return "";
+        Iterator<String> namesIter = names.iterator();
+        Iterator<String> linksIter = links.iterator();
+        while (namesIter.hasNext() && linksIter.hasNext()) {
+            String link = linksIter.next();
+            if (link != null) {
+                ret += "<a href='"+link+"'>"+HTMLEncode(namesIter.next())+"</a> &gt; ";
+            } else {
+                ret += HTMLEncode(namesIter.next())+" &gt; ";
+            }
+        }
+        return ret + HTMLEncode(getTitle(request))+"</div>";
+    }
+    
+    abstract protected List<String> getArianeNames(HttpServletRequest request);
 
+    abstract protected List<String> getArianeLinks(HttpServletRequest request);
+
+    private String getPreviousLink(HttpServletRequest request) {
+        List<String> l = getArianeLinks(request);
+        if (l == null)
+            return ".";
+        String s = l.get(l.size() - 1);
+        if (s != null)
+            return s;
+        else
+            return "";
+    }
+    
+    private String getPreviousName(HttpServletRequest request) {
+        List<String> l = getArianeNames(request);
+        if (l == null)
+            return "d'accueil";
+        String s = l.get(l.size() - 1);
+        if (s != null)
+            return s;
+        else
+            return "d'accueil";        
+    }
+    
     abstract protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response);
     
     protected void printPagePost(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
