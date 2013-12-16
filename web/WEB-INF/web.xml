@@ -104,13 +104,17 @@
         <servlet-name>ConfirmPanier</servlet-name>
         <servlet-class>pages.ConfirmPanier</servlet-class>
     </servlet>
-    <servlet>        
+    <servlet>
         <servlet-name>SeeCommands</servlet-name>
         <servlet-class>pages.SeeCommands</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>populusDatabasusImages</servlet-name>
         <servlet-class>web.populusDatabasusImages</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Payer</servlet-name>
+        <servlet-class>pages.Payer</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
@@ -216,13 +220,17 @@
         <servlet-name>ConfirmPanier</servlet-name>
         <url-pattern>/ConfirmPanier</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>        
+    <servlet-mapping>
         <servlet-name>SeeCommands</servlet-name>
         <url-pattern>/SeeCommands</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>populusDatabasusImages</servlet-name>
         <url-pattern>/populusDatabasusImages</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Payer</servlet-name>
+        <url-pattern>/Payer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
