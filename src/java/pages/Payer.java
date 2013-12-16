@@ -16,7 +16,9 @@ import user.Client;
 import ejb.CartFacade;
 import ejb.LineCommandFacade;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 
 /**
@@ -39,6 +41,16 @@ public class Payer extends AbstractPage {
         return "Payement de la commande";
     }
 
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return Arrays.asList("Panier", "Informations client", "Vérification avant paiment");
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return Arrays.asList("?page=ViewCart", "?page=ConfirmAddress", "?page=ConfirmPanier");
+    }
+    
     @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
 
