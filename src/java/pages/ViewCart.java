@@ -6,11 +6,14 @@ package pages;
 
 import command.Cart;
 import command.LineCommand;
+import ejb.CartFacade;
+import ejb.ProductFacade;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,6 +25,12 @@ import user.Client;
  */
 public class ViewCart extends AbstractPage {
 
+    @EJB
+    ProductFacade pf;
+    
+    @EJB
+    CartFacade cf;
+    
     @Override
     protected String getTitle(HttpServletRequest request) {
         return "Panier";
@@ -69,7 +78,7 @@ public class ViewCart extends AbstractPage {
                                 + "<input type=\"hidden\" name=\"do\" value=\"add\" />"
                                 + "<input id=\"add\" type=\"submit\" value=\"+\"");
                         
-                        if(p.getProduct().getStock() <= 0){
+                        if(pf.find(p.getProduct().getId()).getStock() <= 0){
                             out.print(" disabled=\"disabled\"");
                         }
                                 
@@ -79,7 +88,7 @@ public class ViewCart extends AbstractPage {
                                 + "<input type=\"hidden\" name=\"do\" value=\"minus\" />"
                                 + "<input id=\"minus\" type=\"submit\" value=\"-\"");
                         
-                        if(cart.getQuantity(p.getProduct()) <= 1){
+                        if(/*cf.find(cart.getId()).getQuantity(p.getProduct())*/cart.getQuantity(p.getProduct()) <= 1){
                             out.print(" disabled=\"disabled\"");
                         }
                                 

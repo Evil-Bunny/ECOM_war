@@ -61,27 +61,31 @@ public class ModifQuant extends HttpServlet {
                 String todo;
                 for (LineCommand lc : cart.getProducts()) {
                     if (lc.getProduct().getId().equals(new Long(request.getParameter("id")))) {
-                        p = lc.getProduct();
-                        todo = request.getParameter("do");
-                        if (todo!=null && todo.equals("add")){
-                            if(p.getStock()>=1) {
-                                p.setStock(p.getStock() - 1);
-                                lc.setQuantity(lc.getQuantity()+1);
-                            }
-                        } else if (todo!=null && todo.equals("minus")) {
-                            if (lc.getQuantity() > 0) {
-                                p.setStock(p.getStock() + 1);
-                                lc.setQuantity(lc.getQuantity()-1);
-                                if(lc.getQuantity() == 0) {
-                                    int indexProd = cart.IndexProduit(p);
-                                    if(indexProd != -1) {
-                                        cart.getProducts().remove(indexProd);
+                        //p = lc.getProduct();
+                        p = pf.find(lc.getProduct().getId());
+                        if(p != null) {
+                            todo = request.getParameter("do");
+                            if (todo!=null && todo.equals("add")){
+                                //System.out.print(p.getStock());
+                                if(p.getStock()>=1) {
+                                    p.setStock(p.getStock() - 1);
+                                    lc.setQuantity(lc.getQuantity()+1);
+                                }
+                            } else if (todo!=null && todo.equals("minus")) {
+                                if (lc.getQuantity() > 0) {
+                                    p.setStock(p.getStock() + 1);
+                                    lc.setQuantity(lc.getQuantity()-1);
+                                    if(lc.getQuantity() == 0) {
+                                        int indexProd = cart.IndexProduit(p);
+                                        if(indexProd != -1) {
+                                            cart.getProducts().remove(indexProd);
+                                        }
                                     }
                                 }
                             }
+                            pf.edit(p);
+                            break;
                         }
-                        pf.edit(p);
-                        break;
                     }
                 }
 
