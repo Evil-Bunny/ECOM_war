@@ -128,6 +128,10 @@
         <servlet-name>EditProduct</servlet-name>
         <servlet-class>admin.EditProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Payer</servlet-name>
+        <servlet-class>pages.Payer</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
@@ -255,6 +259,10 @@
     <servlet-mapping>
         <servlet-name>EditProduct</servlet-name>
         <url-pattern>/EditProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Payer</servlet-name>
+        <url-pattern>/Payer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

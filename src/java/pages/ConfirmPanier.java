@@ -71,7 +71,7 @@ public class ConfirmPanier extends AbstractPage {
                 c.storePrices();
                 c.setClient((Client)session.getAttribute("client"));
                 session.setAttribute("command", c);
-
+                out.println("Attention, vous êtes sur le point de payer pour commander le contenu du panier. En cliquant sur Payer, vous allez commander les produits récapitulés ci-dessous.");
                 out.println("<table>");
                 out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th></tr>");
                 for (LineCommand p : cart.getProducts()) {
@@ -89,11 +89,12 @@ public class ConfirmPanier extends AbstractPage {
                 out.println("</table>");
                 
                 
-                out.println("<form name='adress' action='?page=Payer' method='POST'>"
-                        + "<input type='radio' name='payment' id='paypal'>Paypal</input>"
-                        + "<input checked='true' type='radio' name='payment' id='carte'>Carte Bancaire</input>"
-                        + "<input type=\"submit\" value=\"Submit\"/>"
-                        + "</form>");
+                out.println("<fieldset><legend>Veuiller selectionner votre mode de payement</legend>"
+                        + "<form name='adress' action='?page=Payer' method='POST'>"
+                        + "<input type='radio' name='payment' id='paypal'> Paypal</input><br/>"
+                        + "<input checked='true' type='radio' name='payment' id='carte'> Carte Bancaire</input></br>"
+                        + "<input id=\"submit\" type=\"submit\" value=\"Valider\"/>"
+                        + "</form></fieldset>");
             }
         }
 
