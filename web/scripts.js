@@ -78,6 +78,12 @@ function check(input, test, msg) {
     }
 }
 
+function uncheck(input) {
+    var tag = document.getElementById(input);
+    tag.style.borderColor = "";
+    tag.title = tag.originalTitle;
+}
+
 function checkRegister() {
     var ok = 1; // ce n'est pas un booléen pour éviter le 'court circuit' sur le AND
     ok &= check("username", /.../, "L'identifiant doit contenir au moins 3 charactères.");
@@ -113,10 +119,31 @@ function checkConfirmAddress() {
     ok &= check("nameFact", /./, "Champ requis");
     ok &= check("surnameFact", /./, "Champ requis");
     ok &= check("addressFact", /./, "Champ requis");
-    ok &= check("nameLivr", /./, "Champ requis");
-    ok &= check("surnameLivr", /./, "Champ requis");
-    ok &= check("addressLivr", /./, "Champ requis");
+    if (! document.getElementById("sameAddr").checked) {
+        ok &= check("nameLivr", /./, "Champ requis");
+        ok &= check("surnameLivr", /./, "Champ requis");
+        ok &= check("addressLivr", /./, "Champ requis");
+    } else {
+        uncheck("nameLivr");
+        uncheck("surnameLivr");
+        uncheck("addressLivr");
+    }
     ok &= check("input_mail", /.@./, "Adresse e-mail invalide");
-    ok &= check("input_tel", /./, "Champ requis");
+    ok &= check("input_tel", /.../, "Numéro de téléhpone invalide");
     return ok === 1;    
+}
+
+function sameAddrOnClick() {
+    if (document.getElementById("sameAddr").checked) {
+        document.getElementById("nameLivr").disabled = true;
+        document.getElementById("surnameLivr").disabled = true;
+        document.getElementById("addressLivr").disabled = true;
+        uncheck("nameLivr");
+        uncheck("surnameLivr");
+        uncheck("addressLivr");
+    } else {
+        document.getElementById("nameLivr").disabled = false;
+        document.getElementById("surnameLivr").disabled = false;
+        document.getElementById("addressLivr").disabled = false;
+    }
 }

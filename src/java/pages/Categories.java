@@ -29,6 +29,16 @@ public class Categories extends AbstractPage {
     }
     
     @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return null;
+    }
+    
+    @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         List<Category> topCategories = new ArrayList();
         List<Category> subCategories;

@@ -111,3 +111,23 @@ input#valid {
     margin: 5px 0px 0px 50px;
 }
 
+#content fieldset {
+    margin-top: 10px;
+    padding: 4px;
+    width: 400px;
+}
+
+#content fieldset * {
+    margin-left: 15px;
+}
+
+#content fieldset legend {
+    margin-left: 10px;
+    font-size: 110%;
+    padding: 0px 4px;
+}
+
+#content fieldset input#submit {
+    margin-left: 20px;
+    margin-top: 2px;
+}

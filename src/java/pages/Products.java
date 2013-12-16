@@ -23,6 +23,7 @@ import product.type.Category;
 import product.type.LineCharacteristic;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -67,6 +68,50 @@ public class Products extends AbstractPage {
             return mf.find(Long.parseLong(request.getParameter("manufacturer"))).getName();
         }
         return "Produits";
+    }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        if (request.getParameter("category") != null && request.getParameter("manufacturer") != null) {
+            return Arrays.asList("Recherche avancée");
+        }
+        if (request.getParameter("search") != null) {
+            return null;
+        }
+        if (request.getParameter("category") != null && ! request.getParameter("category").equals("")) {
+            ArrayList<String> l = new ArrayList();
+            Category c = cf.find(Long.parseLong(request.getParameter("category")));
+            l.add("Catégories");
+            if (c.getParent() != null)
+                l.add(c.getParent().getCategorie());
+            return l;
+        }
+        if (request.getParameter("manufacturer") != null && ! request.getParameter("manufacturer").equals("")) {
+            return Arrays.asList("Marques & Constructeurs");
+        }
+        return null;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        if (request.getParameter("category") != null && request.getParameter("manufacturer") != null) {
+            return Arrays.asList("?page=Search");
+        }
+        if (request.getParameter("search") != null) {
+            return null;
+        }
+        if (request.getParameter("category") != null && ! request.getParameter("category").equals("")) {
+            ArrayList<String> l = new ArrayList();
+            Category c = cf.find(Long.parseLong(request.getParameter("category")));
+            l.add("?page=Categories");
+            if (c.getParent() != null)
+                l.add("?page=Products&amp;category="+c.getParent().getId());
+            return l;
+        }
+        if (request.getParameter("manufacturer") != null && ! request.getParameter("manufacturer").equals("")) {
+            return Arrays.asList("?page=Manufacturers");
+        }
+        return null;
     }
 
     @Override
@@ -167,11 +212,16 @@ public class Products extends AbstractPage {
         nbPages = (products.size()-1)/PRODUCTSBYPAGE +1;
         products = products.subList(start, Math.min(products.size(),start+PRODUCTSBYPAGE));
         
+        if (products.isEmpty()) {
+            out.println("Aucun produit ne correspond à ces critères.");
+            return;
+        }
+        
         out.println("<ul id='list_products'>");
         for (Product p : products) {
             Category category = p.getCategorie();
             out.println("<li><a href='?page=Product&amp;id="+p.getId()+"'>");
-            out.println("<img src='img/prod/"+p.getId()+".jpg' alt='' height='100px' width='100px' style='background:white;'/>");
+            out.println("<img src='img/prod/"+p.getId()+".jpg' alt='' height='100px' width='100px'/>");
             out.println("</a><div class='prod_right'>");
             out.println(String.format("<div class='price'>%.2f &euro;</div>", p.getPrice()));
             if (p.getStock() == 0) {

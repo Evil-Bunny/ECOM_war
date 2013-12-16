@@ -28,6 +28,16 @@ public class SeeCommands extends AbstractPage {
     protected String getTitle(HttpServletRequest request) {
         return "Récapitulatif des commandes";
     }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return null;
+    }
 
     @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {

@@ -6,11 +6,15 @@ package pages;
 
 import command.Cart;
 import command.LineCommand;
+import ejb.CartFacade;
+import ejb.ProductFacade;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,9 +26,25 @@ import user.Client;
  */
 public class ViewCart extends AbstractPage {
 
+    @EJB
+    ProductFacade pf;
+    
+    @EJB
+    CartFacade cf;
+    
     @Override
     protected String getTitle(HttpServletRequest request) {
         return "Panier";
+    }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return null;
     }
 
     @Override
@@ -39,10 +59,12 @@ public class ViewCart extends AbstractPage {
         } else {
             cart = (Cart) ((Client) session.getAttribute("client")).getCart();
         }
+        //cf.edit(cart);
 
         if (request.getParameter("total") == null && request.getParameter("menu") == null) {
             int Prod = 0;
-             for (LineCommand p : cart.getProducts()) {
+            
+             for (LineCommand p : /*cf.find(cart).getProducts()*/cart.getProducts()) {
                  Prod = Prod + p.getQuantity();
              }
              if(Prod <= 0){
@@ -68,7 +90,6 @@ public class ViewCart extends AbstractPage {
                                 + "<input type=\"hidden\" name=\"id\" value=\""+ p.getProduct().getId() +"\" />"
                                 + "<input type=\"hidden\" name=\"do\" value=\"add\" />"
                                 + "<input id=\"add\" type=\"submit\" value=\"+\"");
-                        
                         if(p.getProduct().getStock() <= 0){
                             out.print(" disabled=\"disabled\"");
                         }

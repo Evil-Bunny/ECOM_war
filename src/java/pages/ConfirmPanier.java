@@ -8,6 +8,8 @@ import command.Cart;
 import command.Command;
 import command.LineCommand;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,6 +24,16 @@ public class ConfirmPanier extends AbstractPage {
     @Override
     protected String getTitle(HttpServletRequest request) {
         return "Vérification avant paiment";
+    }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return Arrays.asList("Panier", "Informations client");
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return Arrays.asList("?page=ViewCart", "?page=ConfirmAddress");
     }
 
     @Override
@@ -77,11 +89,12 @@ public class ConfirmPanier extends AbstractPage {
                 out.println("</table>");
                 
                 
-                out.println("<form name='adress' action='?page=Payer' method='POST'>"
-                        + "<input type='radio' name='payment' id='paypal'>Paypal</input>"
-                        + "<input checked='true' type='radio' name='payment' id='carte'>Carte Bancaire</input>"
-                        + "<input type=\"submit\" value=\"Submit\"/>"
-                        + "</form>");
+                out.println("<fieldset><legend>Veuiller selectionner votre mode de payement</legend>"
+                        + "<form name='adress' action='?page=Payer' method='POST'>"
+                        + "<input type='radio' name='payment' id='paypal'> Paypal</input><br/>"
+                        + "<input checked='true' type='radio' name='payment' id='carte'> Carte Bancaire</input></br>"
+                        + "<input id=\"submit\" type=\"submit\" value=\"Valider\"/>"
+                        + "</form></fieldset>");
             }
         }
 
