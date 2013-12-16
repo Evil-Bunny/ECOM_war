@@ -101,19 +101,27 @@ public class populusDatabasus extends HttpServlet {
             manufacturers.add("Macintosh");
             manufacturers.add("Hewlett-Packard");
             ArrayList<String> charac = new ArrayList();
-            charac.add("Résolution");
+            ArrayList<String> characUnit = new ArrayList();
+            charac.add("Définition");
+            characUnit.add(" px");
             charac.add("Fréquence");
+            characUnit.add(" MHz");
             charac.add("Capacité");
-            charac.add("Tours/Minute");
+            characUnit.add(" Go");
+            charac.add("Vitesse de rotation");
+            characUnit.add(" tr/min");
             charac.add("Ports");
+            characUnit.add("");
             charac.add("Alimentation");
-            charac.add("Type");
-            charac.add("DPI");
-            charac.add("PPP");
-            charac.add("Format");
-            charac.add("Socket");
+            characUnit.add(" W");
+            charac.add("Interface");
+            characUnit.add("");
+            charac.add("Résolution");
+            characUnit.add(" dpi");
             charac.add("Taille");
+            characUnit.add(" cm");
             charac.add("Poids");
+            characUnit.add(" kg");
             ArrayList<ArrayList> names = new ArrayList();
             names.add(new ArrayList(Arrays.asList("Hyde", "Megan")));
             names.add(new ArrayList(Arrays.asList("Reilly", "Abbot")));
@@ -205,13 +213,13 @@ public class populusDatabasus extends HttpServlet {
                     p.setPrice(10.0f + new Random().nextFloat() * ((1000.0f - 10.0f) + 1.0f));
                     p.setStock(10);
                     ArrayList<LineCharacteristic> lcs = new ArrayList<>();
-                    for (int k = 0; k < 5; k++) {
-                        k += new Random().nextInt(5);
-                        ch = chf.findByName((String) charac.get(new Random().nextInt(charac.size())));
+                    for (int k = 0; k < new Random().nextInt(3) +2; k++) {
+                        int n = new Random().nextInt(charac.size());
+                        ch = chf.findByName((String) charac.get(n));
                         LineCharacteristic lc = new LineCharacteristic();
                         lc.setProduct(p);
                         lc.setCharacteristic(ch);
-                        lc.setName(c.getCategorie() + ch.getName() + k);
+                        lc.setName(new Random().nextInt(900) + characUnit.get(n));
                         lcs.add(lc);
                     }
                     p.setProductCaracteristics(lcs);
