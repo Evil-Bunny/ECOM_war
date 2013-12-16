@@ -18,7 +18,7 @@
     </servlet>
     <servlet>
         <servlet-name>addProd</servlet-name>
-        <servlet-class>web.addProd</servlet-class>
+        <servlet-class>admin.addProd</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>buyProd</servlet-name>
@@ -104,13 +104,29 @@
         <servlet-name>ConfirmPanier</servlet-name>
         <servlet-class>pages.ConfirmPanier</servlet-class>
     </servlet>
-    <servlet>        
+    <servlet>
         <servlet-name>SeeCommands</servlet-name>
         <servlet-class>pages.SeeCommands</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>populusDatabasusImages</servlet-name>
         <servlet-class>web.populusDatabasusImages</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IndexAdmin</servlet-name>
+        <servlet-class>admin.IndexAdmin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminSearch</servlet-name>
+        <servlet-class>admin.AdminSearch</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminProducts</servlet-name>
+        <servlet-class>admin.AdminProducts</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProduct</servlet-name>
+        <servlet-class>admin.EditProduct</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
@@ -130,7 +146,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addProd</servlet-name>
-        <url-pattern>/addProd</url-pattern>
+        <url-pattern>/admin/addProd</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>listProd</servlet-name>
@@ -216,13 +232,29 @@
         <servlet-name>ConfirmPanier</servlet-name>
         <url-pattern>/ConfirmPanier</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>        
+    <servlet-mapping>
         <servlet-name>SeeCommands</servlet-name>
         <url-pattern>/SeeCommands</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>populusDatabasusImages</servlet-name>
         <url-pattern>/populusDatabasusImages</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IndexAdmin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminSearch</servlet-name>
+        <url-pattern>/admin/AdminSearch</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminProducts</servlet-name>
+        <url-pattern>/admin/AdminProducts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProduct</servlet-name>
+        <url-pattern>/EditProduct</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

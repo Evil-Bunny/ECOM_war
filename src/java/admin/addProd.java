@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package admin;
 
 import ejb.CategoryFacade;
 import ejb.CharacteristicFacade;
@@ -19,18 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import product.Manufacturer;
 import ejb.ManufacturerFacade;
-import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import javax.imageio.ImageIO;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
 import product.type.Category;
@@ -94,42 +87,42 @@ public class addProd extends HttpServlet {
 
 
 
-                out.println("<script type=\"text/javascript\" src=\"scripts.js\"></script>");
-                out.println("<form name=\"addProduct\" action=\"addProd\" enctype=\"multipart/form-data\" method=\"POST\">");
-                out.println("<label for=\"name\">Product name</label>");
-                out.println("<input id=\"name\" type=\"text\" name=\"name\" value=\"\" size=\"30\" /><br/>");
-                out.println("<label for=\"brand\">Brand</label>");
-                out.println("<input id=\"brand\" type=\"text\" name=\"brand\" value=\"\" size=\"30\" /><br/> ");
-                out.println("<label for=\"Category\">Category</label>");
-                out.println("<select id=\"category\" name=\"category\"> ");
+                out.println("<script type='text/javascript' src='scripts.js'></script>");
+                out.println("<form name='addProduct' action='addProd' enctype='multipart/form-data' method='POST'>");
+                out.println("<label for='name'>Product name</label>");
+                out.println("<input id='name' type='text' name='name' value='' size='30' /><br/>");
+                out.println("<label for='brand'>Brand</label>");
+                out.println("<input id='brand' type='text' name='brand' value='' size='30' /><br/> ");
+                out.println("<label for='Category'>Category</label>");
+                out.println("<select id='category' name='category'> ");
 
                 for (Category c : cf.findAll()) {
-                    out.println("<option value=\"" + c.getId() + "\">" + c.getCategorie() + "</option>");
+                    out.println("<option value='" + c.getId() + "'>" + c.getCategorie() + "</option>");
                 }
                 out.println("</select><br />");
-                out.println("<label for=\"image\">Product picture</label>");
-                out.println("<input id=\"image\" name=\"image\" type=\"file\" accept=\"image/jpeg\"><br/>");
-                out.println("<label for=\"price\">Price</label>");
-                out.println("<input id=\"price\" type=\"text\" name=\"price\" value=\"\" size=\"10\" />  <br/>");
-                out.print("<table id = \"caracs\">");
+                out.println("<label for='image'>Product picture</label>");
+                out.println("<input id='image' name='image' type='file' accept='image/jpeg'><br/>");
+                out.println("<label for='price'>Price</label>");
+                out.println("<input id='price' type='text' name='price' value='' size='10' />  <br/>");
+                out.print("<table id = 'caracs'>");
                 out.print("<tr>");
                 out.println("<th>Nom du descripteur</th>");
                 out.println("<th>Valeur</th><th></th>");
                 out.println("</tr>");
                 out.print("<tr>");
-                out.println("<td><input list=\"idDesc\" name=\"idDes_1\"> ");
-                out.println("<datalist id = \"idDesc\">");
+                out.println("<td><input list='idDesc' name='idDes_1'> ");
+                out.println("<datalist id = 'idDesc'>");
                 for (Characteristic c : charaf.findAll()) {
-                    out.println("<option value=\"" + c.getName() + "\">");
+                    out.println("<option value='" + c.getName() + "'>");
                 }
                 out.println("</datalist></td>");
-                out.println("<td><input type=\"text\" name=\"descr_1\" value=\"\" size=\"30\"/></td> ");
+                out.println("<td><input type='text' name='descr_1' value='' size='30'/></td> ");
                 out.println("<td><button type='button' onclick='delCarac(this)'>X</button></td> ");
                 out.print("</tr>");
                 out.println("<tr><td><button type='button' onclick='addCarac()'>+</button></td><td></td><td></td></tr>");
                 out.print("</table>");
 
-                out.println("<input type=\"submit\" value=\"Submit\" />\n");
+                out.println("<input type='submit' value='Submit' />\n");
                 out.println("</form>");
 
 
