@@ -9,6 +9,7 @@ import command.LineCommand;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,16 @@ public class ViewCart extends AbstractPage {
     @Override
     protected String getTitle(HttpServletRequest request) {
         return "Panier";
+    }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return null;
     }
 
     @Override

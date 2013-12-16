@@ -30,7 +30,7 @@
                     <a href="?en"><img src="img/en.png" alt="Anglais / English" title="Anglais / English"/></a>
                 </span>-->
                 <div id="band">
-                    <a id="nav" href="" title="Retour à  ..."><img src="img/previous.png" width="30px" height="30px" alt=""/>Retour</a>
+                    <a id="nav" href="<jsp:include page="<%=requestPage%>"><jsp:param name="get" value="PreviousLink"/></jsp:include>" title="Retour à la page <jsp:include page="<%=requestPage%>"><jsp:param name="get" value="PreviousName"/></jsp:include>"><img src="img/previous.png" width="30px" height="30px" alt=""/>Retour</a>
                     <h1><jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></h1>
                     <span id="options"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include>)</a><%
                         if (request.getSession(true).getAttribute("client") == null) {
@@ -86,7 +86,9 @@
                 </div>
                 <% } %>
             </div><!--left-->
-            <div id="ariane"><a href="."><img src="img/home.png" alt="EvilBunny" width="20px" height="20px"/></a> &gt; Catégories</div>
+            <div id="ariane">
+                <jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Ariane"/></jsp:include>
+            </div>
             <div id="content">
                 <% try { %>
                     <jsp:include page="<%=requestPage%>"/>

@@ -5,6 +5,8 @@
 package pages;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,12 +20,17 @@ public class ConfirmAddress extends AbstractPage {
 
     @Override
     protected String getTitle(HttpServletRequest request) {
-        HttpSession session = request.getSession(true);
-        if (session.getAttribute("client") == null) {
-            return "Entrer les informations";
-        }else{
-            return "Confirmer les informations";
-        }
+        return "Informations client";
+    }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return Arrays.asList("Panier");
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return Arrays.asList("?page=ViewCart");
     }
 
     @Override

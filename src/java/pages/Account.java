@@ -6,6 +6,7 @@ package pages;
 
 import ejb.ClientFacade;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +27,16 @@ public class Account extends AbstractPage {
         return "Compte client";
     }
     
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return null;
+    }
+
     @Override
     protected void printPagePost(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         Client c = (Client)request.getSession(true).getAttribute("client");

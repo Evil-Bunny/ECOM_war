@@ -36,6 +36,16 @@ public class Search extends AbstractPage {
     protected String getTitle(HttpServletRequest request) {
         return "Recherche avancée";
     }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return null;
+    }
 
     @Override
     protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {

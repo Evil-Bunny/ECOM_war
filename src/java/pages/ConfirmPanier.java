@@ -8,6 +8,8 @@ import command.Cart;
 import command.Command;
 import command.LineCommand;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,6 +24,16 @@ public class ConfirmPanier extends AbstractPage {
     @Override
     protected String getTitle(HttpServletRequest request) {
         return "Vérification avant paiment";
+    }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return Arrays.asList("Panier", "Informations client");
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return Arrays.asList("?page=ViewCart", "?page=ConfirmAddress");
     }
 
     @Override

@@ -10,6 +10,7 @@ package pages;
  */
 
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +23,16 @@ public class Contact extends AbstractPage {
     @Override
     protected String getTitle(HttpServletRequest request){
         return "Contact";
+    }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return null;
     }
     
     @Override

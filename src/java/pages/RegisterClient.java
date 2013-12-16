@@ -8,6 +8,7 @@ import ejb.ClientFacade;
 import command.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
@@ -29,6 +30,16 @@ public class RegisterClient extends AbstractPage {
     @Override
     protected String getTitle(HttpServletRequest request) {
         return "Inscription";
+    }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        return null;
     }
 
     @Override

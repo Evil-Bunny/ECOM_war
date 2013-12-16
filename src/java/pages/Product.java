@@ -8,6 +8,8 @@ import ejb.ProductFacade;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -28,6 +30,28 @@ public class Product extends AbstractPage {
     @Override
     protected String getTitle(HttpServletRequest request){
         return pf.find(new Long(request.getParameter("id"))).getName();
+    }
+    
+    @Override
+    protected List<String> getArianeNames(HttpServletRequest request) {
+        ArrayList<String> l = new ArrayList();
+        product.Product p = pf.find(Long.parseLong(request.getParameter("id")));
+        l.add("Catégories");
+        if (p.getCategorie().getParent() != null)
+            l.add(p.getCategorie().getParent().getCategorie());
+        l.add(p.getCategorie().getCategorie());
+        return l;
+    }
+
+    @Override
+    protected List<String> getArianeLinks(HttpServletRequest request) {
+        ArrayList<String> l = new ArrayList();
+        product.Product p = pf.find(Long.parseLong(request.getParameter("id")));
+        l.add("?page=Categories");
+        if (p.getCategorie().getParent() != null)
+            l.add("?page=Products&amp;category="+p.getCategorie().getParent().getId());
+        l.add("?page=Products&amp;category="+p.getCategorie().getId());
+        return l;
     }
     
     @Override
