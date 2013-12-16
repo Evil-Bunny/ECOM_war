@@ -6,6 +6,47 @@
         Purpose of the stylesheet follows.
 */
 
+#content label {
+    display:block;
+    clear:both;
+}
+
+#content form {
+    width:500px;
+    margin:auto;
+}
+
+#content legend {
+    padding:0 5px;
+}
+
+#content fieldset {
+    padding:5px;
+    margin-bottom:10px;
+}
+
+#content fieldset input, #confirm {
+    float:right;
+}
+
+#content label input {
+    width:360px;
+    margin-bottom:3px;
+}
+
+#content textarea {
+    display:block;
+    resize:none;
+    width:484px;
+    height:100px;
+}
+
+#sameAddr {
+    position:relative;
+    top:3px;
+}
+
+/*
 #content form {
     width: 450px;
     margin: auto;
@@ -37,5 +78,5 @@
 
 #confirm {
     margin: 5px 0px 5px 280px;
-}
+}*/
 
