@@ -29,7 +29,7 @@
     float:right;
 }
 
-#content label input {
+#content fieldset input {
     width:360px;
     margin-bottom:3px;
 }
@@ -45,38 +45,3 @@
     position:relative;
     top:3px;
 }
-
-/*
-#content form {
-    width: 450px;
-    margin: auto;
-}
-
-#content fieldset {
-    padding: 4px;
-}
-
-#content fieldset * {
-    margin-left: 20px;
-}
-
-#content fieldset legend {
-    margin-left: 10px;
-    font-size: 110%;
-    padding: 0px 4px;
-}
-
-#content fieldset label{
-    width: 200px;
-}
-
-#content fieldset input{
-    width: 200px;
-    float: right;
-    margin-right: 80px;
-}
-
-#confirm {
-    margin: 5px 0px 5px 280px;
-}*/
-
