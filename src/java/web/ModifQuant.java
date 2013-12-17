@@ -81,14 +81,6 @@ public class ModifQuant extends HttpServlet {
                         }
                     }
                     pf.edit(p);
-                    
-                    for (LineCommand lc : cart.getProducts()) {
-                        if (lc.getProduct().equals(p))
-                        {
-                         System.out.println(lc.getProduct().getStock());
-
-                        }
-                    }
                 }
 
                 if (session.getAttribute("client") == null) {
