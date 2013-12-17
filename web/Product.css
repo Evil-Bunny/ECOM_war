@@ -107,3 +107,10 @@ h2 a {
 	margin-left:-50px;
 }
 
+.cart_contient {
+    /*font-family: "Courier New";*/
+    color: rgb(0, 163, 0);
+    text-align: right;
+    margin-top: 60px;
+}
+

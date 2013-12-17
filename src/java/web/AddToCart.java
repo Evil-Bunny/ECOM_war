@@ -44,10 +44,11 @@ public class AddToCart extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException {   
         Enumeration paramNames = request.getParameterNames();
         if (paramNames.hasMoreElements()) {
             HttpSession session = request.getSession(true);
+            session.removeAttribute("command");
             if (session.getAttribute("client") == null) {
                 if (session.getAttribute("cart") == null) {
                     session.setAttribute("cart", new Cart());
@@ -55,7 +56,7 @@ public class AddToCart extends HttpServlet {
                 cart = (Cart) session.getAttribute("cart");
 
             } else {
-                cart = (Cart) ((Client) session.getAttribute("client")).getCart();
+                cart = cif.find(((Client) session.getAttribute("client")).getId()).getCart();
             }
 
             Product p = pf.find(new Long(request.getParameter("product")));

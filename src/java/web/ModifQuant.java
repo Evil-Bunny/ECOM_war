@@ -5,7 +5,6 @@
 package web;
 
 import command.Cart;
-import command.LineCommand;
 import ejb.ClientFacade;
 import ejb.CartFacade;
 import ejb.ProductFacade;
@@ -50,11 +49,11 @@ public class ModifQuant extends HttpServlet {
         Enumeration paramNames = request.getParameterNames();
         if (paramNames.hasMoreElements()) {
             HttpSession session = request.getSession(true);
-
+            session.removeAttribute("command");
             if (session.getAttribute("client") == null) {
                 cart = (Cart) session.getAttribute("cart");
             } else {
-                cart = (Cart) ((Client) session.getAttribute("client")).getCart();
+                cart = cif.find(((Client) session.getAttribute("client")).getId()).getCart();
             }
 
             if (cart != null) {
@@ -81,14 +80,6 @@ public class ModifQuant extends HttpServlet {
                         }
                     }
                     pf.edit(p);
-                    
-                    for (LineCommand lc : cart.getProducts()) {
-                        if (lc.getProduct().equals(p))
-                        {
-                         System.out.println(lc.getProduct().getStock());
-
-                        }
-                    }
                 }
 
                 if (session.getAttribute("client") == null) {
