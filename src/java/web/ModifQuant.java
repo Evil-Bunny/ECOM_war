@@ -54,7 +54,7 @@ public class ModifQuant extends HttpServlet {
             if (session.getAttribute("client") == null) {
                 cart = (Cart) session.getAttribute("cart");
             } else {
-                cart = (Cart) ((Client) session.getAttribute("client")).getCart();
+                cart = cif.find(((Client) session.getAttribute("client")).getId()).getCart();
             }
 
             if (cart != null) {

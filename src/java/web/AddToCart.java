@@ -56,7 +56,7 @@ public class AddToCart extends HttpServlet {
                 cart = (Cart) session.getAttribute("cart");
 
             } else {
-                cart = (Cart) ((Client) session.getAttribute("client")).getCart();
+                cart = cif.find(((Client) session.getAttribute("client")).getId()).getCart();
             }
 
             Product p = pf.find(new Long(request.getParameter("product")));
