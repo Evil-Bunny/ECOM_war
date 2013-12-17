@@ -2,10 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package admin;
 
+import ejb.ProductFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +17,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Samy
  */
-public class test extends HttpServlet {
+public class EditProduct extends HttpServlet {
 
+    
+    @EJB
+    ProductFacade pf;
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -31,20 +36,29 @@ public class test extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        if (request.getParameter("param") != null) {
-            try {
-                out.print(this.getClass().getDeclaredField(request.getParameter("param")).get(null));
-            } catch (NoSuchFieldException | IllegalAccessException ex) {
-                out.print("&lt;" + request.getParameter("param") + "&gt");
-            }
-        } else {
-            printPage(out, request, response);
+        product.Product product = pf.find(Long.parseLong(request.getParameter("id")));
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet EditProduct</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            out.println("</body>");
+            out.println("</html>");
+        } finally {            
+            out.close();
         }
-    }
-    static final String title = "Test";
-
-    protected void printPage(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
-        out.println("page...");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

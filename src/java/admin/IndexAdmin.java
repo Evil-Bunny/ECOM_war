@@ -2,42 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package admin;
 
-import ejb.ClientFacade;
-import command.Cart;
-import command.LineCommand;
-import ejb.CartFacade;
-import product.Product;
-import ejb.ProductFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
-import javax.ejb.EJB;
+import java.net.URLEncoder;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import product.Manufacturer;
-import product.type.Category;
-import user.Client;
 
 /**
  *
  * @author Samy
  */
-@WebServlet(name = "testCart", urlPatterns = {"/testCart"})
-public class testCart extends HttpServlet {
-
-    @EJB
-    private ProductFacade pef;
-    private Cart cart;
-    @EJB
-    private CartFacade cef;
-    @EJB
-    private ClientFacade cif;
+public class IndexAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -54,54 +33,22 @@ public class testCart extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session = request.getSession(true);
-            if (session.getAttribute("client") == null) {
-                if (session.getAttribute("cart") != null) {
-                    cart = (Cart) session.getAttribute("cart");
-                } else {
-                    session.setAttribute("cart", new Cart());
-                    cart = (Cart) session.getAttribute("cart");
-                }
-            } else {
-                cart = (Cart) ((Client) session.getAttribute("client")).getCart();
-            }
-            response.sendRedirect("/Home");
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet testCart</title>");
+            out.println("<title>Index Admin</title>");
             out.println("</head>");
             out.println("<body>");
-            Enumeration paramNames = request.getParameterNames();
-            if (!paramNames.hasMoreElements()) {
-                out.println("<h1>Voici le Cart</h1>");
-                for (LineCommand p : cart.getProducts()) {
-                    out.println(p.toString());
-                }
 
-            } else {
-                out.println("<h1>Merci de l'achat pigeon</h1>");
-                Manufacturer m = new Manufacturer();
-                Category c = new Category();
-                Product pe = new Product();
+            out.println("<div>");
+            out.println("<a href='admin/addProd' title='Ajouter au panier'>Ajout d'un produit</a>");
+            out.println("<a href='ConsultCommandes' title='Consulter les commandes'>Consulter les commandes</a>");
+            out.println("<a href='admin/AdminSearch' title='Recherche de produit'>Recherche de produit</a>");
+            out.println("</div>");
 
-                m.setName(request.getParameter("brand"));
-                c.setCategorie(request.getParameter("category"));
-                pe.setBrand(m);
-                pe.setCategorie(c);
-                pe.setName(request.getParameter("name"));
-                pe.setPrice(Float.parseFloat(request.getParameter("price")));
-                pef.create(pe);
-                cart.setQuantity(pe, 1);
 
-                if (session.getAttribute("client") == null) {
-                    session.setAttribute("cart", cart);
-                } else {
-                    ((Client) session.getAttribute("client")).setCart(cart);
-                    cif.edit((Client) session.getAttribute("client"));
-                }
 
-            }
             out.println("</body>");
             out.println("</html>");
         } finally {
