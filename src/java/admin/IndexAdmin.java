@@ -42,10 +42,10 @@ public class IndexAdmin extends HttpServlet {
             out.println("<body>");
 
             out.println("<div>");
-            out.println("<a href='admin/addProd' title='Ajout d'un produit'>Ajout d'un produit</a>");
-            out.println("<a href='admin/ConsultCommands' title='Consulter les commandes'>Consulter les commandes</a>");
-            out.println("<a href='admin/ConsultCommands?sent=false' title='Consulter les commandes'>Consulter les commandes non envoyées</a>");
-            out.println("<a href='admin/AdminSearch' title='Recherche de produit'>Recherche de produit</a>");
+            out.println("<a href='admin/addProd' title='Ajout d'un produit'>Ajout d'un produit</a><br/>");
+            out.println("<a href='admin/ConsultCommands' title='Consulter les commandes'>Consulter les commandes</a><br/>");
+            out.println("<a href='admin/ConsultCommands?sent=false' title='Consulter les commandes'>Consulter les commandes non envoyées</a><br/>");
+            out.println("<a href='admin/AdminSearch' title='Recherche de produit'>Recherche de produit</a><br/>");
             out.println("</div>");
 
 
