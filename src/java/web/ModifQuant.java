@@ -50,7 +50,7 @@ public class ModifQuant extends HttpServlet {
         Enumeration paramNames = request.getParameterNames();
         if (paramNames.hasMoreElements()) {
             HttpSession session = request.getSession(true);
-
+            session.removeAttribute("command");
             if (session.getAttribute("client") == null) {
                 cart = (Cart) session.getAttribute("cart");
             } else {

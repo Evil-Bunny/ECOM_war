@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import command.Command;
 import command.LineCommand;
-import ejb.CommandFacade;
 import user.Client;
 import ejb.CartFacade;
+import ejb.ClientFacade;
 import ejb.LineCommandFacade;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +28,7 @@ import javax.ejb.EJB;
 public class Payer extends AbstractPage {
 
     @EJB
-    CommandFacade cf;
+    ClientFacade cf;
     
     @EJB
     CartFacade cartf;
@@ -60,7 +60,8 @@ public class Payer extends AbstractPage {
             //if
             out.println("Payement accepté");
             c.setDateCommand(new Date());
-            cf.edit(c);
+            c.setClient((Client)session.getAttribute("client"));
+            cf.edit((Client)session.getAttribute("client"));
             Client cl = (Client) session.getAttribute("client");
             if (cl != null) {
                 Cart cartClient = cl.getCart();

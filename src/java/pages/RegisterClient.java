@@ -100,6 +100,7 @@ public class RegisterClient extends AbstractPage {
         ci.setCart((Cart) session.getAttribute("cart"));
         try {
             cif.edit(ci);
+            ci = cif.find(ci.getUsername(),request.getParameter("password"));
             session.setAttribute("client", ci);
             out.print("Inscription Réussie");
             throw new HTTPRedirect("?page=Account");
