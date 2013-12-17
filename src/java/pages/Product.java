@@ -92,7 +92,7 @@ public class Product extends AbstractPage {
         if(cart != null){ // si panier existe
             for (LineCommand lc : cart.getProducts()) { // recherche du produit dans le panier
                 if ((lc.getProduct().getId()).equals(product.getId())) {
-                    out.println("<div class=\"cart_contient\" >Quantité ajoutée : "+ cart.getQuantity(lc.getProduct()) +"</div>");
+                    out.println("<div class=\"cart_contient\" >Quantité dans le panier : "+ cart.getQuantity(lc.getProduct()) +"</div>");
                 }
             }
         }
