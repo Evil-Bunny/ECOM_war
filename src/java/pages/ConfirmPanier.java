@@ -65,11 +65,9 @@ public class ConfirmPanier extends AbstractPage {
 
             if (Prod > 0) {
                 
-                
                 Command c = new Command();
                 c.setProducts(cart.getProducts());
                 c.storePrices();
-                c.setClient((Client)session.getAttribute("client"));
                 session.setAttribute("command", c);
                 out.println("Attention, vous êtes sur le point de payer pour commander le contenu du panier. En cliquant sur Payer, vous allez commander les produits récapitulés ci-dessous.");
                 out.println("<table>");
