@@ -4,6 +4,8 @@
  */
 package pages;
 
+import command.Cart;
+import command.LineCommand;
 import ejb.CategoryFacade;
 import ejb.CharacteristicFacade;
 import ejb.LineCharacteristicFacade;
@@ -28,6 +30,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
+import user.Client;
 
 /**
  *
@@ -234,6 +238,24 @@ public class Products extends AbstractPage {
                     Logger.getLogger(Products.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            
+            // recherche du produit déjà dans le panier
+            HttpSession session = request.getSession(true);
+            Cart cart;
+            if (session.getAttribute("client") == null) { //pas connecté
+                cart = (Cart) session.getAttribute("cart");
+            } else { //connecté
+                cart = (Cart) ((Client) session.getAttribute("client")).getCart();
+            }
+
+            if(cart != null){ // si panier existe
+                for (LineCommand lc : cart.getProducts()) { // recherche du produit dans le panier
+                    if ((lc.getProduct().getId()).equals(p.getId())) {
+                        out.println("<div class=\"cart_contient\" >Quantité  ajoutée : "+ cart.getQuantity(lc.getProduct()) +"</div>");
+                    }
+                }
+            }
+            
             out.println("<a href='?page=Product&amp;id="+p.getId()+"'>Plus d'info</a></div>");
             out.println("<h2><a href='?page=Product&amp;id="+p.getId()+"'>"+HTMLEncode(p.getName())+"</a></h2>");
             out.print("<table><tr><td>Caractéristiques</td><td>");
