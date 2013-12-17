@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import command.Command;
 import command.LineCommand;
-import ejb.CommandFacade;
 import user.Client;
 import ejb.CartFacade;
+import ejb.ClientFacade;
+import ejb.CommandFacade;
 import ejb.LineCommandFacade;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,13 +29,16 @@ import javax.ejb.EJB;
 public class Payer extends AbstractPage {
 
     @EJB
-    CommandFacade cf;
+    ClientFacade cf;
     
     @EJB
     CartFacade cartf;
     
     @EJB
     LineCommandFacade lcf;
+    
+    @EJB
+    CommandFacade commandf;
     
     @Override
     protected String getTitle(HttpServletRequest request) {
@@ -57,12 +61,14 @@ public class Payer extends AbstractPage {
         HttpSession session = request.getSession(true);
         Command c = (Command) session.getAttribute("command");
         if (c != null) {
-            //if
             out.println("Payement accepté");
             c.setDateCommand(new Date());
-            cf.edit(c);
+            c.setClient((Client)session.getAttribute("client"));
+            
             Client cl = (Client) session.getAttribute("client");
             if (cl != null) {
+                cf.edit(cl);
+                
                 Cart cartClient = cl.getCart();
                 for (LineCommand lc : cartClient.getProducts())
                 {
@@ -70,6 +76,9 @@ public class Payer extends AbstractPage {
                 }
                 cartClient.setProducts(new ArrayList<LineCommand>());
                 cartf.edit(cartClient);
+            }
+            else{
+                commandf.edit(c);
             }
             session.removeAttribute("command");
             session.removeAttribute("cart");

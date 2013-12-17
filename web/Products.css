@@ -91,3 +91,9 @@ h2 a {
 	background:#d1d1d1;
 	padding:3px;
 }
+
+.cart_contient {
+    /*font-family: "Courier New";*/
+    color: rgb(0, 163, 0);
+    text-align: right;
+}
