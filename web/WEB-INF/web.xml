@@ -132,6 +132,10 @@
         <servlet-name>Payer</servlet-name>
         <servlet-class>pages.Payer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultCommands</servlet-name>
+        <servlet-class>admin.ConsultCommands</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
@@ -263,6 +267,10 @@
     <servlet-mapping>
         <servlet-name>Payer</servlet-name>
         <url-pattern>/Payer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultCommands</servlet-name>
+        <url-pattern>/admin/ConsultCommands</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
