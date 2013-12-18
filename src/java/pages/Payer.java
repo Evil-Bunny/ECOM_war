@@ -79,7 +79,7 @@ public class Payer extends AbstractPage {
                 {
                     lcf.remove(lc);
                 }
-                
+                session.setAttribute("client", cl);                
             }
             else{
                 c.setClient(null);
