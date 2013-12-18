@@ -26,12 +26,12 @@ public class PayementOk extends AbstractPage {
 
     @Override
     protected List<String> getArianeNames(HttpServletRequest request) {
-        return Arrays.asList("Panier", "Informations client", "Vérification avant payement", "Payement");
+        return Arrays.asList("Panier", "Informations client", "Vérification avant payement");
     }
 
     @Override
     protected List<String> getArianeLinks(HttpServletRequest request) {
-        return Arrays.asList(null, null, null, null);
+        return Arrays.asList(null, null, null);
     }
 
     @Override
