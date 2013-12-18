@@ -132,6 +132,10 @@
         <servlet-name>PayementOk</servlet-name>
         <servlet-class>pages.PayementOk</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultCommands</servlet-name>
+        <servlet-class>admin.ConsultCommands</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterClient</servlet-name>
         <url-pattern>/RegisterClient</url-pattern>
@@ -254,7 +258,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditProduct</servlet-name>
-        <url-pattern>/EditProduct</url-pattern>
+        <url-pattern>/admin/EditProduct</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Payer</servlet-name>
@@ -263,6 +267,10 @@
     <servlet-mapping>
         <servlet-name>PayementOk</servlet-name>
         <url-pattern>/PayementOk</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultCommands</servlet-name>
+        <url-pattern>/admin/ConsultCommands</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
