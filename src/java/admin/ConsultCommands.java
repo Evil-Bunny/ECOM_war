@@ -49,21 +49,23 @@ public class ConsultCommands extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             List<Command> commands;
-            if (request.getAttribute("send") != null) {
-                Command c = cf.find((Long) request.getAttribute("send"));
+            if (request.getParameter("send") != null) {
+                Command c = cf.find(new Long(request.getParameter("send")));
                 c.setExpediee(true);
                 cf.edit(c);
             }
-            out.println("<a href='?send=0&" + URLEncoder.encode(request.getQueryString(), "UTF-8") + "' title='Envoyer'>Définir en temps qu'envoyé</a>");
-            if (request.getAttribute("sent") != null) {
-                commands = cf.findAll((Boolean) request.getAttribute("sent"));
+            
+            if (request.getParameter("sent") != null) {
+                commands = cf.findAll( Boolean.valueOf(request.getParameter("sent")));
             } else {
                 commands = cf.findAll();
             }
-            for (Command command : commands) {
 
+            for (Command command : commands) {
                 out.println("commande n° " + command.getId() + " :");
-                out.println("<a href='?send=" + command.getId() + "&" + URLEncoder.encode(request.getQueryString(), "UTF-8") + "' title='Envoyer'>Définir en temps qu'envoyé</a>");
+                out.println("<form action='?send=" + command.getId() + "' method='POST'>");
+                out.println("<input type='submit' value='Marquer comme envoyé'/>");
+                out.println("</form>");
                 out.println("<table>");
                 out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th></tr>");
                 for (LineCommand lc : command.getProducts()) {
@@ -76,7 +78,7 @@ public class ConsultCommands extends HttpServlet {
                             + String.format("%.2f &euro;", lc.getPrice()) + "</td></tr>");
                 }
                 out.println("<tr><td class='lineTotal1'></td><td class='lineTotal2'></td><td class='titleTotal'>Total : </td><td class='priceTotal'>"
-                        + String.format("%.2f &euro;", command.getTotal()) + "</td><td class='lineTotal3'></td></tr> ");
+                        + String.format("%.2f &euro;", command.getTotal()) + "</td></tr> ");
                 out.println("</table>");
             }
 

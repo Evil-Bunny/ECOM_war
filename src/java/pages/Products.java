@@ -41,22 +41,17 @@ public class Products extends AbstractPage {
 
     @EJB
     CategoryFacade cf;
-    
     @EJB
     ManufacturerFacade mf;
-    
     @EJB
     ProductFacade pf;
-    
     @EJB
     CharacteristicFacade chf;
-    
     @EJB
     LineCharacteristicFacade lcf;
-    
     public static final int PRODUCTSBYPAGE = 10;
     public static final int PAGESAROUND = 5;
-    
+
     @Override
     protected String getTitle(HttpServletRequest request) {
         if (request.getParameter("category") != null && request.getParameter("manufacturer") != null) {
@@ -65,15 +60,23 @@ public class Products extends AbstractPage {
         if (request.getParameter("search") != null) {
             return "Produits - Recherche";
         }
-        if (request.getParameter("category") != null && ! request.getParameter("category").equals("")) {
-            return cf.find(Long.parseLong(request.getParameter("category"))).getCategorie();
+        if (request.getParameter("category") != null && !request.getParameter("category").equals("")) {
+            try {
+                return cf.find(Long.parseLong(request.getParameter("category"))).getCategorie();
+            } catch (NullPointerException e) {
+                throw new HTTPErrorException(404);
+            }
         }
-        if (request.getParameter("manufacturer") != null && ! request.getParameter("manufacturer").equals("")) {
-            return mf.find(Long.parseLong(request.getParameter("manufacturer"))).getName();
+        if (request.getParameter("manufacturer") != null && !request.getParameter("manufacturer").equals("")) {
+            try {
+                return mf.find(Long.parseLong(request.getParameter("manufacturer"))).getName();
+            } catch (NullPointerException e) {
+                throw new HTTPErrorException(404);
+            }
         }
         return "Produits";
     }
-    
+
     @Override
     protected List<String> getArianeNames(HttpServletRequest request) {
         if (request.getParameter("category") != null && request.getParameter("manufacturer") != null) {
@@ -82,15 +85,16 @@ public class Products extends AbstractPage {
         if (request.getParameter("search") != null) {
             return null;
         }
-        if (request.getParameter("category") != null && ! request.getParameter("category").equals("")) {
+        if (request.getParameter("category") != null && !request.getParameter("category").equals("")) {
             ArrayList<String> l = new ArrayList();
             Category c = cf.find(Long.parseLong(request.getParameter("category")));
             l.add("Catégories");
-            if (c.getParent() != null)
+            if (c.getParent() != null) {
                 l.add(c.getParent().getCategorie());
+            }
             return l;
         }
-        if (request.getParameter("manufacturer") != null && ! request.getParameter("manufacturer").equals("")) {
+        if (request.getParameter("manufacturer") != null && !request.getParameter("manufacturer").equals("")) {
             return Arrays.asList("Marques & Constructeurs");
         }
         return null;
@@ -104,15 +108,16 @@ public class Products extends AbstractPage {
         if (request.getParameter("search") != null) {
             return null;
         }
-        if (request.getParameter("category") != null && ! request.getParameter("category").equals("")) {
+        if (request.getParameter("category") != null && !request.getParameter("category").equals("")) {
             ArrayList<String> l = new ArrayList();
             Category c = cf.find(Long.parseLong(request.getParameter("category")));
             l.add("?page=Categories");
-            if (c.getParent() != null)
-                l.add("?page=Products&amp;category="+c.getParent().getId());
+            if (c.getParent() != null) {
+                l.add("?page=Products&amp;category=" + c.getParent().getId());
+            }
             return l;
         }
-        if (request.getParameter("manufacturer") != null && ! request.getParameter("manufacturer").equals("")) {
+        if (request.getParameter("manufacturer") != null && !request.getParameter("manufacturer").equals("")) {
             return Arrays.asList("?page=Manufacturers");
         }
         return null;
@@ -123,9 +128,9 @@ public class Products extends AbstractPage {
         List<Product> products;
         int start, nbPages;
         String tmp;
-        
+
         // récupération de la liste des produits
-        
+
         if (request.getParameter("search") != null) {
             String search = request.getParameter("search");
             Set<Product> p = new HashSet(pf.search(search));
@@ -135,8 +140,9 @@ public class Products extends AbstractPage {
             for (Category c : cf.search(search)) {
                 p.addAll(c.getProducts());
                 if (c.getSubCategories() != null) {
-                    for (Category sc : c.getSubCategories())
+                    for (Category sc : c.getSubCategories()) {
                         p.addAll(sc.getProducts());
+                    }
                 }
             }
             for (LineCharacteristic lc : lcf.search(search)) {
@@ -151,20 +157,25 @@ public class Products extends AbstractPage {
             boolean stock = false;
             float minPrice = 0, maxPrice = 0;
             param = request.getParameter("category");
-            if (param != null && ! param.equals(""))
+            if (param != null && !param.equals("")) {
                 c = cf.find(Long.parseLong(param));
+            }
             param = request.getParameter("manufacturer");
-            if (param != null && ! param.equals(""))
+            if (param != null && !param.equals("")) {
                 m = mf.find(Long.parseLong(param));
+            }
             param = request.getParameter("stock");
-            if (param != null && ! param.equals(""))
+            if (param != null && !param.equals("")) {
                 stock = true;
+            }
             param = request.getParameter("minPrice");
-            if (param != null && ! param.equals(""))
+            if (param != null && !param.equals("")) {
                 minPrice = Long.parseLong(param);
+            }
             param = request.getParameter("maxPrice");
-            if (param != null && ! param.equals(""))
+            if (param != null && !param.equals("")) {
                 maxPrice = Long.parseLong(param);
+            }
             // LineCharacteristic
             Enumeration<String> params = request.getParameterNames();
             HashMap<Integer, Long> caracName = new HashMap();
@@ -180,8 +191,9 @@ public class Products extends AbstractPage {
             List<LineCharacteristic> characs = new ArrayList();
             for (Integer i : caracName.keySet()) {
                 String val = caracVal.get(i);
-                if (val == null || val.equals(""))
+                if (val == null || val.equals("")) {
                     continue;
+                }
                 LineCharacteristic lc = new LineCharacteristic();
                 lc.setCharacteristic(chf.find(caracName.get(i)));
                 lc.setName(caracVal.get(i));
@@ -190,8 +202,9 @@ public class Products extends AbstractPage {
             products = pf.findAdvanced(c, m, request.getParameter("name"), stock, minPrice, maxPrice, characs);
         } else if (request.getParameter("category") != null) {
             Category category = cf.find(Long.parseLong(request.getParameter("category")));
-            if (category == null)
+            if (category == null) {
                 throw new HTTPErrorException(404);
+            }
             products = category.getProducts();
             for (Category c : category.getSubCategories()) {
                 products.addAll(c.getProducts());
@@ -199,7 +212,7 @@ public class Products extends AbstractPage {
         } else if (request.getParameter("manufacturer") != null) {
             try {
                 products = mf.find(Long.parseLong(request.getParameter("manufacturer"))).getProducts();
-            } catch(NullPointerException e) {
+            } catch (NullPointerException e) {
                 throw new HTTPErrorException(404);
             }
         } else {
@@ -210,22 +223,22 @@ public class Products extends AbstractPage {
         } else {
             start = 0;
         }
-        
+
         // affichage de la liste des produits
-        
-        nbPages = (products.size()-1)/PRODUCTSBYPAGE +1;
-        products = products.subList(start, Math.min(products.size(),start+PRODUCTSBYPAGE));
-        
+
+        nbPages = (products.size() - 1) / PRODUCTSBYPAGE + 1;
+        products = products.subList(start, Math.min(products.size(), start + PRODUCTSBYPAGE));
+
         if (products.isEmpty()) {
             out.println("Aucun produit ne correspond à ces critères.");
             return;
         }
-        
+
         out.println("<ul id='list_products'>");
         for (Product p : products) {
             Category category = p.getCategorie();
-            out.println("<li><a href='?page=Product&amp;id="+p.getId()+"'>");
-            out.println("<img src='img/prod/"+p.getId()+".jpg' alt='' height='100px' width='100px'/>");
+            out.println("<li><a href='?page=Product&amp;id=" + p.getId() + "'>");
+            out.println("<img src='img/prod/" + p.getId() + ".jpg' alt='' height='100px' width='100px'/>");
             out.println("</a><div class='prod_right'>");
             out.println(String.format("<div class='price'>%.2f &euro;</div>", p.getPrice()));
             if (p.getStock() == 0) {
@@ -233,12 +246,12 @@ public class Products extends AbstractPage {
             } else {
                 out.println("<div class='stock stock_yes'>En stock</div>");
                 try {
-                    out.println("<a href='AddToCart?&amp;product="+p.getId()+"&amp;old="+URLEncoder.encode(request.getQueryString(), "UTF-8") + "'>Ajouter au panier</a><br/>");
+                    out.println("<a href='AddToCart?&amp;product=" + p.getId() + "&amp;old=" + URLEncoder.encode(request.getQueryString(), "UTF-8") + "'>Ajouter au panier</a><br/>");
                 } catch (UnsupportedEncodingException ex) {
                     Logger.getLogger(Products.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
+
             // recherche du produit déjà dans le panier
             HttpSession session = request.getSession(true);
             Cart cart;
@@ -248,37 +261,39 @@ public class Products extends AbstractPage {
                 cart = (Cart) ((Client) session.getAttribute("client")).getCart();
             }
 
-            if(cart != null){ // si panier existe
+            if (cart != null) { // si panier existe
                 for (LineCommand lc : cart.getProducts()) { // recherche du produit dans le panier
                     if ((lc.getProduct().getId()).equals(p.getId())) {
-                        out.println("<div class=\"cart_contient\" >Quantité  dans le panier : "+ cart.getQuantity(lc.getProduct()) +"</div>");
+                        out.println("<div class=\"cart_contient\" >Quantité  dans le panier : " + cart.getQuantity(lc.getProduct()) + "</div>");
                     }
                 }
             }
-            
-            out.println("<a href='?page=Product&amp;id="+p.getId()+"'>Plus d'info</a></div>");
-            out.println("<h2><a href='?page=Product&amp;id="+p.getId()+"'>"+HTMLEncode(p.getName())+"</a></h2>");
+
+            out.println("<a href='?page=Product&amp;id=" + p.getId() + "'>Plus d'info</a></div>");
+            out.println("<h2><a href='?page=Product&amp;id=" + p.getId() + "'>" + HTMLEncode(p.getName()) + "</a></h2>");
             out.print("<table><tr><td>Caractéristiques</td><td>");
             tmp = "";
             for (LineCharacteristic carac : p.getProductCaracteristics()) {
-                tmp += " - "+HTMLEncode(carac.getCharacteristic().getName())+" : "+HTMLEncode(carac.getName());
+                tmp += " - " + HTMLEncode(carac.getCharacteristic().getName()) + " : " + HTMLEncode(carac.getName());
             }
-            if (tmp.length() != 0)
+            if (tmp.length() != 0) {
                 out.println(tmp.substring(3));
+            }
             out.print("</td></tr><tr><td>Catégorie</td><td>");
-            if (category.getParent() != null)
-                out.println("<a href='?page=Products&amp;category="+category.getParent().getId()+"'>"+HTMLEncode(category.getParent().getCategorie())+"</a> &gt; ");
-            out.println("<a href='?page=Products&amp;category="+category.getId()+"'>"+HTMLEncode(category.getCategorie())+"</a>");
+            if (category.getParent() != null) {
+                out.println("<a href='?page=Products&amp;category=" + category.getParent().getId() + "'>" + HTMLEncode(category.getParent().getCategorie()) + "</a> &gt; ");
+            }
+            out.println("<a href='?page=Products&amp;category=" + category.getId() + "'>" + HTMLEncode(category.getCategorie()) + "</a>");
             out.print("</td></tr><tr><td>Marque</td><td>");
-            out.println("<a href='?page=Products&amp;manufacturer="+p.getBrand().getId()+"'>"+HTMLEncode(p.getBrand().getName())+"</a>");
+            out.println("<a href='?page=Products&amp;manufacturer=" + p.getBrand().getId() + "'>" + HTMLEncode(p.getBrand().getName()) + "</a>");
             out.println("</td></tr></table><div class='clear_footer'></div></li>");
         }
         out.println("</ul>");
-        
+
         // pagination
-        
+
         if (nbPages != 1) {
-            int currentPage = start/PRODUCTSBYPAGE +1;
+            int currentPage = start / PRODUCTSBYPAGE + 1;
             String baseURL = "?page=Products";
             if (request.getParameter("category") != null) {
                 baseURL += "&amp;category=" + request.getParameter("category");
@@ -290,18 +305,21 @@ public class Products extends AbstractPage {
                 baseURL += "&amp;search=" + request.getParameter("search");
             }
             baseURL += "&amp;start=";
-            out.println("<div class='pages'><a href='"+baseURL+"0'>Début</a>");
-            if (currentPage != 1)
-                out.println("<a href='"+baseURL+(start-PRODUCTSBYPAGE)+"'>Précédent</a>");
-            for (int i = Math.max(1, currentPage-PAGESAROUND) ; i < currentPage ; i++)
-                out.println("<a href='"+baseURL+((i-1)*PRODUCTSBYPAGE)+"'>"+i+"</a>");
-            out.println("<span>"+currentPage+"</span>");
-            for (int i = currentPage+1; i<= Math.min(nbPages, currentPage+PAGESAROUND) ; i++)
-                out.println("<a href='"+baseURL+((i-1)*PRODUCTSBYPAGE)+"'>"+i+"</a>");
-            if (currentPage != nbPages)
-                out.println("<a href='"+baseURL+(start+PRODUCTSBYPAGE)+"'>Suivant</a>");
-            out.println("<a href='"+baseURL+((nbPages-1)*PRODUCTSBYPAGE)+"'>Fin</a></div>");
+            out.println("<div class='pages'><a href='" + baseURL + "0'>Début</a>");
+            if (currentPage != 1) {
+                out.println("<a href='" + baseURL + (start - PRODUCTSBYPAGE) + "'>Précédent</a>");
+            }
+            for (int i = Math.max(1, currentPage - PAGESAROUND); i < currentPage; i++) {
+                out.println("<a href='" + baseURL + ((i - 1) * PRODUCTSBYPAGE) + "'>" + i + "</a>");
+            }
+            out.println("<span>" + currentPage + "</span>");
+            for (int i = currentPage + 1; i <= Math.min(nbPages, currentPage + PAGESAROUND); i++) {
+                out.println("<a href='" + baseURL + ((i - 1) * PRODUCTSBYPAGE) + "'>" + i + "</a>");
+            }
+            if (currentPage != nbPages) {
+                out.println("<a href='" + baseURL + (start + PRODUCTSBYPAGE) + "'>Suivant</a>");
+            }
+            out.println("<a href='" + baseURL + ((nbPages - 1) * PRODUCTSBYPAGE) + "'>Fin</a></div>");
         }
     }
-    
 }

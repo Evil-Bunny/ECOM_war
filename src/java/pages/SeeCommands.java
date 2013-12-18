@@ -49,12 +49,11 @@ public class SeeCommands extends AbstractPage {
                 if (commands.isEmpty()){
                     out.println("<p>Aucune commande n'est enregistrée pour votre profil.<p/>");
                 } else {
-                    out.println("toto");
                     for (Command command : commands) {
                         out.println("commande n° " + command.getId() + " :");
 
                         out.println("<table>");
-                        out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th><th>Supprimer</th></tr>");
+                        out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th></tr>");
                         for (LineCommand lc : command.getProducts()) {
                                 out.print("<tr><td class='prems'><div class='info'><a href=\"?page=Product&id=" + lc.getProduct().getId()
                                         + "\">" + lc.getProduct().getName() + "</a>"
@@ -65,7 +64,7 @@ public class SeeCommands extends AbstractPage {
                                         + String.format("%.2f &euro;", lc.getPrice()) + "</td></tr>");
                         }
                         out.println("<tr><td class='lineTotal1'></td><td class='lineTotal2'></td><td class='tittleTotal'>Total : </td><td class='priceTotal'>"
-                                + String.format("%.2f &euro;", command.getTotal()) + "</td><td class='lineTotal3'></td></tr> ");
+                                + String.format("%.2f &euro;", command.getTotal()) + "</td></tr> ");
                         out.println("</table>");
 
                     }

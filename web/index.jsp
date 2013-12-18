@@ -3,7 +3,7 @@
 <%@page import="user.Client"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<% try {%>
 <html lang="fr" xml:lang="fr" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <%
@@ -13,12 +13,12 @@
             }
         %>
         <title>Evil Bunny - <jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></title>
-        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-        <meta name      ="author"       content="Nicolas Bouscarle" />
-        <!--<link rel="shortcut icon" href="favicon.ico" />-->
-        <link rel="stylesheet" type="text/css" href="common.css" />
-        <link rel="stylesheet" type="text/css" href="small.css" media="screen and (max-width:1134px)" /><!--max-device-width-->
-        <link rel="stylesheet" type="text/css" href="<%=requestPage%>.css" />
+            <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+            <meta name      ="author"       content="Nicolas Bouscarle" />
+            <!--<link rel="shortcut icon" href="favicon.ico" />-->
+            <link rel="stylesheet" type="text/css" href="common.css" />
+            <link rel="stylesheet" type="text/css" href="small.css" media="screen and (max-width:1134px)" /><!--max-device-width-->
+            <link rel="stylesheet" type="text/css" href="<%=requestPage%>.css" />
         <script type="text/javascript" src="scripts.js"></script>
     </head>
     <body>
@@ -34,21 +34,19 @@
                     <h1><jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Title"/></jsp:include></h1>
                     <span id="options"><a href="?page=ViewCart">Panier (<jsp:include page="ViewCart"><jsp:param name="total" value="true"/></jsp:include>)</a><%
                         if (request.getSession(true).getAttribute("client") == null) {
-                            %><a href="?page=Login">Connexion</a><a href="?page=RegisterClient">Inscription</a><%
-                        } else {
-                            %><a href="Logout">Déconnexion</a><a href="?page=Account">Voir mon compte</a><%
-                        }%></span>
-                    </div><!--band-->
-                </div><!--header-->
-                <div id="left">
-                    <ul id="menu">
-                        <li>
-                            <a href="?page=Categories">Catégories</a>
-                            <jsp:include page="Categories"><jsp:param name="menu" value="true"/></jsp:include>
+                        %><a href="?page=Login">Connexion</a><a href="?page=RegisterClient">Inscription</a><%} else {
+                        %><a href="Logout">Déconnexion</a><a href="?page=Account">Voir mon compte</a><%}%></span>
+                </div><!--band-->
+            </div><!--header-->
+            <div id="left">
+                <ul id="menu">
+                    <li>
+                        <a href="?page=Categories">Catégories</a>
+                        <jsp:include page="Categories"><jsp:param name="menu" value="true"/></jsp:include>
                         </li>
                         <li>
                             <a href="?page=Manufacturers">Marques &amp; Constructeurs</a>
-                            <jsp:include page="Manufacturers"/>
+                        <jsp:include page="Manufacturers"/>
                     </li>
                     <!--<li><a href="search">Recherche</a></li>-->
                     <li><a href="?page=Search">Recherche avancée</a></li>
@@ -67,7 +65,7 @@
                         <input id="search_button" type="submit" value="Rechercher"/>
                     </fieldset>
                 </form>
-                <% if (request.getSession(true).getAttribute("client") == null) { %>
+                <% if (request.getSession(true).getAttribute("client") == null) {%>
                 <form id="log" action="?page=Login" method="POST">
                     <fieldset><legend>Connexion rapide</legend>
                         <label>Identifiant : <input type="text" name="username"/></label>
@@ -75,29 +73,28 @@
                         <input type="submit" value="Se connecter"/>
                     </fieldset>
                 </form>
-                <% } else { %>
+                <% } else {%>
                 <div id="log">
-                    <span>Vous êtes connectés en tant que <%=((Client)request.getSession(true).getAttribute("client")).getUsername()%></span>
+                    <span>Vous êtes connectés en tant que <%=((Client) request.getSession(true).getAttribute("client")).getUsername()%></span>
                     <ul>
                         <li><a href="?page=Account">Voir mon compte</a></li>
                         <li><a href="?page=SeeCommands">Voir mes commandes</a></li>
                         <li><a href="Logout">Déconnexion</a></li>
                     </ul>
                 </div>
-                <% } %>
+                <% }%>
             </div><!--left-->
             <jsp:include page="<%=requestPage%>"><jsp:param name="get" value="Ariane"/></jsp:include>
-            <div id="content">
-                <% try { %>
-                    <jsp:include page="<%=requestPage%>"/>
-                <% } catch (HTTPErrorException e) {
-                    response.sendError(e.getErrorCode());
-                } catch (HTTPRedirect e) {
-                    response.sendRedirect(e.getMessage());
-                }%>
+                <div id="content">
+                <jsp:include page="<%=requestPage%>"/>
             </div><!--content-->
             <div class="clear_footer"></div>
         </div><!--central-->
         <div id="footer"><a href="?page=Contact">Nous contacter</a><a href="?page=Legal">Mentions légales</a><span>©EvilBunny</span></div>
     </body>
 </html>
+<% } catch (HTTPErrorException e) {
+        response.sendError(e.getErrorCode());
+    } catch (HTTPRedirect e) {
+        response.sendRedirect(e.getMessage());
+                                }%>
