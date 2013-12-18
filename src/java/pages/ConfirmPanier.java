@@ -8,6 +8,7 @@ import command.Cart;
 import command.Command;
 import command.LineCommand;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class ConfirmPanier extends AbstractPage {
 
     @Override
     protected String getTitle(HttpServletRequest request) {
-        return "Vérification avant paiment";
+        return "Vérification avant payement";
     }
     
     @Override
@@ -66,7 +67,12 @@ public class ConfirmPanier extends AbstractPage {
             if (Prod > 0) {
                 
                 Command c = new Command();
-                c.setProducts(cart.getProducts());
+                ArrayList<LineCommand> lines = new ArrayList<>();
+                for (LineCommand lc : cart.getProducts()){
+                    LineCommand l = new LineCommand(lc.getProduct(), lc.getQuantity());
+                    lines.add(l);
+                }
+                c.setProducts(lines);
                 c.storePrices();
                 session.setAttribute("command", c);
                 out.println("Attention, vous êtes sur le point de payer pour commander le contenu du panier. En cliquant sur Payer, vous allez commander les produits récapitulés ci-dessous.");

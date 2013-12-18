@@ -65,7 +65,7 @@ public class ConsultCommands extends HttpServlet {
                 out.println("commande n° " + command.getId() + " :");
                 out.println("<a href='?send=" + command.getId() + "&" + URLEncoder.encode(request.getQueryString(), "UTF-8") + "' title='Envoyer'>Définir en temps qu'envoyé</a>");
                 out.println("<table>");
-                out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th><th>Supprimer</th></tr>");
+                out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th></tr>");
                 for (LineCommand lc : command.getProducts()) {
                     out.print("<tr><td class='prems'><div class='info'><a href=\"?page=Product&id=" + lc.getProduct().getId()
                             + "\">" + lc.getProduct().getName() + "</a>"
