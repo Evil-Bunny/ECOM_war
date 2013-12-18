@@ -47,7 +47,7 @@ public class Payer extends AbstractPage {
 
     @Override
     protected List<String> getArianeNames(HttpServletRequest request) {
-        return Arrays.asList("Panier", "Informations client", "Vérification avant paiment");
+        return Arrays.asList("Panier", "Informations client", "Vérification avant payement");
     }
 
     @Override
@@ -63,25 +63,32 @@ public class Payer extends AbstractPage {
         if (c != null) {
             out.println("Payement accepté");
             c.setDateCommand(new Date());
-            c.setClient((Client)session.getAttribute("client"));
             
-            Client cl = (Client) session.getAttribute("client");
-            if (cl != null) {
+            if (session.getAttribute("client")!=null){
+                Client cl = cf.find(((Client) session.getAttribute("client")).getId());
+                c.setClient(cl);
                 cf.edit(cl);
                 
                 Cart cartClient = cl.getCart();
-                for (LineCommand lc : cartClient.getProducts())
+                List<LineCommand> lines = cartClient.getProducts();
+                cartClient.setProducts(new ArrayList<LineCommand>());
+                cartf.edit(cartClient);
+                ((Client)session.getAttribute("client")).setCart(cartClient);
+                
+                for (LineCommand lc : lines)
                 {
                     lcf.remove(lc);
                 }
-                cartClient.setProducts(new ArrayList<LineCommand>());
-                cartf.edit(cartClient);
+                
             }
             else{
+                c.setClient(null);
                 commandf.edit(c);
             }
+            //session.setAttribute("client", cf.find(((Client) session.getAttribute("client")).getId()));
             session.removeAttribute("command");
             session.removeAttribute("cart");
+            throw new HTTPRedirect("?page=PayementOk");
         } else {
             out.println("Vous n'avez aucune commande à payer, peut être avez vous modifié votre panier.");
         }
