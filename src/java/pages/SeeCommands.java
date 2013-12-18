@@ -51,8 +51,12 @@ public class SeeCommands extends AbstractPage {
                 } else {
                     out.println("toto");
                     for (Command command : commands) {
-                        out.println("commande n° " + command.getId() + " :");
-
+                        
+                        out.println("commande n° " + command.getId() + " : ");
+                        if (!command.isExpediee())
+                            out.println("non ");
+                        out.println("envoyée");
+                        
                         out.println("<table>");
                         out.println("<tr><th>Produit</th><th class='quant'>Quantité</th><th class='price'>Prix Unitaire</th><th>Prix</th><th>Supprimer</th></tr>");
                         for (LineCommand lc : command.getProducts()) {
