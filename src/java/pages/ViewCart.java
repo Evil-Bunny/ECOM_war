@@ -108,7 +108,7 @@ public class ViewCart extends AbstractPage {
                                 + String.format("%.2f &euro;", p.getProduct().getPrice()) +"</td><td class='priceLine'>" 
                                 + String.format("%.2f &euro;", p.storePrice()) + "</td><td class='suppr'>"
                                 + "<a href='DelToCart?&amp;product=" + p.getProduct().getId() + "&amp;old="
-                                + URLEncoder.encode(request.getQueryString(), "UTF-8") + "'>supprimer</a></td></tr>");
+                                + URLEncoder.encode(request.getQueryString(), "UTF-8") + "'>X</a></td></tr>");
                         } catch (UnsupportedEncodingException ex) {
                         Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -117,7 +117,7 @@ public class ViewCart extends AbstractPage {
                 out.println("<tr><td class='lineTotal1'></td><td class='lineTotal2'></td><td class='tittleTotal'>Total : </td><td class='priceTotal'>"
                         + String.format("%.2f &euro;", cart.getTotal()) +"</td><td class='lineTotal3'></td></tr> ");
                 out.println("</table>");
-                out.println("<form method=\"POST\" action=\"?page=ConfirmAddress\"><input id=\"valid\" type=\"submit\"  value=\"Acheter le Panier\"/></form>");
+                out.println("<form method=\"POST\" action=\"?page=ConfirmAddress\"><input id=\"valid\" type=\"submit\"  value=\"Commander\"/></form>");
              }
         } else if (request.getParameter("menu") == null) {
             Integer total = 0;
@@ -128,7 +128,7 @@ public class ViewCart extends AbstractPage {
         } else if (request.getParameter("total") == null) {
             out.println("<ul>");
             for (LineCommand p : cart.getProducts().subList(0, Math.min(cart.getProducts().size(), 3))) {
-                out.println("<li><a href='?page=Product&amp;id="+p.getProduct().getId()+"'>" + p.getProduct().getName() + "</a></li>");
+                out.println("<li><a href='?page=Product&amp;id="+p.getProduct().getId()+"'>("+p.getQuantity()+") " + p.getProduct().getName() + "</a></li>");
             }
             if (cart.getProducts().size() > 3)
                 out.println("<a href='?page=ViewCart' id='cart_more'>voir la suite ...</a>");

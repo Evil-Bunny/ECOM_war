@@ -73,12 +73,12 @@ public class Product extends AbstractPage {
             out.println("<div class='stock stock_no'>Rupture de stock</div>");
         } else {
             out.println("<div class='stock stock_yes'>En stock</div>");
+            try {
+                out.println("<a id='add2cart' href='AddToCart?&amp;product="+ product.getId() +"&amp;old="+URLEncoder.encode(request.getQueryString(), "UTF-8") + "' title='Ajouter au panier'><img src='img/cart.png' alt='Panier' height='60px' width='60px'/></a><br/>");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+            }             
         }   
-        try {
-            out.println("<a id='add2cart' href='AddToCart?&amp;product="+ product.getId() +"&amp;old="+URLEncoder.encode(request.getQueryString(), "UTF-8") + "' title='Ajouter au panier'><img src='img/cart.png' alt='Panier' height='60px' width='60px'/></a><br/>");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
-        }             
                 
         // recherche du produit si déjà dans le panier
         HttpSession session = request.getSession(true);

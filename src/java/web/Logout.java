@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pages.HTTPRedirect;
 
 /**
  *
@@ -33,7 +34,13 @@ public class Logout extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.removeAttribute("client");
         session.removeAttribute("cart");
-        response.sendRedirect(".");
+        String referer = request.getHeader("referer");
+        StringBuffer base = request.getRequestURL();
+        if (referer != null && referer.startsWith(request.getRequestURL().substring(0, base.lastIndexOf("/"))))
+            response.sendRedirect(referer);
+        else
+            response.sendRedirect(".");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

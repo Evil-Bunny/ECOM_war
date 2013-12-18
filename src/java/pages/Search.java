@@ -77,7 +77,7 @@ public class Search extends AbstractPage {
             out.println("<option value='"+c.getId()+"'>"+HTMLEncode(c.getName())+"</option>");
         }
         out.println("</select></td><td><input type='text' name='caracVal_1'/></td><td><button type='button' onclick='delCarac(this)'>X</button></td></tr>");
-        out.println("<tr><td><button type='button' onclick='addCarac()'>+</button></td><td></td></tr>");
+        out.println("<tr><td><button type='button' onclick='addCarac()'>Ajouter un critère</button></td><td></td></tr>");
         out.println("</table></div></fieldset>");
         out.println("<input type='submit' value='Rechercher'/>");
         out.println("</form>");

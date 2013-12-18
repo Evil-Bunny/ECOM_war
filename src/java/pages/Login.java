@@ -48,7 +48,13 @@ public class Login extends AbstractPage {
                 cef.edit(ci.getCart());
                 session.setAttribute("client", ci);
                 out.println("Connection Reussie");
-                throw new HTTPRedirect(".");
+                String referer = request.getParameter("referer");
+                if (referer == null)
+                    referer = request.getHeader("referer");
+                if (referer != null && referer.startsWith(request.getRequestURL().toString()))
+                    throw new HTTPRedirect(referer);
+                else
+                    throw new HTTPRedirect(".");
             } else {
                 out.println("<h2>Veuillez vous identifier de nouveau</h2>");
                 out.println("<h3>Identifiant ou de mot de passe inconnu</h3>");
@@ -58,6 +64,7 @@ public class Login extends AbstractPage {
                         + "            <label for=\"pass\">Mot de passe : "
                         + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" /> </label>  <br/>     \n"
                         + "            <input id=\"button\" type=\"submit\" value=\"Se connecter\" />\n"
+                        + "<input type='hidden' name='referer' value='"+request.getParameter("referer")+"'/>\n"
                         + "        </form>"
                         +"<a href=\"?page=RegisterClient\">Pas encore inscrit ?</a>");
             }
@@ -70,6 +77,7 @@ public class Login extends AbstractPage {
                     + "            <label for=\"pass\">Mot de passe : "
                     + "            <input id=\"pass\" type=\"password\" name=\"pass\" value=\"\" />  </label> <br/>     \n"
                     + "            <input id=\"button\" type=\"submit\" value=\"Se connecter\" />\n"
+                        + "<input type='hidden' name='referer' value='"+request.getHeader("referer")+"'/>\n"
                     + "        </form>"
                     +"<a href=\"?page=RegisterClient\">Pas encore inscrit ?</a>");
 
