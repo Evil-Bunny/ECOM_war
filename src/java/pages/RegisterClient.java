@@ -103,7 +103,11 @@ public class RegisterClient extends AbstractPage {
             ci = cif.find(ci.getUsername(),request.getParameter("password"));
             session.setAttribute("client", ci);
             out.print("Inscription Réussie");
-            throw new HTTPRedirect("?page=Account");
+            String referer = request.getParameter("referer");
+            if (referer != null && referer.startsWith(request.getRequestURL().toString()))
+                throw new HTTPRedirect(referer);
+            else
+                throw new HTTPRedirect(".");
         } catch (EJBException e) {
             out.println(e.getMessage());
         }        
@@ -145,6 +149,11 @@ public class RegisterClient extends AbstractPage {
             out.print(HTMLEncode(request.getParameter("address")));
         }
         out.println("</textarea></label>");
+        
+        if (request.getParameter("referer") != null)
+            out.println("<input type='hidden' name='referer' value='"+request.getParameter("referer")+"'/>");
+        else
+            out.println("<input type='hidden' name='referer' value='"+request.getHeader("referer")+"'/>");
 
         out.println("<input type='submit' value=\"S'inscrire\" /></form>");
     }

@@ -44,9 +44,9 @@ public class Contact extends AbstractPage {
         "    <div id=\"PresContact\">\n" +
         "        <h2>Evil Bunny</h2>\n" +
         "        <ul id ='TextContact'>\n" +
-        "             <li><h3>Adresse :</h3><p id=\"ad\">42 rue de la Réponse </br> 42042 Chambles (France)</br></p></li>" +
-        "             <li><h3>N° tel :</h3><p id=\"ad\">+337 13 37 13 37</br></p></li>" +
-        "             <li><h3>Email :</h3><p id=\"ad\">ecom.lapin@laposte.net</br></p></li>" +
+        "             <li><h3>Adresse :</h3><p>42 rue de la Réponse </br> 42042 Chambles (France)</br></p></li>" +
+        "             <li><h3>N° tel :</h3><p>+337 13 37 13 37</br></p></li>" +
+        "             <li><h3>Email :</h3><p><a href='mailto:ecom.lapin@laposte.net'>ecom.lapin@laposte.net</a></br></p></li>" +
         "        </ul>\n" +
         "    </div>\n" +
         "</div>");
