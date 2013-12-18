@@ -41,7 +41,7 @@ var rows = 1;
 function addCarac() {
     var table = document.getElementById("caracs");
     rows++;
-    table.insertRow(table.rows.length - 1).innerHTML += table.rows[1].innerHTML.replace(/_[1-9]+/g, "_" + rows);
+    table.insertRow(table.rows.length - 1).innerHTML = table.rows[1].innerHTML.replace(/_[0-9]+/g, "_" + rows).replace(/value=["'][^"']*["']/g, "");
     table.parentNode.scrollTop = 100000000;
 }
 

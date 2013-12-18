@@ -23,7 +23,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
 import product.type.Category;
@@ -78,54 +80,57 @@ public class addProd extends HttpServlet {
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Ajout de produit</title>");
+            out.println("<script type='text/javascript' src='../scripts.js'></script>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addProd at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Ajout de produit</h1>");
 
+            out.println("<script type='text/javascript' src='scripts.js'></script>");
+            out.println("<form name='addProduct' action='addProd' enctype='multipart/form-data' method='POST'>");
+            out.println("<label for='name'>Product name</label>");
+            out.println("<input id='name' type='text' name='name' value='' size='30' /><br/>");
+            out.println("<label for='brand'>Brand</label>");
+            out.println("<input id='brand' type='text' name='brand' value='' list='list_brand' /><br/> ");
+            out.println("<datalist id='list_brand'>");
+            List<Manufacturer> lm = mf.findAll();
+            Collections.sort(lm);
+            for (Manufacturer m : lm)
+                out.println("<option>"+m.getName()+"</option>");
+            out.println("</datalist>");
 
+            out.println("<label for='Category'>Category</label>");
+            out.println("<select id='category' name='category'> ");
 
+            for (Category c : cf.findAll()) {
+                out.println("<option value='" + c.getId() + "'>" + c.getCategorie() + "</option>");
+            }
+            out.println("</select><br />");
+            out.println("<label for='image'>Product picture</label>");
+            out.println("<input id='image' name='image' type='file' accept='image/jpeg'><br/>");
+            out.println("<label for='price'>Price</label>");
+            out.println("<input id='price' type='text' name='price' value='' size='10' />  <br/>");
+            out.println("<label>Stock</label>");
+            out.println("<input id='stock' name='stock' type='text' value='0'/>");
+            out.print("<table id = 'caracs'>");
+            out.print("<tr>");
+            out.println("<th>Nom du descripteur</th>");
+            out.println("<th>Valeur</th><th></th>");
+            out.println("</tr>");
+            out.print("<tr>");
+            out.println("<td><input list='idDesc' name='idDes_1'/></td>");
+            out.println("<td><input type='text' name='descr_1' value='' size='30'/></td> ");
+            out.println("<td><button type='button' onclick='delCarac(this)'>X</button></td> ");
+            out.print("</tr>");
+            out.println("<tr><td><button type='button' onclick='addCarac()'>+</button></td><td></td><td></td></tr>");
+            out.print("</table>");
+            out.println("<datalist id = 'idDesc'>");
+            for (Characteristic c : charaf.findAll()) {
+                out.println("<option value='" + c.getName() + "'>");
+            }
+            out.println("</datalist>");
 
-
-
-                out.println("<script type='text/javascript' src='scripts.js'></script>");
-                out.println("<form name='addProduct' action='addProd' enctype='multipart/form-data' method='POST'>");
-                out.println("<label for='name'>Product name</label>");
-                out.println("<input id='name' type='text' name='name' value='' size='30' /><br/>");
-                out.println("<label for='brand'>Brand</label>");
-                out.println("<input id='brand' type='text' name='brand' value='' size='30' /><br/> ");
-                out.println("<label for='Category'>Category</label>");
-                out.println("<select id='category' name='category'> ");
-
-                for (Category c : cf.findAll()) {
-                    out.println("<option value='" + c.getId() + "'>" + c.getCategorie() + "</option>");
-                }
-                out.println("</select><br />");
-                out.println("<label for='image'>Product picture</label>");
-                out.println("<input id='image' name='image' type='file' accept='image/jpeg'><br/>");
-                out.println("<label for='price'>Price</label>");
-                out.println("<input id='price' type='text' name='price' value='' size='10' />  <br/>");
-                out.print("<table id = 'caracs'>");
-                out.print("<tr>");
-                out.println("<th>Nom du descripteur</th>");
-                out.println("<th>Valeur</th><th></th>");
-                out.println("</tr>");
-                out.print("<tr>");
-                out.println("<td><input list='idDesc' name='idDes_1'> ");
-                out.println("<datalist id = 'idDesc'>");
-                for (Characteristic c : charaf.findAll()) {
-                    out.println("<option value='" + c.getName() + "'>");
-                }
-                out.println("</datalist></td>");
-                out.println("<td><input type='text' name='descr_1' value='' size='30'/></td> ");
-                out.println("<td><button type='button' onclick='delCarac(this)'>X</button></td> ");
-                out.print("</tr>");
-                out.println("<tr><td><button type='button' onclick='addCarac()'>+</button></td><td></td><td></td></tr>");
-                out.print("</table>");
-
-                out.println("<input type='submit' value='Submit' />\n");
-                out.println("</form>");
-
-
+            out.println("<input type='submit' value='Submit' />\n");
+            out.println("</form>");
 
             out.println("</body>");
             out.println("</html>");
@@ -166,6 +171,12 @@ public class addProd extends HttpServlet {
         } catch (NumberFormatException e) {
             out.print("Veuillez rentrer un nombre dans le champ prix.");
 
+        }
+        try {
+            pe.setStock(Integer.parseInt(getStringFromPart(request.getPart("stock"))));
+        } catch (NumberFormatException e) {
+            out.print("Veuillez rentrer un nombre dans le champ stock.");
+            return;
         }
         Enumeration<String> paramsNames = request.getParameterNames();
         String parName;

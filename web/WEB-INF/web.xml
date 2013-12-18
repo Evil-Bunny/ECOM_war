@@ -129,6 +129,10 @@
         <servlet-class>pages.Payer</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>PayementOk</servlet-name>
+        <servlet-class>pages.PayementOk</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ConsultCommands</servlet-name>
         <servlet-class>admin.ConsultCommands</servlet-class>
     </servlet>
@@ -242,7 +246,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>IndexAdmin</servlet-name>
-        <url-pattern>/admin</url-pattern>
+        <url-pattern>/admin/</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminSearch</servlet-name>
@@ -254,11 +258,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditProduct</servlet-name>
-        <url-pattern>/EditProduct</url-pattern>
+        <url-pattern>/admin/EditProduct</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Payer</servlet-name>
         <url-pattern>/Payer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayementOk</servlet-name>
+        <url-pattern>/PayementOk</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ConsultCommands</servlet-name>
@@ -269,4 +277,29 @@
             30
         </session-timeout>
     </session-config>
+    <security-constraint>
+        <display-name>accès Administrateur</display-name>
+            <web-resource-collection>
+                <web-resource-name>AdminPages</web-resource-name>
+                <url-pattern>/admin/*</url-pattern>
+            </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>file</realm-name>
+    </login-config>
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
+<!--    <security-role-mapping>
+        <role-name>Admin</role-name>
+        <principal-name>admin</principal-name>
+        <principal-name>toto</principal-name>
+    </security-role-mapping>-->
 </web-app>
