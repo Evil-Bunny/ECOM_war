@@ -43,7 +43,7 @@ public class Account extends AbstractPage {
         boolean formOK = true;
         
         if (c == null)
-            throw new HTTPErrorException(403);
+            throw new HTTPRedirect(".");
  
         out.println("<noscript>");
         if (request.getParameter("username") == null || request.getParameter("username").length() < 3) {
