@@ -121,7 +121,7 @@ public class addProd extends HttpServlet {
             out.println("<td><input type='text' name='descr_1' value='' size='30'/></td> ");
             out.println("<td><button type='button' onclick='delCarac(this)'>X</button></td> ");
             out.print("</tr>");
-            out.println("<tr><td><button type='button' onclick='addCarac()'>+</button></td><td></td><td></td></tr>");
+            out.println("<tr><td><button type='button' onclick='addCaracAddProd()'>+</button></td><td></td><td></td></tr>");
             out.print("</table>");
             out.println("<datalist id = 'idDesc'>");
             for (Characteristic c : charaf.findAll()) {
