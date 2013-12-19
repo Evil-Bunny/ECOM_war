@@ -17,14 +17,6 @@
         <servlet-class>admin.addProd</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>buyProd</servlet-name>
-        <servlet-class>web.buyProd</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>listProd</servlet-name>
-        <servlet-class>web.listProd</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Products</servlet-name>
         <servlet-class>pages.Products</servlet-class>
     </servlet>
@@ -47,10 +39,6 @@
     <servlet>
         <servlet-name>Product</servlet-name>
         <servlet-class>pages.Product</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>addStock</servlet-name>
-        <servlet-class>web.addStock</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Search</servlet-name>
@@ -153,14 +141,6 @@
         <url-pattern>/admin/addProd</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>listProd</servlet-name>
-        <url-pattern>/listProd</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>buyProd</servlet-name>
-        <url-pattern>/buyProd</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Products</servlet-name>
         <url-pattern>/Products</url-pattern>
     </servlet-mapping>
@@ -183,10 +163,6 @@
     <servlet-mapping>
         <servlet-name>Product</servlet-name>
         <url-pattern>/Product</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>addStock</servlet-name>
-        <url-pattern>/addStock</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Search</servlet-name>
@@ -279,10 +255,10 @@
     </session-config>
     <security-constraint>
         <display-name>accès Administrateur</display-name>
-            <web-resource-collection>
-                <web-resource-name>AdminPages</web-resource-name>
-                <url-pattern>/admin/*</url-pattern>
-            </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>AdminPages</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
         </auth-constraint>
@@ -297,7 +273,7 @@
     <security-role>
         <role-name>admin</role-name>
     </security-role>
-<!--    <security-role-mapping>
+    <!--    <security-role-mapping>
         <role-name>Admin</role-name>
         <principal-name>admin</principal-name>
         <principal-name>toto</principal-name>
